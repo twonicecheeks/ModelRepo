@@ -78,6 +78,7 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--root",default="/Users/abbeyfelix/Developer/MODEL")
     ap.add_argument("--decision-csv",default="")
+    ap.add_argument("--game-id",action="append",default=[],help="Restrict this evaluation bundle to one or more model game_id values")
     ap.add_argument("--note",default="")
     a=ap.parse_args()
     root=Path(a.root).resolve()
@@ -95,8 +96,14 @@ def main():
     if sidecar.read_text(encoding="utf-8").strip()!=ledger_sha:
         raise SystemExit("FAIL OMEGA probability ledger hash mismatch")
 
-    forecast_rows=read_csv(ledger)
-    if not forecast_rows: raise SystemExit("FAIL probability ledger empty")
+    source_forecast_rows=read_csv(ledger)
+    if not source_forecast_rows: raise SystemExit("FAIL probability ledger empty")
+    requested_games=set(a.game_id or [])
+    available_games={str(r.get("game_id") or "") for r in source_forecast_rows}
+    unknown=sorted(requested_games-available_games)
+    if unknown: raise SystemExit("FAIL requested game_id not in current OMEGA ledger: "+", ".join(unknown))
+    forecast_rows=[r for r in source_forecast_rows if not requested_games or str(r.get("game_id") or "") in requested_games]
+    if not forecast_rows: raise SystemExit("FAIL scoped forecast row set is empty")
     keys=set(); by_key={}
     for r in forecast_rows:
         k=(r.get("game_id",""),r.get("player_id",""))
@@ -121,7 +128,7 @@ def main():
         if cpath.exists() and ca.exists():
             meta=json.loads(ca.read_text(encoding="utf-8"))
             if meta.get("omegaLedgerSha256")==ledger_sha and (not market_snapshot_id or meta.get("marketSnapshotId")==market_snapshot_id):
-                comparison_id=candidate_id; comparison_path=cpath; comparison_sha=sha(cpath); comparison_rows=read_csv(cpath)
+                comparison_id=candidate_id; comparison_path=cpath; comparison_sha=sha(cpath); comparison_rows=[r for r in read_csv(cpath) if not requested_games or str(r.get("game_id_model") or "") in requested_games]
 
     decision_path=Path(a.decision_csv).expanduser().resolve() if a.decision_csv else None
     decision_rows=[]
@@ -179,12 +186,13 @@ def main():
     try:
         compact=[{k:r.get(k,"") for k in FORECAST_FIELDS} for r in forecast_rows]
         fp=staging/"OMEGA_0.23_FORECAST_INDEX.csv"; write_csv(fp,compact,FORECAST_FIELDS); fp_sha=sha(fp)
-        fullp=staging/"OMEGA_0.23_FORECAST_FULL.csv"; shutil.copy2(ledger,fullp); full_sha=sha(fullp)
+        fullp=staging/"OMEGA_0.23_FORECAST_FULL.csv"; write_csv(fullp,forecast_rows,list(source_forecast_rows[0].keys())); full_sha=sha(fullp)
         shutil.copy2(audit,staging/"OMEGA_0.16_PROSPECTIVE_AUDIT.json"); audit_sha=sha(staging/"OMEGA_0.16_PROSPECTIVE_AUDIT.json")
         if market_dir:
             shutil.copy2(market_dir/"normalized_market_rows.csv",staging/"OMEGA_0.23_MARKET_SNAPSHOT.csv")
             shutil.copy2(market_dir/"MARKET_SNAPSHOT_MANIFEST.json",staging/"OMEGA_0.23_MARKET_SNAPSHOT_MANIFEST.json")
-        if comparison_path: shutil.copy2(comparison_path,staging/"OMEGA_0.23_MARKET_COMPARISON.csv")
+        if comparison_path:
+            write_csv(staging/"OMEGA_0.23_MARKET_COMPARISON.csv",comparison_rows,list(read_csv(comparison_path)[0].keys()) if read_csv(comparison_path) else ["game_id_model"])
         decisions_sha=""
         if decision_path:
             dst=staging/"OMEGA_0.23_DECISION_LEDGER.csv"; shutil.copy2(decision_path,dst); decisions_sha=sha(dst)
@@ -200,6 +208,7 @@ def main():
             "status":"IMMUTABLE_PREGAME_INPUTS_PACKAGED","note":a.note,
             "integrity":{"omegaModelModified":False,"omegaProbabilityLedgerReadOnly":True,"outcomesReadAtPackaging":False,"marketEnteredModel":False,"oddsPapiPlayerPropRequests":0,"packagedAfterSomeKickoffs":bool(kickoff_times and packaged>min(kickoff_times))},
             "sourceTiming":{"forecastCapturedMin":min(f_times).isoformat().replace("+00:00","Z") if f_times else "","forecastCapturedMax":max(f_times).isoformat().replace("+00:00","Z") if f_times else "","marketCapturedMin":min(m_times).isoformat().replace("+00:00","Z") if m_times else "","marketCapturedMax":max(m_times).isoformat().replace("+00:00","Z") if m_times else "","earliestKickoff":min(kickoff_times).isoformat().replace("+00:00","Z") if kickoff_times else ""},
+            "scope":{"gameIds":sorted({r.get("game_id","") for r in compact}),"explicitGameScope":bool(requested_games)},
             "forecast":{"sourceLedgerId":lid,"sourceLedgerSha256":ledger_sha,"forecastIndexSha256":fp_sha,"forecastFullSha256":full_sha,"prospectiveAuditSha256":audit_sha,"rows":len(compact),"games":len({r.get("game_id","") for r in compact})},
             "market":{"snapshotId":market_snapshot_id,"marketRowsSha256":market_rows_sha,"marketManifestSha256":market_manifest_sha,"comparisonId":comparison_id,"comparisonSha256":comparison_sha},
             "decisions":{"rows":len(decision_rows),"sha256":decisions_sha,"present":bool(decision_rows),"validatedAgainstComparison":bool(decision_rows)},
