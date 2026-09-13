@@ -1,0 +1,2 @@
+# Phase 2C research acceleration. Installed only into MODEL\047s isolated NFL venv.
+numpy==2.3.5

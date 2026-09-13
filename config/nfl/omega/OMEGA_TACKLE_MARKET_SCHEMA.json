@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "OMEGA_TACKLE_MARKET_LEDGER_0.1",
+  "allowedMarketKinds": ["tackles_assists", "solo_tackles", "assists"],
+  "requiredCoreFields": ["book", "player_name_or_id", "market_kind", "line", "price"],
+  "settlementFields": ["settlement_scope", "includes_special_teams", "stat_correction_policy"],
+  "defaultSettlementValue": "UNKNOWN",
+  "forbiddenRawCaptureFields": ["model_probability", "p_model", "edge", "ev", "expected_value", "recommended_bet", "pick"],
+  "policy": "Market history is stored raw and timestamped. No model field is permitted in the raw ledger."
+}

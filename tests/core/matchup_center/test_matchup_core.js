@@ -1,0 +1,12 @@
+const assert=require('assert');
+const core=require('../../../packages/core/src/matchup_center/matchup_core.js');
+assert.equal(core.VERSION,'1.4.0');
+const starterBoard={games:[{gamePk:'1',away:'AAA',home:'BBB',startAt:'2026-09-13T17:00:00Z',venueName:'Park',state:'VERIFIED',pregame:true,starters:{away:{officialName:'Away Arm'},home:{officialName:'Home Arm'}}}]};
+const ml={kind:'ML',gamePk:'1',status:'CANDIDATE',side:'AAA',probability:.61,research:{verdict:'CONFIRMED',confidence:80,publicResearch:{materialSummary:{directCount:0,possibleCount:1}}}};
+const k={kind:'K',gamePk:'1',status:'CANDIDATE',player:'Away Arm',officialMlbId:'10',side:'Under',line:5.5,expectedK:4.7,research:{verdict:'CONFIRMED',confidence:77,publicResearch:{materialSummary:{directCount:1,possibleCount:0}}}};
+const edgeBoard={edges:[{kind:'ML',gamePk:'1',trust:{state:'VERIFIED',side:{model:.61,market:.53,ev:.1}}},{kind:'K',gamePk:'1',projection:{officialMlbId:'10',player:'Away Arm'},trust:{state:'WATCH',side:{model:.58,market:.52,ev:.08}}}]};
+const prev={edges:[{kind:'ML',gamePk:'1',trust:{state:'VERIFIED',side:{model:.61,market:.51,ev:.1}}}]};
+const mlb=core.mlbMatchups({starterBoard,radarBoard:{ml:[ml],k:[k],builtAt:'x'},edgeBoard,previousEdgeBoard:prev,lineupBaselines:{'1':{gamePk:'1',officialLineups:0,probability:.57}}});assert.equal(mlb.gameCount,1);assert.equal(mlb.games[0].researchSummary.status,'REVIEW');assert.equal(mlb.games[0].ml.edge.trust.state,'VERIFIED');assert.equal(mlb.games[0].ml.previousEdge.trust.side.market,.51);assert.equal(mlb.games[0].k[0].edge.trust.state,'WATCH');assert.equal(mlb.games[0].ml.lineupBaseline.probability,.57);
+const omega={status:'PASS',probabilityLedgerId:'p',games:[{gameId:'2026_01_CHI_CAR',away:'CHI',home:'CAR',marketRows:[{player:'X'}]}]};
+const nfl=core.nflMatchups({status:'PASS',season:2026,week:2,updatedAt:'x',games:[{id:'g',away:{abbr:'CHI'},home:{abbr:'CAR'},startAt:'x',research:{status:'WATCH'}}]},omega);assert.equal(nfl.gameCount,1);assert.equal(nfl.week,2);assert.equal(nfl.games[0].researchSummary.status,'WATCH');assert.equal(nfl.games[0].omega.marketRows[0].player,'X');assert.equal(nfl.omegaStatus,'PASS');
+console.log('PASS Matchup Center core 1.4: MLB current/prior Trust assembly + NFL OMEGA read-only layer normalization');

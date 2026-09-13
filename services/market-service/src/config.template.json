@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "serviceVersion": "2.3.7",
+  "provider": {
+    "oddspapi": {
+      "baseUrl": "https://api.oddspapi.io/v4",
+      "books": [
+        "pinnacle",
+        "circasports",
+        "fanduel"
+      ],
+      "sharpBooks": [
+        "pinnacle",
+        "circasports"
+      ],
+      "minRefreshSeconds": 60,
+      "consensusMaxBookSkewSeconds": 120,
+      "moneylineBooks": [
+        "pinnacle",
+        "circasports",
+        "fanduel"
+      ],
+      "moneylineSharpBooks": [
+        "pinnacle",
+        "circasports"
+      ]
+    }
+  },
+  "sports": {
+    "mlb": {
+      "enabled": true,
+      "sportId": 13,
+      "tournamentId": 109,
+      "markets": {
+        "moneyline": 131
+      },
+      "officialIdentity": "MLB gamePk",
+      "modelAdaptersAvailable": [
+        "mlb-moneyline-v0.8.0-offense-strength-2026-09-06",
+        "mlb-k-v0.8.3-sample-shrinkage-workload-2026-09-07"
+      ],
+      "marketTruthAdapters": [
+        "moneyline"
+      ]
+    },
+    "nfl": {
+      "enabled": false,
+      "sportId": null,
+      "tournamentId": null,
+      "markets": {},
+      "modelAdaptersAvailable": [],
+      "marketTruthAdapters": []
+    },
+    "cfb": {
+      "enabled": false,
+      "sportId": null,
+      "tournamentId": null,
+      "markets": {},
+      "modelAdaptersAvailable": [],
+      "marketTruthAdapters": []
+    }
+  },
+  "trust": {
+    "marketFreshSeconds": 180,
+    "marketBlockSeconds": 300,
+    "anomalyEdgePP": 12.0,
+    "verifiedMinEdgePP": 2.5,
+    "verifiedMinEV": 0.02,
+    "propModelFreshMinutes": 30,
+    "propModelMaxSkewMinutes": 10,
+    "mlbModelFreshMinutes": 90,
+    "mlbModelWatchMinutes": 45,
+    "mlbModelMaxSkewMinutes": 30
+  }
+}

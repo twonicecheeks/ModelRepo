@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "MODEL \u2014 MLB + NFL Matchup Center",
+  "version": "3.2.0",
+  "version_name": "3.2.0 Personnel & Matchup Impact",
+  "description": "MODEL 3.2: non-mutating MLB lineup-transition impact and NFL depth-chart-weighted personnel/unit matchup intelligence, with Matchup Intelligence and research materiality hardening.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "storage",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://propsmadness.com/*",
+    "https://www.propsmadness.com/*",
+    "https://statsapi.mlb.com/*",
+    "http://127.0.0.1:8765/*",
+    "https://*.propsmadness.com/*",
+    "https://baseballsavant.mlb.com/*",
+    "https://www.fangraphs.com/*",
+    "https://news.google.com/*",
+    "https://www.fanduel.com/*",
+    "https://site.api.espn.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MODEL Matchup Center"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://propsmadness.com/mlb/props/*",
+        "https://www.propsmadness.com/mlb/props/*"
+      ],
+      "js": [
+        "providers/propsmadness/table_core.js",
+        "providers/propsmadness/table_main.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+# macOS
+.DS_Store
+
+# Logs / temporary output
+*.log
+logs/
+tmp/
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+
+# Environment / credentials
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local service configuration / authentication
+services/market-service/config.json
+services/market-service/src/config.json
+**/config.local.json
+**/credentials.json
+
+# Generated archives / backups
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.bak
+*.backup
+
+# MODEL historical migration backups
+/archive/
+
+# MODEL generated release artifacts
+/releases/
+
+# MODEL local datasets and generated model ledgers
+# Keep the machinery in Git; keep the large datasets local.
+/data/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

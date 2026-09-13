@@ -1,0 +1,177 @@
+{
+  "contractVersion": "0.2.0",
+  "projectPhase": "MODEL_2.9.0_NFL_PHASE1B_SNAPSHOT",
+  "status": "HISTORICAL_SNAPSHOT_AND_NORMALIZATION",
+  "createdAt": "2026-09-08",
+  "provider": "nflverse",
+  "providerLicense": "CC BY 4.0 for core nflverse-data sources; source-specific exceptions must be tracked separately",
+  "canonicalIdentity": {
+    "gameId": "nflverse game_id",
+    "format": "{season}_{week:02d}_{away_team}_{home_team}",
+    "playerId": "gsis_id",
+    "teamId": "nflverse normalized team abbreviation",
+    "rules": [
+      "Do not join games by bookmaker fixture ID.",
+      "Do not join players by display name when gsis_id is available.",
+      "Do not silently rewrite historical team abbreviations outside the provider normalization layer."
+    ],
+    "teamHistoryKey": "provider-normalized current-franchise key; raw nflverse game_id remains unchanged",
+    "teamRelocationRules": [
+      "Preserve raw nflverse game_id exactly.",
+      "Normalize team history keys inside the nflverse provider layer only.",
+      "Use current-franchise continuity for OAK\u2192LV, SD\u2192LAC, STL/LAR\u2192LA and common nflverse aliases.",
+      "Do not use display names as join keys."
+    ]
+  },
+  "sources": {
+    "schedules": {
+      "role": "canonical game identity, kickoff, teams, venue/rest context, outcomes for target construction only",
+      "requiredForPhase1": true,
+      "availability": "past and future schedules",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv",
+      "minimumSeason": 1999,
+      "marketIsolation": "schedule betting columns are downstream/evaluation-only and forbidden as model features"
+    },
+    "play_by_play": {
+      "role": "primary historical source for team efficiency and QB/play-style candidate features",
+      "requiredForPhase1": true,
+      "availability": "1999 onward",
+      "urlTemplate": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_{season}.parquet",
+      "minimumSeason": 1999
+    },
+    "players": {
+      "role": "canonical player identity crosswalk; gsis_id is primary key",
+      "requiredForPhase1": true,
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.parquet"
+    },
+    "weekly_rosters": {
+      "role": "historical team/player membership and roster context",
+      "requiredForPhase1": true,
+      "availability": "2002 onward",
+      "urlTemplate": "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_{season}.parquet",
+      "minimumSeason": 2002
+    },
+    "team_stats_weekly": {
+      "role": "box-score cross-check and supplemental team summaries; not a replacement for PBP efficiency features",
+      "requiredForPhase1": false,
+      "availability": "1999 onward",
+      "urlTemplate": "https://github.com/nflverse/nflverse-data/releases/download/stats_team/stats_team_week_{season}.parquet",
+      "minimumSeason": 1999
+    },
+    "depth_charts": {
+      "role": "QB/depth context candidate; schema changed from 2025 onward and must be normalized explicitly",
+      "requiredForPhase1": false,
+      "availability": "2001 onward; date-based structure from 2025 onward",
+      "urlTemplate": "https://github.com/nflverse/nflverse-data/releases/download/depth_charts/depth_charts_{season}.rds",
+      "minimumSeason": 2001,
+      "status": "DEFERRED_UNTIL_SCHEMA_ADAPTER"
+    },
+    "injuries": {
+      "role": "historical injury/practice context",
+      "requiredForPhase1": false,
+      "availability": "historical through 2024; nflverse reports the source died after 2024",
+      "urlTemplate": "https://github.com/nflverse/nflverse-data/releases/download/injuries/injuries_{season}.parquet",
+      "minimumSeason": 2009,
+      "status": "NOT_A_2026_PRODUCTION_PROVIDER"
+    },
+    "snap_counts": {
+      "role": "historical participation/availability research",
+      "requiredForPhase1": false,
+      "availability": "2012 onward",
+      "urlTemplate": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_{season}.parquet",
+      "minimumSeason": 2012,
+      "status": "OPTIONAL_RESEARCH"
+    },
+    "participation": {
+      "role": "play-level personnel/pressure context",
+      "requiredForPhase1": false,
+      "availability": "2016 onward; post-2022 source/licensing/timing differs",
+      "status": "DEFERRED_NOT_REQUIRED_FOR_V0_1"
+    }
+  },
+  "historicalEvaluationPolicy": {
+    "developmentSeasons": "2016-2024 are research development candidates for coverage; final training window remains unfrozen until audit review",
+    "holdoutSeason": 2025,
+    "holdoutRules": [
+      "Never fit coefficients on 2025.",
+      "Never choose features, hyperparameters, thresholds, or transformations by optimizing 2025 performance.",
+      "Do not expose 2025 labels to feature construction for 2025 games."
+    ],
+    "prospectiveSeason": 2026,
+    "prospectiveRules": [
+      "2026 is prospective only.",
+      "No retraining on 2026 outcomes during the initial validation window."
+    ],
+    "historySeedSeason": 2015
+  },
+  "pregameLeakagePolicy": {
+    "primaryRule": "A game feature row may use only information that existed before that game.",
+    "teamHistoryRule": "For same-season team performance features, use only rows from weeks strictly less than the target game week.",
+    "priorSeasonRule": "Prior-season summaries may be carried into Week 1 and early season only as explicit priors.",
+    "marketFieldsForbiddenFromIndependentFeatures": [
+      "away_moneyline",
+      "home_moneyline",
+      "spread_line",
+      "away_spread_odds",
+      "home_spread_odds",
+      "total_line",
+      "under_odds",
+      "over_odds"
+    ],
+    "currentGameOutcomeFieldsForbiddenFromFeatures": [
+      "away_score",
+      "home_score",
+      "result",
+      "total",
+      "overtime"
+    ],
+    "normalizedArtifactIsolation": [
+      "game_identity.csv contains only identity and pregame-stable context.",
+      "game_targets.csv contains outcomes separately and is never admitted into features.",
+      "schedule market columns are not copied into normalized model artifacts.",
+      "pregame feature rows are built from prior weeks only; 2015 is warmup history for 2016."
+    ]
+  },
+  "phase1CandidateFeatureFamilies": [
+    "passing EPA/dropback",
+    "rushing EPA/play",
+    "success rate",
+    "CPOE",
+    "sack/pressure propensity proxy",
+    "explosive pass/rush rates",
+    "turnover propensity with regression later",
+    "QB identity/state scaffolding",
+    "rest/home context from schedules"
+  ],
+  "nonGoals": [
+    "No sportsbook price as a predictive input.",
+    "No NFL OddsPapi requests in Phase 1.",
+    "No player-prop market integration.",
+    "No production extension wiring yet.",
+    "No fitted NFL coefficients yet.",
+    "No arbitrary QB point-value adjustment."
+  ],
+  "snapshotPolicy": {
+    "researchAnalysisSeasons": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "historySeedSeasons": [
+      2015
+    ],
+    "trainingWindowStatus": "NOT_FROZEN",
+    "purpose": "Acquire a recent-era reproducible research snapshot and measure coverage before freezing the training window.",
+    "rawStorage": "content-addressed SHA256 blob store plus immutable snapshot manifests",
+    "normalizedStorage": "immutable per-snapshot tables plus CURRENT_PHASE1_SNAPSHOT pointer",
+    "dependency": "pyarrow 25.0.1 in isolated MODEL Application Support virtualenv",
+    "networkPolicy": "nflverse/PyPI only for explicit snapshot build; OddsPapi 0"
+  }
+}

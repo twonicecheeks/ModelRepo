@@ -1,0 +1,2021 @@
+You can access opening and closing lines for player props and main markets by using specialized sports betting data APIs, historical odds databases, or real-time odds tracking software. Because player prop markets are decentralized and massive in volume compared to traditional game sides, tracking their opening and closing prices requires dedicated third-party tools.
+
+Dedicated Odds APIs & Databases (For Developers and Quants)
+If you need programmatic access or a deep historical archive to backtest models and calculate Closing Line Value (CLV):
+	•	The Odds API: Provides historical snapshots and archived data for major leagues, including tracking for player prop markets via specific historical pricing endpoints. [1]
+	•	OddsJam: Offers comprehensive real-time and historical feeds covering major books, featuring deep historical opening and closing lines across standard and prop markets. [1]
+	•	SportsDataIO: Ingests and normalizes legal sportsbook data, offering dedicated line movement endpoints and historical prop archiving.  [1, 2]
+	•	OpticOdds: Supplies granular historical odds feeds tailored for custom analytics dashboards and trading tools. [1]
+
+Real-Time Tracking & Pro Screens (For Active Bettors)
+If you want to view line movement, current market width, and final closing numbers visually without writing code:
+	•	Unabated: Features a dedicated Player Prop Odds Tool designed to monitor instant odds shifts and market movement across numerous sportsbooks. [1]
+	•	Betstamp PRO: Supplies professional-grade odds screens mapping out main markets and player prop ladders side-by-side. [1]
+	•	Sports Insights (Bet Labs): Offers custom historical databases and tracking features designed to analyze market movement and closing data. [1]
+
+To narrow down the best option for you, please let me know:
+	•	Do you want a visual tool/dashboard or an API for coding?
+	•	Which specific sports or leagues (NFL, NBA, MLB, etc.) are you focusing on?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	•	  OddsJam      Sports Betting Odds API Feeds, Real-Time Sportsbook Data Sports Betting API for Market Makers, Traders & Syndicates * Real-Time Odds Feed from 100+ Sportsbooks. Get low-latency odds updat...      
+	•	  SportsDataIO      Odds API | Sports Betting API - SportsDataIO Betting Odds API SportsDataIO's Odds API is custom tailored to help the entire US sports betting ecosystem, including traders, aff...      
+	•	  Oddstrader      Live Odds and Betting Lines for Upcoming Games - OddsTrader Compare live odds across books to get the best lines on upcoming games. NFL, NBA, MLB, college and pro. Lock in the best bet every...     
+Show all
+
+
+
+API for coding a prediction model for MLB and NFL markets
+
+
+
+
+
+
+
+
+
+
+
+
+
+When coding a machine learning or predictive mathematical model for MLB and NFL markets, you need a data stack that supplies three types of data: historical data (for training and backtesting), real-time/live market data (for production deployment), and settlement data (to auto-grade your predictions). [1, 2]
+The top API options for building an MLB/NFL prediction model range from indie-developer-friendly to professional-grade platforms.
+
+1. Developer & Indie Favorites (Affordable Backtesting & Live Feeds)
+	•	OddsPapi: Built specifically for quants and developers. It normalizes player prop and main lines across a massive pool of over 350 bookmakers (including crypto, sharp books like Pinnacle, and retail books). Notably, it provides free historical player prop data—a rarity in the industry—which is perfect for backtesting custom Python models without burning through your budget. [1, 2]
+	•	The Odds API: The gold standard for developer onboarding. It features a robust, transparent free tier (500 monthly requests) and cleanly formatted JSON data.
+	◦	Main markets (Moneyline, Spreads, Totals) date back to mid-2020.
+	◦	Player props for NFL and MLB date back to May 2023.
+	◦	Note: Accessing historical endpoints requires a paid tier and uses higher credit allocations per request. [1, 2, 3, 4]
+	•	BALLDONTLIE API: A highly functional option for prediction-model builders. It provides a generous free tier and allows you to look up comprehensive player/team performance stats alongside 6+ years of historical odds data to evaluate over/under and spread predictions. [1]
+
+2. Specialized & Local Book Aggregators
+	•	SportsGameOdds: Excellent for highly granular MLB and NFL targeting. It tracks roughly 85 sportsbooks and has a very structured schema for baseball props (such as pitching strikeouts, first 3/5/7 inning markets, and standard player performance ladders). Their tier packages range from a delayed free tier up to $499/month for real-time tracking. [1, 2, 3]
+	•	TheRundown: Best if your model aims to evaluate traditional sportsbooks side-by-side with emerging prediction exchanges (e.g., Kalshi or Polymarket). They normalize standard sportsbooks and exchange contracts into a unified JSON hierarchy. [1]
+
+3. Quantitative & Enterprise-Grade (High Budget Required)
+	•	SportsDataIO: If you require deep, meticulously formatted archives, their Historical Odds Database tracks main markets and deep player props from 2020 onward via API or AWS S3 bucket delivery. [1]
+	•	OpticOdds: Tailored to high-frequency and commercial algorithmic execution, monitoring lines across roughly 200 sportsbooks with dedicated grading endpoints and rapid update frequencies. [1]
+
+
+
+Core Implementation Workflow for Python
+When structuring your codebase, python-based models typically implement this loop:
+
+                  ┌──────────────────────────────┐
+                  │ 1. Historical Data Retrieval │
+                  │    (OddsPapi / Odds API)     │
+                  └──────────────┬───────────────┘
+                                 ▼
+                  ┌──────────────────────────────┐
+                  │   2. Build Data Frame &      │
+                  │      Train Model Features    │
+                  └──────────────┬───────────────┘
+                                 ▼
+                  ┌──────────────────────────────┐
+                  │  3. Pull Live Morning Lines   │
+                  │   (Target: Expected Value)   │
+                  └──────────────┬───────────────┘
+                                 ▼
+                  ┌──────────────────────────────┐
+                  │ 4. Closing Line Value Check  │
+                  │    (Evaluate Model Edge)     │
+                  └──────────────────────────────┘
+	1	Backtest with Implied Probabilities: Rather than mapping standard American or decimal odds integers directly into your features, write a helper function to convert lines into Vig-Removed Implied Probabilities using Pinnacle or Circa as an anchor market.
+	2	Feature Engineering: Integrate your odds API with free on-field statistical APIs (like the official MLB Stats API or community Python wrappers for nfl-data-py). [1]
+	3	Closing Line Value (CLV) Metric: Ensure your code captures the market price precisely at game time. A healthy model should consistently yield positive CLV—meaning your model beats the final closing line a majority of the time, which dictates long-term statistical profitability. [1]
+
+Are you planning to build this model primarily in Python, or are you using a different language? If you'd like, I can provide a sample JSON data structure or a basic Python snippet demonstrating how to parse an odds payload.
+
+
+
+
+
+
+
+
+
+Assuming 2.4.7 is the current installed target, the architecture is finally split into much cleaner responsibilities. One important caveat: we have not yet seen the first live 2.4.7 Trust audit, so the K architecture below is implemented/tested but still needs that final live confirmation.
+
+1. Current architecture
+Layer	Resource	Responsibility
+Identity	MLB Official	Canonical gamePk, official starters, official batting orders
+Pitcher markets/data	PropsMadness	K, Outs, ER, Hits Allowed, Walks; recent history; season averages; pitcher grade; opponent rankings; current K price
+Player skill	Baseball Savant	Actual pitcher/hitter K%, Whiff%, Swing%, BB%; player IDs
+K model	Structured K v1.3	Builds an independent expected-K distribution
+K market comparison	PropsMadness	Current K line and price, used only after expected K is built
+ML model	Legacy PMV1Engine / offense-strength model	Current moneyline probability model; still needs structured migration
+ML market truth	OddsPapi	Supported game markets only; no player-prop requests
+Trust layer	MODEL v2	Identity, freshness, edge, EV, anomaly and confidence gates
+Persistence	Chrome storage + local MODEL service	Current boards, audits, immutable market snapshots, historical ledgers
+
+The canonical MLB identity is MLB gamePk. We reconcile PropsMadness pitchers to the official MLB starter before allowing the K model to use them.
+
+OddsPapi policy
+
+Your free plan is now explicitly treated as:
+
+250 requests/month
+no player props
+OddsPapi is therefore used for game markets only
+K-only work uses 0 OddsPapi requests
+
+A normal full game-market refresh is currently about 3 OddsPapi requests for the entire MLB slate: Pinnacle, Circa and FanDuel. A participant identity cache miss can occasionally add one more.
+
+2. Models currently being used
+Structured K model
+
+Current lineage:
+
+mlb-k-v0.8.2-independent-target-market-2026-09-06
+
+This is now the cleanest model in the project.
+
+Step A — workload
+
+PropsMadness supplies:
+
+Pitcher Outs
+Earned Runs
+Hits Allowed
+Walks
+
+Those are converted into expected workload and ultimately:
+
+Expected Batters Faced
+
+The model therefore doesn't simply ask, "What is this pitcher's K rate?" It first asks how many realistic strikeout opportunities he'll receive.
+
+Step B — pitcher skill
+
+Baseball Savant supplies the starter's:
+
+K%
+Whiff%
+Swing%
+BB%
+
+We derive:
+
+Contact% = 100 − Whiff%
+
+and
+
+SwStr% = Swing% × Whiff%
+
+Step C — actual opposing batting order
+
+MLB Official supplies the nine published hitters.
+
+Savant supplies those hitters' actual underlying K/Whiff/Swing-type skill data.
+
+The model calculates lineup-weighted opponent tendencies rather than treating every team as a generic season average.
+
+PropsMadness opponent ranks such as:
+
+K rank
+Whiff rank
+Contact rank
+Chase rank
+BB rank
+Pitches/PA rank
+xwOBA rank
+HardHit rank
+
+remain useful context, but we deliberately do not turn ordinal ranks like #7 K% into made-up percentages.
+
+Step D — structural expected K
+
+Conceptually:
+
+Expected BF × matchup-adjusted K probability = structural expected K
+
+The matchup probability combines the pitcher's underlying strikeout/whiff/contact skill with the actual opposing lineup.
+
+Step E — independent blend
+
+The current blend is:
+
+Component	Weight
+Structural K	70.51%
+Recent K performance	19.23%
+Season K/start	10.26%
+Target K market	0.00%
+
+That last line is crucial.
+
+The sportsbook's K line and price cannot move expected K.
+
+Step F — distribution
+
+Expected K is converted into an overdispersed Poisson distribution.
+
+So instead of merely saying:
+
+Expected K = 5.8
+
+we can calculate:
+
+P(Over 4.5)
+P(Over 5.5)
+P(Over 6.5)
+fair price
+EV at a listed sportsbook price
+
+without rebuilding expected K.
+
+Step G — market comparison
+
+Only after the distribution exists does PropsMadness supply:
+
+current K line
+Over odds
+Under odds
+sportsbook
+timestamp
+
+If both sides exist, MODEL removes the vig and calculates:
+
+Model probability − local no-vig probability = edge
+
+It also calculates EV against the actual listed price.
+
+If only one side exists, we can calculate EV on that side, but we do not invent a no-vig market probability.
+
+Current K validation status
+
+PROSPECTIVE_INPUT_MIGRATION
+
+Therefore even an otherwise excellent K edge is currently capped at WATCH until we accumulate enough forward evidence to validate this new input architecture.
+
+3. Current moneyline model
+
+Current lineage:
+
+mlb-moneyline-v0.8.0-offense-strength-2026-09-06
+
+This contains the offense-strength work we added.
+
+The offense component uses PA-shrunk/weighted:
+
+wRC+
+ISO
+xSLG
+xwOBA
+BB%
+K%
+
+with additional top-of-order weighting.
+
+It produces a team offense factor roughly bounded between:
+
+0.86 and 1.14
+
+That offense factor affects both starter and bullpen run expectation.
+
+We also reduced the older matchup-offense adjustment to 35% of its former influence so the dedicated offense-strength term didn't double-count the same information.
+
+Important limitation
+
+This model has not yet completed the migration that K has completed.
+
+The current Trust code explicitly treats moneyline as quarantined behind the older:
+
+PMV1Engine.getMlSlate()
+→ PMV1Engine.projectGame()
+
+architecture.
+
+So:
+
+K = new structured architecture
+
+but:
+
+Moneyline = still partially dependent on the legacy board/runtime
+
+This is now probably the largest architectural issue remaining.
+
+4. Trust Layer
+
+Trust states are:
+
+VERIFIED — all required integrity/market/model gates pass and the edge is actionable.
+
+WATCH — potentially useful but one or more confidence limitations remain.
+
+PASS — model worked, but edge/EV isn't sufficient.
+
+ANOMALY — model and market disagree by an unusually large amount and should be investigated instead of blindly bet.
+
+BLOCKED — required identity/data/freshness/market information failed.
+
+Moneyline gates
+
+Current important thresholds include approximately:
+
+minimum edge: 2.5 percentage points
+minimum EV: 2%
+anomaly disagreement: 12 percentage points
+market aging/watch: ~180 seconds
+market hard block: ~300 seconds
+ML input hard freshness: ~90 minutes
+ML input watch: ~45 minutes
+maximum model capture skew: ~30 minutes
+K gates
+
+K is stricter about synchronized prop inputs:
+
+minimum edge: 2.5 pp
+minimum EV: 2%
+anomaly: 12 pp
+PropsMadness market hard stale: ~300 sec
+structured K package hard freshness: ~30 min
+maximum K-source skew: ~10 min
+unresolved opener/workload role can block
+single-source PropsMadness market reference prevents VERIFIED
+prospective model lineage also prevents VERIFIED
+5. Every current production button
+
+There are 7 intentional production buttons now.
+
+Data Pipeline + K Engine
+1. SYNC + BUILD K BOARD
+
+This is the main K-data button.
+
+It simultaneously:
+
+queries the 5 PropsMadness pitcher markets
+gets PropsMadness matches
+gets opponent rankings
+gets MLB's official schedule/starters
+gets official batting orders
+uses MLB boxscore fallback if necessary
+gets current + previous-season Savant pitcher data
+gets current + previous-season Savant batter data
+reconciles official starters
+builds the Structured K board
+stores the current snapshot and audit
+
+It uses zero OddsPapi requests.
+
+Normal external calls are roughly 12 across PropsMadness/MLB/Savant, plus an MLB boxscore call for each lineup that needs fallback. Those do not consume your OddsPapi quota.
+
+2. COPY K BOARD
+
+Copies only the Structured K portion.
+
+This is what you paste to me when we want to inspect:
+
+expected K
+matchup K%
+expected BF
+lineup metrics
+Savant coverage
+local K line
+READY/WATCH/BLOCKED status
+reasons
+
+It gives a successful-copy confirmation and character count.
+
+3. COPY DATA AUDIT
+
+Copies the much larger pipeline diagnostic.
+
+This includes:
+
+PropsMadness endpoint health
+starter reconciliation
+MLB lineup status
+Savant coverage
+K engine audit
+memory/data sizes
+source counts
+
+Use this when something upstream appears wrong.
+
+4. CLEAR CURRENT CACHE
+
+Deletes only the current structured working caches:
+
+current PropsMadness snapshot
+current official-starter board
+current K projection board
+current pipeline audit
+
+It does not delete historical prediction ledgers or historical snapshots.
+
+Normally you should not need this.
+
+Trust Layer buttons
+5. REFRESH K EDGES · 0 API
+
+This is the button you should normally use after building the K board.
+
+It:
+
+reads the already-built Structured K board
+evaluates the independent distribution at the current PropsMadness K line
+devigs a two-sided K price
+calculates edge
+calculates fair price
+calculates EV
+applies Trust gates
+
+OddsPapi requests: 0.
+
+It does not refresh PropsMadness data. If the K board is old, run SYNC + BUILD K BOARD first.
+
+6. REFRESH ML + ALL · ~3 API
+
+This is the quota-consuming button.
+
+It:
+
+refreshes OddsPapi supported MLB game markets
+normally makes about 3 full-slate OddsPapi requests
+rebuilds moneyline Trust comparisons
+also rebuilds K Trust results from the stored K board
+
+It does not use OddsPapi player props.
+
+Important: this button currently refreshes ML market truth, but our moneyline model itself is still on the older PMV1Engine architecture.
+
+7. COPY TRUST AUDIT
+
+Copies the final Trust output showing:
+
+service version
+refresh mode
+OddsPapi policy/request usage
+model probability
+market probability
+edge
+fair odds
+best available odds
+EV
+Trust state
+reasons
+
+Successful copy now visibly shows:
+
+COPIED ✓
+
+plus a persistent confirmation with character count/time.
+
+The displayed MLB ACTIVE, NFL PLANNED, and CFB PLANNED badges are not active buttons. NFL and CFB are not implemented yet.
+
+The old Hydrate/Batch Workflow buttons still have some code remnants in the monolithic legacy runtime, but they are hidden and their clicks are intercepted. They are not part of the production workflow anymore.
+
+6. Problems still to fix
+
+I'd prioritize them like this.
+
+P0 — must address next
+1. Live-verify 2.4.7
+
+We have unit/regression/installer tests, but I have not yet seen your first real 2.4.7 K Trust audit.
+
+We need to establish that live production really gives:
+
+Refresh mode: K_ONLY_ZERO_ODDSPAPI
+
+OddsPapi requests: 0
+
+and actual PropsMadness K:
+
+model probability
+no-vig probability
+edge
+fair price
+EV
+
+This should be our next immediate test.
+
+2. Migrate the moneyline model to the structured architecture
+
+This is the biggest remaining architectural debt.
+
+Moneyline still relies on the legacy PMV1Engine live slate.
+
+We need:
+
+PropsMadness structured data
++ MLB gamePk/starters/lineups
++ Savant offense/pitcher inputs
++ bullpen inputs
+          ↓
+STRUCTURED ML BOARD
+          ↓
+independent ML probability
+          ↓
+OddsPapi game market
+          ↓
+Trust
+
+Once that has parity, PMV1Engine should no longer be the live source.
+
+3. Physically remove the old Hydrate/Batch monolith
+
+It's quarantined and hidden, but portions still physically exist in popup.js.
+
+That violates the end-state cleanliness standard we established.
+
+We intentionally have not deleted it yet because the moneyline/offense code is still tangled with it.
+
+Correct order:
+
+structured ML replacement → verify parity → delete legacy scanner/parsers/workflow → clean popup.js
+
+P1 — model validation
+4. Validate the new K model statistically
+
+The K model works structurally, but its new lineage is still prospective.
+
+We need automated recording of:
+
+projected mean K
+P(Over)/P(Under)
+market line
+opening/current/closing price
+actual K
+CLV
+Brier score
+log loss
+calibration
+ROI
+performance by probability bucket
+performance by pitcher type/workload
+model version
+
+Only then should we promote it from PROSPECTIVE_INPUT_MIGRATION to VALIDATED.
+
+5. Empirically calibrate K dispersion and blend weights
+
+The current 70.5 / 19.2 / 10.3 blend is a principled continuation of the previous model after removing target-market influence.
+
+But it is not yet empirically optimized against a large historical sample.
+
+Likewise, the overdispersed Poisson needs empirical residual calibration.
+
+Those aren't bugs, but they are the next model-science improvements.
+
+6. Better opener/bulk-pitcher handling
+
+Guys like Bryan Hudson expose this problem.
+
+Standard starters have good:
+
+Outs
+HA
+BB
+ER
+K
+
+markets.
+
+Openers/bulk situations often don't.
+
+Instead of either guessing or blocking forever, we need an explicit role model:
+
+STARTER / OPENER / BULK / UNKNOWN
+
+with role-specific workload assumptions and confidence rules.
+
+P1 — market-quality limitations
+7. PropsMadness K market reference is still only one local source
+
+This is why K cannot currently become VERIFIED from market quality alone.
+
+We should investigate whether the underlying PropsMadness response contains multiple book quotes, even though the normalized board currently exposes one representative sportsbook.
+
+If the raw API contains several books, we should build:
+
+multi-book PropsMadness K consensus
+
+rather than throwing that information away.
+
+That could materially improve the edge layer without spending any OddsPapi requests.
+
+8. One-sided markets
+
+When PropsMadness supplies something such as:
+
+Over -130
+Under —
+
+we correctly calculate only EV for the available side.
+
+But market edge/no-vig remains unavailable.
+
+That's correct behavior, but still an information limitation.
+
+P1 — moneyline validation
+9. Moneyline model needs the same rigorous evaluation framework
+
+The previous ML results we've examined are useful, but not enough.
+
+We need automated:
+
+Brier
+log loss
+calibration curve
+ROI
+CLV
+edge-bucket performance
+favorite/underdog performance
+offense-factor performance
+bullpen contribution
+model-version comparisons
+
+This will tell us which coefficients are actually contributing signal.
+
+P2 — operational improvements
+10. The system is still too manual
+
+You currently have to press buttons.
+
+The eventual workflow should run largely unattended:
+
+morning snapshot
+        ↓
+starter confirmation
+        ↓
+lineups begin posting
+        ↓
+automatic structured refresh
+        ↓
+final pregame refresh
+        ↓
+edge board saved
+
+That is especially important because the best K board usually can't be finalized until official lineups post.
+
+11. Add a hard OddsPapi quota ledger
+
+We know the intended request cost now, but I'd like the service itself to maintain:
+
+Requests used this month / 250
+
+and prevent accidental excessive refreshes.
+
+Something like:
+
+OddsPapi: 73 / 250 used · 177 remaining
+
+before you press a quota-consuming button.
+
+12. Pre-lineup behavior
+
+Currently, no official 9-man lineup means K is BLOCKED.
+
+For our high-confidence final board, I think that's correct.
+
+But we could eventually have a clearly separated:
+
+PRELIMINARY / NON-ACTIONABLE
+
+projection earlier in the day using likely lineup/team aggregate information, then replace it automatically when official lineups arrive.
+
+It must never masquerade as the final model.
+
+13. UI cleanup
+
+The static Control Plane itself is now stable, but after moneyline migration we should completely remove the retired Batch Workflow markup and make the popup primarily:
+
+DATA
+K MODEL
+ML MODEL
+TRUST
+HISTORY
+
+rather than hiding old architecture underneath the new one.
+
+P3 — future scope
+14. NFL and CFB aren't implemented
+
+They're currently just planned labels.
+
+I would not touch those until:
+
+MLB K + MLB ML + validation + unattended workflow
+
+are stable.
+
+Where I think we are
+
+I'd describe the project today as:
+
+Structured K: ~85–90% architecturally complete, pending live 2.4.7 verification and calibration.
+
+Moneyline: model exists and has useful offense work, but only ~60–70% migrated to the architecture we actually want.
+
+Trust/market layer: strong for MLB K conceptually; good foundation for ML, but needs the structured ML consumer.
+
+Legacy cleanup: partially complete; final deletion is blocked mainly by moneyline/offense migration.
+
+The clean next sequence is therefore:
+
+live-test 2.4.7 → finish structured moneyline migration → delete legacy runtime → build forward-validation/evaluation layer → automate the daily workflow.
+
+
+
+
+Normal daily workflow
+Open PropsMadness and make sure the MLB slate / pitcher props have loaded normally.
+Open MODEL and run:
+
+SYNC + BUILD K + ML
+
+This is the main build step. It gathers the structured sources and creates:
+
+K projections
+Moneyline projections
+official starter/lineup status
+Savant pitcher/hitter data
+FanGraphs offense
+bullpen data
+park factors
+
+This step uses 0 OddsPapi requests.
+
+Look at the board and see which games/pitchers are:
+READY
+WATCH
+VERIFIED
+BLOCKED
+ANOMALY
+
+A BLOCKED game is intentionally not a prediction yet. For example, if the starting pitcher isn't confirmed or the official lineup isn't available, leave it alone and rebuild later.
+
+For pitcher Ks
+
+You can run/rebuild K throughout the day without worrying about your OddsPapi quota.
+
+After:
+
+SYNC + BUILD K + ML
+
+look at the K projections.
+
+The important K information is:
+
+Expected K → probability over/under → PropsMadness current line/price → edge → EV → Trust status
+
+Remember, the sportsbook K line does not influence Expected K. It only gets compared afterward.
+
+For something like Noah Cameron O3.5, that's exactly the workflow we're using.
+
+For moneylines
+
+Don't spend OddsPapi requests every time you rebuild.
+
+First run:
+
+SYNC + BUILD K + ML
+
+Then wait until the games you're interested in actually show READY.
+
+Once you have several READY games and want current prices, run:
+
+REFRESH ML + ALL · ~3 API
+
+That gets, in roughly three total requests:
+
+Pinnacle
+Circa
+FanDuel
+
+for the remaining MLB slate.
+
+Then MODEL compares the already-created probabilities against the market.
+
+You should see results such as:
+
+VERIFIED
+Model 59.0% → sharp 53.7% → +5.3pp edge → positive EV
+
+or:
+
+ANOMALY
+Model 66.3% → sharp 50.7% → disagreement too large → don't automatically bet it
+
+What I would do today
+
+Since you've already used a fresh market refresh, do not refresh OddsPapi again right now.
+
+For the rest of today's games:
+
+As later lineups/starters become official:
+
+SYNC + BUILD K + ML
+
+That costs 0 OddsPapi.
+
+Check whether WSH–SD, STL–SF, CIN–LAD, TOR–OAK, etc. move from BLOCKED to READY.
+
+Then, closer to the late-game window, when several of them are READY:
+
+one REFRESH ML + ALL · ~3 API
+
+Then:
+
+COPY TRUST AUDIT
+
+and send it to me if you want me to break down the slate.
+
+The simple rule
+
+Think of MODEL 2.7.0 as:
+
+BUILD as often as needed → REFRESH MARKET sparingly → BET only after Trust.
+
+So your buttons effectively become:
+
+Throughout the day:
+SYNC + BUILD K + ML — 0 OddsPapi
+
+When you actually need updated ML prices:
+REFRESH ML + ALL — ~3 OddsPapi
+
+For diagnostics/results:
+COPY TRUST AUDIT
+
+
+
+
+
+
+
+
+Where MODEL is today
+
+Current production stack:
+
+Component	Current state
+Chrome extension	MODEL 2.8.0 — Slate Radar
+Local market service	2.3.5
+K engine	1.3
+K lineage	mlb-k-v0.8.2-independent-target-market-2026-09-06
+ML engine	1.3
+ML lineage	mlb-moneyline-v0.8.0-offense-strength-2026-09-06
+Early slate discovery	Slate Radar 1.0
+OddsPapi game-market join	Live verified
+Player-prop OddsPapi usage	Disabled / 0 requests
+Legacy PMV1/Hydrate/Batch runtime	Physically removed
+Final lineup gate	Fail closed
+Historical calibration	Still prospective / needs accumulation
+
+We have now live-proven:
+
+Pinnacle + Circa + FanDuel → bookmaker-specific fixture IDs → MLB gamePk → one canonical game → sharp consensus → Structured ML comparison → Trust.
+
+That was a major milestone.
+
+And the current K model is also doing what we designed it to do. For example, the Pivetta production row used an official 9-man lineup, workload, Savant pitcher/lineup skill, recent and season information, while explicitly keeping the target K market at zero weight in expected K.
+
+
+The architecture
+
+Conceptually, MODEL now looks like this:
+
+                         ┌─────────────────────┐
+                         │      MLB MODEL      │
+                         │   Chrome Extension  │
+                         └──────────┬──────────┘
+                                    │
+                           SYNC + BUILD K + ML
+                                    │
+        ┌───────────────────────────┴───────────────────────────┐
+        │                                                       │
+        ▼                                                       ▼
+
+ DATA / IDENTITY LAYER                                  MARKET LAYER
+ ───────────────────                                    ───────────────
+
+ MLB Official                                            OddsPapi
+ • gamePk                                                • Pinnacle
+ • schedule                                              • Circa
+ • starters                                              • FanDuel
+ • official batting orders
+        │                                                       │
+ Baseball Savant                                               │
+ • pitcher K%                                                   │
+ • Whiff%                                                       │
+ • Swing%                                                       │
+ • Contact%                                                     │
+ • SwStr%                                                       │
+ • hitter skill                                                 │
+ • park factors                                                 │
+        │                                                       │
+ FanGraphs                                                      │
+ • wRC+                                                         │
+ • offense strength                                             │
+        │                                                       │
+ MLB StatsAPI                                                   │
+ • bullpen roster                                               │
+ • bullpen season data                                          │
+ • recent bullpen usage                                         │
+        │                                                       │
+ PropsMadness                                                   │
+ • K                                                            │
+ • Outs                                                         │
+ • ER                                                           │
+ • Hits Allowed                                                 │
+ • Walks                                                        │
+ • history                                                      │
+ • local K price                                                │
+        │                                                       │
+        └───────────────────────┐                  ┌─────────────┘
+                                ▼                  ▼
+
+                       STRUCTURED DATA BOARDS
+                       ──────────────────────
+
+                    ┌─────────────────────────┐
+                    │  Structured K Package   │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                         K MODEL v0.8.2
+                                 │
+                        Expected K distribution
+                                 │
+                    target K line weight = ZERO
+                                 │
+                                 ▼
+                       K PRODUCTION BOARD
+                                 │
+                                 │ current PM line/price
+                                 ▼
+                           K TRUST / EV
+
+
+                    ┌─────────────────────────┐
+                    │ Structured ML Package   │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                        ML MODEL v0.8.0
+                                 │
+                     Independent win probability
+                                 │
+                                 ▼
+                       ML PRODUCTION BOARD
+                                 │
+                                 │ Pinnacle/Circa/FanDuel
+                                 ▼
+                            ML TRUST
+                                 │
+                       VERIFIED / PASS /
+                       BLOCKED / ANOMALY
+
+
+
+
+And beside the production pipeline we now have:
+
+                     SLATE RADAR
+                     ───────────
+
+            probable/verified starters
+                     +
+             active roster proxies
+                     +
+             pitcher / offense skill
+                     +
+              workload information
+                     │
+                     ▼
+              PRELIMINARY CANDIDATES
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+       ML RADAR              K RADAR
+          │                     │
+          ▼                     ▼
+   "Watch TOR ML"        "Watch Cease O7.5"
+          │                     │
+          └──────────┬──────────┘
+                     ▼
+                lineup posts
+                     ▼
+              PRODUCTION MODEL
+                     ▼
+                    TRUST
+
+Radar can never directly become a bet.
+
+That separation is one of the best architectural decisions we've made.
+
+
+
+
+
+
+
+
+We are continuing my **MLB MODEL** Chrome-extension project. Treat everything below as the authoritative current project checkpoint unless I provide newer logs/files.
+
+## CURRENT DATE / PROJECT STATE
+
+Current checkpoint: **September 8, 2026**
+
+Current live release:
+
+* **MODEL 2.8.2 — Opportunity Integrity**
+* Local market service: **2.3.5**
+* MLB K engine: **1.4**
+* K lineage: `mlb-k-v0.8.3-sample-shrinkage-workload-2026-09-07`
+* MLB Moneyline engine: **1.3**
+* ML lineage: `mlb-moneyline-v0.8.0-offense-strength-2026-09-06`
+* Slate Radar: **1.2**
+* Legacy PMV1Engine/Hydrate/Batch runtime: **PHYSICALLY REMOVED**
+* NFL branch target: **MODEL 2.9.0 Multi-Sport NFL Alpha**
+
+I also have a PDF called:
+
+`MODEL_2.8.2_User_Manual_and_Project_Checkpoint.pdf`
+
+It contains the complete architecture, formulas, workflow, constituent providers, local-service explanation, technical functions, philosophy, troubleshooting, and project checkpoint. If I upload it, treat **Section 20** as an authoritative recovery checkpoint.
+
+---
+
+# CANONICAL PROJECT PATH
+
+Canonical development root:
+
+`/Users/abbeyfelix/Developer/MODEL`
+
+Chrome must load ONLY:
+
+`/Users/abbeyfelix/Developer/MODEL/apps/chrome-extension/src`
+
+Do not instruct me to load an old release/download directory into Chrome.
+
+Current repository architecture:
+
+* `apps/chrome-extension/src/`
+* `services/market-service/src/`
+* `packages/providers/propsmadness/`
+* `packages/providers/mlb_official/`
+* `packages/providers/baseball_savant/`
+* `packages/providers/oddspapi/`
+* `packages/models/mlb/k/`
+* `packages/models/mlb/moneyline/`
+* `packages/core/`
+* `tests/`
+* `releases/`
+* `archive/migrations/`
+
+The managed localhost service executable is also deployed under:
+
+`~/Library/Application Support/MODEL/service/model_service.py`
+
+We previously discovered that updating only the canonical source file does NOT necessarily update the running service. Installers that modify the service must synchronize the Application Support deployment and authenticate the running MODEL service before restarting it.
+
+---
+
+# RELEASE / DEVELOPMENT RULES
+
+For releases:
+
+* ZIP
+* SHA256 file
+* release notes
+* test audit
+* guarded installer
+* hardcoded canonical root by default
+* preserve localhost service token
+* preserve credential boundaries
+* archive overwritten/removed files under `archive/migrations`
+* rollback on installer validation failure
+* installer/tests must make **0 OddsPapi requests**
+* never declare live verification from local tests alone
+* distinguish IMPLEMENTED / TESTED / LIVE VERIFIED
+
+Do not prematurely delete rollback code unless the replacement has been live verified.
+
+The legacy MLB runtime HAS now been live verified as unnecessary and was removed in MODEL 2.7.0. Do not bring PMV1Engine, Hydrate, Batch scanners, sidebar rescues, profile scanners, etc. back into the active runtime.
+
+---
+
+# MODEL PHILOSOPHY
+
+The core philosophy is:
+
+**BASEBALL DATA → INDEPENDENT PROBABILITY → MARKET COMPARISON → TRUST**
+
+Sportsbook prices must NOT manufacture the model prediction.
+
+The model should determine fair value independently and only afterward ask:
+
+“What price is the market offering?”
+
+This separation is non-negotiable.
+
+Fail closed when trustworthy inputs are unavailable.
+
+Large apparent edges are not automatically good bets. They may represent:
+
+* bad inputs
+* identity errors
+* workload uncertainty
+* small-sample problems
+* market disagreement
+* genuine model misspecification
+
+Trust exists to distinguish those cases.
+
+---
+
+# MLB K MODEL
+
+Current:
+
+`mlb-k-v0.8.3-sample-shrinkage-workload-2026-09-07`
+
+Engine **1.4**
+
+Target K sportsbook line/price has:
+
+**ZERO WEIGHT IN EXPECTED K**
+
+The model uses structured inputs including:
+
+PropsMadness:
+
+* Strikeouts
+* Pitcher Outs
+* Earned Runs
+* Hits Allowed
+* Pitcher Walks
+* histories
+* season/recent workload
+* opponent ordinal rankings
+* book-level K offers
+
+MLB Official:
+
+* gamePk
+* team/event identity
+* starters
+* official nine-man batting orders
+
+Baseball Savant:
+
+* pitcher K%
+* Whiff%
+* Swing%
+* Contact%
+* SwStr%
+* hitter K/Whiff/contact skill
+
+K model conceptually uses:
+
+pitcher skill
+
+* opponent lineup skill
+* expected batters faced
+* workload
+* recent K
+* season K
+* structured workload/supporting pitcher markets
+  → expected K
+  → probability distribution
+  → P(Over/Under)
+
+Recent/season/structural blend historically had structural information dominate.
+
+### K v0.8.3 HARDENING
+
+Pivetta exposed a major issue on Sep 7:
+
+* MODEL projected Pivetta xK ~6.22
+* Over 4.5 ~73.6%
+* confidence High
+* he finished with only 2 Ks
+* he had only ~66 current Savant BF and was returning from a long IL absence
+
+This led to v0.8.3.
+
+Small current-season pitcher samples are now shrunk toward:
+
+1. credible prior-season skill when available
+2. otherwise a league prior
+
+Shrink:
+
+* K%
+* Whiff%
+* SwStr%
+* Contact%
+
+Confidence now considers effective sample size and workload uncertainty.
+
+Workload states include concepts such as:
+
+* NORMAL
+* LIMITED
+* OPENER_LIKE
+* UNANCHORED
+
+A Pivetta-like 66-BF + limited-workload case can no longer remain clean `High` confidence.
+
+The raw mathematical signal may still exist, but Trust can block it.
+
+---
+
+# MLB MONEYLINE MODEL
+
+Current:
+
+`mlb-moneyline-v0.8.0-offense-strength-2026-09-06`
+
+Engine **1.3**
+
+DO NOT refit these coefficients casually. We intentionally froze the math while improving the data architecture.
+
+Offensive composite weights:
+
+* wRC+ = 0.50
+* ISO = 0.18
+* xSLG = 0.12
+* xwOBA = 0.08
+* BB% = 0.07
+* K% = -0.05
+
+Composite produces offense adjustment.
+
+Other components:
+
+* starter baseline R9 ~4.35
+* starter adjustment
+* bullpen quality
+* bullpen availability/recent usage
+* park run factor
+* home-field offense adjustment
+* expected runs
+* logistic win probability
+
+Final probability is independent of OddsPapi.
+
+---
+
+# MLB STRUCTURED DATA ARCHITECTURE
+
+MLB Official:
+identity authority:
+
+* gamePk
+* teams
+* game time
+* starter identity
+* official batting orders
+
+Baseball Savant:
+underlying pitcher/hitter skill and park factors
+
+FanGraphs:
+exact MLBAM-ID wRC+
+
+MLB StatsAPI:
+bullpen roster/stats and prior-day usage
+
+PropsMadness:
+pitcher workload/context plus K market prices
+
+OddsPapi:
+GAME MARKET TRUTH ONLY, downstream after prediction
+
+---
+
+# FANGRAPHS / BULLPEN / PARK RULES
+
+FanGraphs:
+
+* exact MLBAM ID join
+* real wRC+
+* null remains blocker where required
+* do not invent replacements
+
+Bullpen:
+MLB StatsAPI active roster + team-filtered season pitching + prior-day usage.
+
+Starter excluded.
+
+Need validated relief coverage and known usage.
+
+Fail closed when bullpen package does not validate.
+
+Park factors:
+Baseball Savant run index.
+
+Prefer longest available recent rolling window:
+3y → 2y → 1y only when longer unavailable.
+
+Do not replace a valid longer window with shorter.
+
+Model park clamp:
+0.85–1.15
+
+Sutter Health Park previously live-verified with 2y run index 121, clamped to 1.15.
+
+Do not hardcode that provider result.
+
+---
+
+# WORKLOAD INTEGRITY
+
+Burns exposed another issue.
+
+Previously ML could use season-average Pitcher Outs as production workload even when the current game had special workload management.
+
+That is now fixed.
+
+Production ML requires a trustworthy **current-game workload anchor**.
+
+Season-average workload can still be used by:
+
+* Slate Radar
+* diagnostics
+
+but should NOT silently qualify a production ML prediction when current workload is uncertain.
+
+Special contexts we want increasingly represented:
+
+* returning from IL
+* pitch limit
+* piggyback
+* opener
+* September workload management
+* rehab return
+* workload unknown
+
+If credible restriction exists but exact magnitude is unknown, prefer:
+`WORKLOAD_UNCERTAIN / BLOCKED`
+rather than inventing precision.
+
+---
+
+# PROPSMADNESS K MARKET TRUTH
+
+Important new discovery:
+
+PropsMadness exposes book-level player-prop prices, including **Pinnacle and Circa**.
+
+Our existing capture was already collecting multiple sportsbook offers; older code discarded most of them when selecting one representative quote.
+
+2.8.1+ preserves book-level K offers.
+
+K market architecture now aims for:
+
+MODEL xK
+→ model probability
+→ Pinnacle/Circa same-line sharp prop reference
+→ FanDuel/local executable price
+→ EV / Trust
+
+Expected K remains completely independent of these prices.
+
+Pinnacle/Circa can form a sharp consensus ONLY when both quote the **same K line**.
+
+Do NOT average probabilities across different lines.
+
+Example:
+Pinnacle 5.5 + Circa 5.5 = valid sharp reference
+
+Pinnacle 5.5 + Circa 6.5 = no fabricated consensus
+
+OddsPapi player-prop requests remain **ZERO**.
+
+---
+
+# ODDSPAPI POLICY
+
+Account:
+
+* Free plan
+* 250 requests/month
+* player props NOT INCLUDED
+
+NON-NEGOTIABLE:
+**Never design or probe OddsPapi player props.**
+
+Reserve OddsPapi for supported game markets.
+
+Current MLB full-market books:
+
+* Pinnacle
+* Circa (`circasports`)
+* FanDuel
+
+Normal full game-market refresh:
+~3 requests total
+
+K-only refresh:
+0 OddsPapi
+
+The working OddsPapi query contract uses exactly one bookmaker per tournament request.
+
+Historical bug:
+service used plural `bookmakers=` instead of singular `bookmaker=`.
+
+Fixed in service 2.3.4.
+
+Then discovered bookmaker-specific OddsPapi fixture IDs could differ.
+
+Fixed in service **2.3.5**:
+each book fixture is independently joined to MLB Official and then merged under canonical **MLB gamePk**.
+
+Live verified:
+15 games could produce:
+
+* 15 sharp-ready rows
+* 15 two-sharp consensuses
+* 15 multi-book merged rows
+* 15 canonical games
+
+Canonical market identity is MLB gamePk, not a universal OddsPapi fixture ID.
+
+---
+
+# LOCAL MARKET SERVICE
+
+Current service:
+**MODEL Local Market Service 2.3.5**
+
+It exists because the Chrome extension should not directly own external API credentials.
+
+Credential boundary:
+
+* OddsPapi key stored in macOS Keychain
+* extension communicates with localhost using a per-install private token
+
+Service handles:
+
+* OddsPapi game-market requests
+* canonical event identity joins
+* snapshots
+* request logs
+* per-book coverage telemetry
+* market audit data
+
+Running service may come from:
+
+`~/Library/Application Support/MODEL/service/model_service.py`
+
+not the canonical source file directly.
+
+Always verify live service version through authenticated health before spending market quota after upgrades.
+
+---
+
+# SLATE RADAR
+
+Introduced in MODEL 2.8.0.
+
+Purpose:
+surface promising games/props HOURS BEFORE official lineups are complete.
+
+It solves the problem where production predictions otherwise arrive only shortly before game time.
+
+Radar storage is separate from production.
+
+Radar is:
+
+**PRELIMINARY ONLY — ACTIONABLE NO**
+
+Radar can use active-roster / pre-lineup proxies.
+
+ML Radar:
+
+* probable/verified starters
+* active-roster offense proxy
+* starter skill
+* bullpen
+* park
+* other stable inputs
+
+K Radar:
+
+* starter skill
+* workload
+* opponent active-roster skill
+* current PropsMadness market when available
+
+Radar states:
+
+* RADAR
+* FINALIZING
+* READY_FOR_MARKET
+* READY_FOR_K_TRUST
+* WAITING_STARTER
+
+A game with unresolved starter identity must NOT receive a manufactured preliminary probability.
+
+Radar must never feed production Trust directly.
+
+---
+
+# MODEL 2.8.2 — OPPORTUNITY INTEGRITY
+
+Current live release.
+
+Decision hierarchy:
+
+**VERIFIED
+
+> WATCH (NOT VERIFIED)
+> preliminary Radar
+> RESEARCH ANOMALY
+> PASS/BLOCKED**
+
+Important rules:
+
+ANOMALY is not a “better bet” because EV is larger.
+
+It is:
+**RESEARCH — ANOMALY**
+
+WATCH explicitly means:
+**NOT VERIFIED**
+
+Confidence affects ranking.
+
+Risk penalties include:
+
+* Medium/Low model confidence
+* stale/aging market
+* single sharp book
+* single local reference
+* one-sided market
+* book disagreement
+* prospective calibration
+* workload uncertainty
+
+Final PASS/BLOCKED suppresses prior Radar hype.
+
+Missing K markets must remain NULL.
+
+We fixed a JavaScript bug where null could become numeric zero.
+
+Bad old display:
+`0.0% / EV 0`
+
+Correct:
+`NO MARKET / EV unavailable`
+
+---
+
+# CURRENT LIVE-VERIFIED 2.8.2 BEHAVIOR
+
+Latest Trust Audit on Sep 8 showed:
+
+Service 2.3.5
+
+Full ML refresh:
+
+* 3 OddsPapi requests
+* Pinnacle OK
+* Circa OK
+* FanDuel OK
+* player-prop OddsPapi = 0
+* 15 sharp-ready rows
+* 15 2-sharp consensus
+* 15 multi-book merged
+* 15 canonical games
+
+Examples:
+
+MIN @ DET ML:
+
+* DET model 58.3%
+* market 54.6%
+* edge +3.7pp
+* EV +5.3%
+* VERIFIED
+
+Kremer O4.5:
+
+* model ~57.8%
+* WATCH (NOT VERIFIED)
+
+Hayden Wesneski O3.5:
+
+* ~61%
+* Medium confidence
+* WATCH
+
+Manaea U5.5:
+
+* ~81.9% vs market ~58%
+* RESEARCH ANOMALY
+
+Detmers O5.5:
+
+* ~66.4% vs market ~53%
+* RESEARCH ANOMALY
+
+Drew Anderson Radar had a ridiculous ~84% Under signal, but production blocked him because:
+`starter workload/role unresolved`
+
+This was viewed as a successful live validation of fail-closed hardening.
+
+LAA @ BOS ML showed:
+
+* LAA model ~55.4%
+* market ~43.5%
+* +11.9pp
+* VERIFIED
+
+We discussed adding an optional future “large-edge review band” around 8–12pp, but **DO NOT change ML coefficients** for this.
+
+---
+
+# DAILY MLB WORKFLOW
+
+The modern workflow is intentionally simple.
+
+Early / throughout day:
+
+**SYNC + BUILD K + ML**
+
+Cost:
+0 OddsPapi
+
+This builds:
+
+* structured K
+* structured ML
+* Slate Radar
+* lineup/starter states
+
+Use Radar to identify markets worth watching.
+
+As lineups post:
+
+Run:
+**SYNC + BUILD K + ML**
+
+again.
+
+Still:
+0 OddsPapi
+
+For K:
+**REFRESH K EDGES**
+0 OddsPapi
+
+For full Moneyline market comparison:
+**REFRESH ML + ALL**
+~3 OddsPapi requests
+
+Then:
+**COPY TRUST AUDIT**
+or
+**COPY OPPORTUNITY RADAR**
+
+Do not repeatedly refresh OddsPapi unnecessarily.
+
+No old Starter Scan/Hydrate/Batch rescue workflow should be used.
+
+---
+
+# TRUST PHILOSOPHY
+
+Statuses conceptually mean:
+
+VERIFIED:
+production inputs complete, market comparison valid, discrepancy acceptable, useful edge
+
+WATCH:
+interesting but not fully verified/calibrated
+
+PASS:
+model valid but insufficient edge/EV
+
+RESEARCH ANOMALY:
+model-market disagreement too large; investigate rather than blindly bet
+
+BLOCKED:
+required trustworthy input unavailable
+
+Trust should protect us from false confidence.
+
+---
+
+# IMPORTANT HISTORICAL LESSONS
+
+1. Pivetta:
+   tiny Savant sample + injury return/workload uncertainty produced false High confidence.
+   Result: 2 Ks vs projected ~6.2.
+   Led to sample shrinkage/workload uncertainty.
+
+2. Chase Burns:
+   special workload management/piggyback situation was not represented because season-average workload could leak into production.
+   Led to production requiring trustworthy current workload.
+
+3. Drew Anderson:
+   Radar showed an enormous preliminary edge, but production correctly blocked because role/workload unresolved.
+   This validated the new architecture.
+
+4. Arizona/KC:
+   unresolved starter identity previously allowed a projection to look stronger than it should.
+   Starter identity must fail closed.
+
+5. OddsPapi:
+   request-contract and fixture-ID bugs taught us to distinguish:
+   implemented
+   tested
+   live verified.
+
+---
+
+# FORWARD VALIDATION — STILL NEEDED
+
+The models are still not statistically “finished.”
+
+We need an automated immutable results ledger containing:
+
+K:
+
+* expected K
+* probability
+* line
+* book prices
+* sharp prop reference
+* closing line
+* actual K
+* CLV
+* Brier
+* log loss
+* calibration bucket
+* ROI
+* model version
+* workload state
+* confidence
+
+ML:
+
+* model win probability
+* sharp probability
+* executable price
+* closing price
+* result
+* Brier
+* log loss
+* calibration
+* CLV
+* ROI
+* edge bucket
+* favorite/underdog
+* version
+* model contributions
+
+DO NOT refit MLB coefficients until we have meaningful forward-validation evidence.
+
+---
+
+# NFL — NEXT MAJOR WORKSTREAM
+
+NFL season is beginning NOW.
+
+Target release:
+
+**MODEL 2.9.0 — Multi-Sport NFL Alpha + MLB Integrity**
+
+NFL should branch from the hardened **2.8.2 architecture**, not old MLB code.
+
+Top-level extension should eventually switch:
+
+`MLB | NFL`
+
+Each sport needs independent:
+
+* providers
+* storage keys
+* model lineage
+* calibration state
+* Radar
+* production board
+* Trust
+
+Shared framework:
+identity
+→ structured data
+→ independent model
+→ market
+→ Trust
+→ Opportunity Board
+
+---
+
+# NFL DATA / MODEL RESEARCH DIRECTION
+
+Primary statistical source:
+**nflverse**
+
+Use reproducible historical/team data.
+
+Potential NFL feature families:
+
+* passing EPA/play
+* rushing EPA/play
+* success / first-down efficiency
+* CPOE
+* explosive-play creation/prevention
+* pressure/sack propensity
+* turnover propensity with heavy shrinkage
+* red-zone efficiency
+* special teams
+* QB identity/value
+* injuries
+* offensive-line / skill-player availability
+* home field
+* rest/travel
+* weather where justified
+
+Important:
+teams winning turnover margin historically win roughly ~70% of games, BUT raw turnover margin is noisy.
+
+NFL should model:
+**turnover propensity / expected turnover advantage**
+with regression toward mean,
+NOT simply reward last season’s turnover margin.
+
+QB state must be first-class:
+
+* QB_CONFIRMED
+* QB_CHANGE
+* QB_QUESTIONABLE
+* QB_OUT
+* QB_UNRESOLVED
+
+Until QB adjustment is empirically validated, do NOT invent arbitrary point values.
+
+QB uncertainty should lower confidence or block.
+
+Week 1 must be prior-heavy:
+last season / multi-year efficiency blended with current season as games accumulate.
+
+Explicit state:
+`EARLY_SEASON_PRIOR_HEAVY`
+
+No false High confidence in Week 1.
+
+---
+
+# NFL TRAINING STANDARD
+
+Do NOT invent weights blindly.
+
+Build historical chronological training.
+
+Preferred research process:
+
+historical seasons
+→ only information available BEFORE each game
+→ train
+→ untouched holdout season
+→ Brier/log loss/calibration
+→ compare against simple baselines
+→ freeze coefficients
+→ prospective 2026
+
+Candidate models:
+
+* home-field baseline
+* Elo-style baseline
+* regularized logistic
+* gradient boosting only if it materially improves out-of-sample calibration and remains interpretable enough
+
+DO NOT randomly shuffle games across seasons in a way that leaks future information.
+
+Metrics:
+
+* Brier score
+* log loss
+* calibration/reliability
+* win accuracy secondary
+* market/CLV later
+
+Model feature contributions should eventually be explainable.
+
+---
+
+# NFL MARKET ARCHITECTURE
+
+Same philosophy as MLB:
+
+NFL DATA
+→ independent fair probability
+→ OddsPapi AFTER projection
+→ Pinnacle / Circa sharp consensus
+→ FanDuel executable price
+→ Trust
+
+OddsPapi NFL IDs previously researched:
+
+* sport 14
+* tournament 31
+* moneyline 141
+
+Verify live contract before relying on them.
+
+Do NOT probe NFL player props through OddsPapi.
+
+NFL game-market use should continue conserving the 250-request monthly quota.
+
+---
+
+# PROPSMADNESS NFL
+
+PropsMadness supports NFL but apparently does not have the same MLB Table View available.
+
+They do not offer a public API.
+
+We discussed emailing PropsMadness requesting:
+
+* NFL Table View
+* possibly subscriber-only CSV/export
+* easier full-slate player-market comparison
+
+Do not make NFL game model dependent on PropsMadness.
+
+PropsMadness could later be valuable for NFL player-prop modeling.
+
+---
+
+# IMMEDIATE NEXT DEVELOPMENT ORDER
+
+1. Treat MODEL 2.8.2 as the frozen MLB production baseline.
+2. Only make small integrity/UI fixes unless a real MLB model defect appears.
+3. Continue NFL 2.9.0 development.
+4. Establish nflverse historical data contract.
+5. Build leakage-safe historical feature table.
+6. Train simple baselines + regularized NFL probability model.
+7. Hold out a season for true validation.
+8. Add QB/injury/early-season uncertainty gates.
+9. Add NFL structured board and separate storage.
+10. Extend local market service for NFL game markets without breaking MLB.
+11. Add NFL three-book synthetic canonical join tests.
+12. Add sport switch to extension.
+13. Run ALL MLB regressions.
+14. Run NFL regressions.
+15. Guarded installer simulation.
+16. Only then call NFL v0.1 working.
+17. Live OddsPapi verification should happen only after local/synthetic tests pass.
+
+---
+
+# NON-NEGOTIABLES FOR THE NEXT ASSISTANT
+
+Do NOT:
+
+* rebuild the old scanner architecture
+* bring PMV1Engine back
+* change MLB coefficients casually
+* use the target K market to determine xK
+* fabricate probabilities from missing inputs
+* treat Radar as actionable
+* call RESEARCH ANOMALY a strong bet
+* use OddsPapi for player props
+* spend OddsPapi quota during installers/tests
+* assume canonical source service file is necessarily the running deployed service
+* claim something is live verified when only local tests passed
+* ask me to repeat information already contained in this checkpoint
+
+When coding:
+diagnose first,
+add regression reproducing the bug,
+fix it,
+run complete regression suite,
+simulate installer,
+package release,
+then ask for live verification.
+
+Please continue from this checkpoint and prioritize **NFL MODEL 2.9.0**, while keeping MLB 2.8.2 stable.
+
+MODEL 2.8.7 Research Relevance & Diagnostic Clarity: Slate Radar 1.5 · RCE-0.4 · Public Research 0.4.0 · non-mutating.
+
+Matchup Center: **1.0.0**
+NFL Public Research provider: **0.1.0**
+NFL Matchup Center boundary: research-only; existing NFL/Omega model pipeline remains separate.
