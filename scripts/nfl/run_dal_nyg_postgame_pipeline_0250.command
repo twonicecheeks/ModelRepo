@@ -12,6 +12,7 @@ MAX_ATTEMPTS="${OMEGA_POSTGAME_MAX_ATTEMPTS:-16}"
 SLEEP_SECONDS="${OMEGA_POSTGAME_RETRY_SECONDS:-1800}"
 LABEL="com.model.omega.dalnyg-postgame-20260914"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
+RESULTS_PTR="$ROOT/data/raw/nfl/omega/CURRENT_OMEGA_2026_RESULTS_MANIFEST"
 LOG_DIR="$ROOT/data/results/nfl/omega/automation_logs_0250"
 mkdir -p "$LOG_DIR"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
@@ -44,7 +45,7 @@ echo "Game: $GAME_ID"
 echo "Challenger: $CHALLENGER_ID"
 echo "4:25 evaluation: $EVAL_425_ID"
 echo "Retry policy: $MAX_ATTEMPTS attempts · $SLEEP_SECONDS seconds between attempts"
-echo "Policy: immutable results snapshots · no fitting · no model mutation · no git pull"
+echo "Policy: isolated immutable results snapshots · generic nflverse pointer preserved · no fitting · no model mutation · no git pull"
 echo
 
 if [[ ! -x "$PY" ]]; then
@@ -62,17 +63,31 @@ if ! "$PY" "$ROOT/scripts/nfl/check_phase1b_dependencies.py"; then
 fi
 
 ready=0
+SOURCE_MANIFEST=""
 attempt=1
 while (( attempt <= MAX_ATTEMPTS )); do
   echo
   echo "===== NFLVERSE ATTEMPT $attempt/$MAX_ATTEMPTS · $(date) ====="
   if "$PY" "$ROOT/scripts/nfl/refresh_nflverse_2026_results_0250.py" --root "$ROOT"; then
-    if "$PY" "$ROOT/scripts/nfl/check_omega_game_results_ready_0250.py" --root "$ROOT" --game-id "$GAME_ID"; then
-      ready=1
-      break
+    if [[ ! -s "$RESULTS_PTR" ]]; then
+      echo "FAIL dedicated results manifest pointer missing after successful refresh"
     else
-      check_rc=$?
-      echo "Readiness gate returned $check_rc; nflverse is not ready yet."
+      manifest_value="$(cat "$RESULTS_PTR")"
+      if [[ "$manifest_value" == /* ]]; then
+        SOURCE_MANIFEST="$manifest_value"
+      else
+        SOURCE_MANIFEST="$ROOT/$manifest_value"
+      fi
+      if [[ ! -f "$SOURCE_MANIFEST" ]]; then
+        echo "FAIL dedicated results manifest target missing: $SOURCE_MANIFEST"
+      elif "$PY" "$ROOT/scripts/nfl/check_omega_game_results_ready_0250.py" \
+          --root "$ROOT" --game-id "$GAME_ID" --source-manifest "$SOURCE_MANIFEST"; then
+        ready=1
+        break
+      else
+        check_rc=$?
+        echo "Readiness gate returned $check_rc; nflverse is not ready yet."
+      fi
     fi
   else
     refresh_rc=$?
@@ -93,6 +108,8 @@ if (( ready != 1 )); then
   exit 75
 fi
 
+echo "PASS grading source manifest pinned for this run: $SOURCE_MANIFEST"
+
 echo
 echo "===== SCORE ROLE-ADJUSTED CHALLENGER ====="
 ROLE_PTR="$ROOT/data/results/nfl/omega/CURRENT_OMEGA_ROLE_ADJUSTED_SCORE"
@@ -106,7 +123,7 @@ if [[ -f "$ROLE_PTR" ]]; then
 fi
 if (( role_done == 0 )); then
   if ! "$PY" "$ROOT/scripts/nfl/score_omega_role_adjusted_challenger_0240.py" \
-      --root "$ROOT" --challenger-id "$CHALLENGER_ID"; then
+      --root "$ROOT" --challenger-id "$CHALLENGER_ID" --source-manifest "$SOURCE_MANIFEST"; then
     echo "FAIL role-adjusted challenger scoring"
     finish 3
     exit 3
@@ -134,7 +151,7 @@ then
   echo "Skipping duplicate 4:25 score run."
 else
   if ! "$PY" "$ROOT/scripts/nfl/score_omega_prospective_eval_0230.py" \
-      --root "$ROOT" --evaluation-id "$EVAL_425_ID"; then
+      --root "$ROOT" --evaluation-id "$EVAL_425_ID" --source-manifest "$SOURCE_MANIFEST"; then
     echo "FAIL frozen 4:25 evaluation scoring"
     finish 4
     exit 4
@@ -156,7 +173,8 @@ DONE="$LOG_DIR/DAL_NYG_POSTGAME_COMPLETE.txt"
   echo "game_id=$GAME_ID"
   echo "challenger_id=$CHALLENGER_ID"
   echo "evaluation_425_id=$EVAL_425_ID"
-  echo "current_raw_snapshot=$(cat "$ROOT/data/raw/nfl/nflverse/CURRENT_RAW_SNAPSHOT" 2>/dev/null || true)"
+  echo "results_source_manifest=$SOURCE_MANIFEST"
+  echo "generic_current_raw_snapshot=$(cat "$ROOT/data/raw/nfl/nflverse/CURRENT_RAW_SNAPSHOT" 2>/dev/null || true)"
   echo "role_score=$(cat "$ROOT/data/results/nfl/omega/CURRENT_OMEGA_ROLE_ADJUSTED_SCORE" 2>/dev/null || true)"
   echo "season_index=$(cat "$ROOT/data/results/nfl/omega/CURRENT_OMEGA_SEASON_INDEX" 2>/dev/null || true)"
   echo "log=$LOG"
