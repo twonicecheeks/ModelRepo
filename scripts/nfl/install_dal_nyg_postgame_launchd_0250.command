@@ -36,6 +36,8 @@ cat > "$PLIST" <<EOF
   <string>$LABEL</string>
   <key>ProgramArguments</key>
   <array>
+    <string>/usr/bin/caffeinate</string>
+    <string>-i</string>
     <string>/bin/zsh</string>
     <string>$RUNNER</string>
   </array>
@@ -74,14 +76,16 @@ echo "PASS launchd label: $LABEL"
 echo "PASS scheduled: Monday 2026-09-14 at 5:30 AM local time"
 echo "PASS runner date-lock: 2026-09-14 only"
 echo "PASS retry: every 30 minutes, up to 16 attempts, until nflverse is complete"
+echo "PASS runner held awake with caffeinate after launch"
 echo "PASS overnight git pulls: 0"
 echo "PASS model fitting/mutation: 0"
+echo "PASS generic nflverse CURRENT_RAW_SNAPSHOT preserved"
 echo "PASS on readiness: score DAL@NYG 0.24 challenger + frozen 4:25 0.23 bundle + rebuild 2026 index"
 echo "PASS one-date plist removes itself after runner exits"
 echo "STDOUT: $LOG_DIR/omega-dal-nyg-launchd.out.log"
 echo "STDERR: $LOG_DIR/omega-dal-nyg-launchd.err.log"
 echo "RESULT LOGS: $ROOT/data/results/nfl/omega/automation_logs_0250/"
 echo
-echo "IMPORTANT: the Mac must not be powered off. A sleeping logged-in Mac normally receives a missed StartCalendarInterval job when it wakes; for execution at exactly 5:30 AM, leave it awake."
+echo "IMPORTANT: the Mac must not be powered off. Once launchd starts the runner, caffeinate keeps it awake through retries. To guarantee the 5:30 AM launch, leave the Mac awake until then (display sleep is fine if system sleep is disabled)."
 echo
 echo "INSTALL PASS"
