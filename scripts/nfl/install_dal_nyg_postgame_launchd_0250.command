@@ -70,6 +70,29 @@ launchctl bootout "gui/$UID_NUM/$LABEL" >/dev/null 2>&1 || true
 launchctl bootstrap "gui/$UID_NUM" "$PLIST"
 launchctl enable "gui/$UID_NUM/$LABEL" >/dev/null 2>&1 || true
 
+# If the Mac is on AC power, keep only idle system sleep suppressed until shortly
+# after the scheduled launch. Display sleep remains available. Once launchd starts,
+# the job itself runs under caffeinate for the duration of all retries.
+PRELAUNCH_SECONDS="$(python3 - <<'PY'
+from datetime import datetime
+now=datetime.now()
+target=datetime(2026,9,14,5,40,0)
+print(max(0,int((target-now).total_seconds())))
+PY
+)"
+POWER_LINE="$(/usr/bin/pmset -g batt 2>/dev/null | head -n 1 || true)"
+PREAWAKE_STATUS="NOT_STARTED"
+if [[ "$PRELAUNCH_SECONDS" -gt 0 && "$POWER_LINE" == *"AC Power"* ]]; then
+  nohup /usr/bin/caffeinate -i -t "$PRELAUNCH_SECONDS" \
+    >"$LOG_DIR/omega-dal-nyg-prelaunch-caffeinate.log" 2>&1 &
+  echo $! > "$LOG_DIR/omega-dal-nyg-prelaunch-caffeinate.pid"
+  PREAWAKE_STATUS="ACTIVE_${PRELAUNCH_SECONDS}s"
+elif [[ "$PRELAUNCH_SECONDS" -le 0 ]]; then
+  PREAWAKE_STATUS="NOT_NEEDED_TARGET_TIME_PASSED"
+else
+  PREAWAKE_STATUS="SKIPPED_NOT_ON_AC_POWER"
+fi
+
 echo
 echo "OMEGA 0.25 — DAL@NYG MORNING AUTOMATION INSTALLED"
 echo "PASS launchd label: $LABEL"
@@ -77,6 +100,7 @@ echo "PASS scheduled: Monday 2026-09-14 at 5:30 AM local time"
 echo "PASS runner date-lock: 2026-09-14 only"
 echo "PASS retry: every 30 minutes, up to 16 attempts, until nflverse is complete"
 echo "PASS runner held awake with caffeinate after launch"
+echo "PRELAUNCH AWAKE: $PREAWAKE_STATUS"
 echo "PASS overnight git pulls: 0"
 echo "PASS model fitting/mutation: 0"
 echo "PASS generic nflverse CURRENT_RAW_SNAPSHOT preserved"
@@ -85,7 +109,11 @@ echo "PASS one-date plist removes itself after runner exits"
 echo "STDOUT: $LOG_DIR/omega-dal-nyg-launchd.out.log"
 echo "STDERR: $LOG_DIR/omega-dal-nyg-launchd.err.log"
 echo "RESULT LOGS: $ROOT/data/results/nfl/omega/automation_logs_0250/"
+if [[ "$PREAWAKE_STATUS" == SKIPPED_NOT_ON_AC_POWER ]]; then
+  echo
+echo "WARNING: Mac is not reporting AC power, so the installer did not force it to stay awake before 5:30 AM. Plug it in and rerun this installer if you want guaranteed unattended launch."
+fi
 echo
-echo "IMPORTANT: the Mac must not be powered off. Once launchd starts the runner, caffeinate keeps it awake through retries. To guarantee the 5:30 AM launch, leave the Mac awake until then (display sleep is fine if system sleep is disabled)."
+echo "IMPORTANT: do not power the Mac off overnight."
 echo
 echo "INSTALL PASS"
