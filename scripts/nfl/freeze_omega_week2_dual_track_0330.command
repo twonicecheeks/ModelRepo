@@ -18,6 +18,7 @@ fi
   "$ROOT/scripts/nfl/refresh_omega_2026_snap_counts_0290.py" \
   "$ROOT/scripts/nfl/capture_omega_tackle_016_2026_pregame.py" \
   "$ROOT/scripts/nfl/capture_omega_week2_pregame_0330.py" \
+  "$ROOT/scripts/nfl/check_omega_week2_universe_0330.py" \
   "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0330.py"
 
 echo
@@ -37,9 +38,13 @@ echo "===== OMEGA 0.33 CAPTURE FRESH WEEK 2 PREGAME ROLE/ROSTER STATE ====="
 "$PY" "$ROOT/scripts/nfl/capture_omega_week2_pregame_0330.py" --root "$ROOT" --week 2
 
 echo
+echo "===== OMEGA 0.33 VERIFY COMPLETE WEEK 2 UNIVERSE ====="
+"$PY" "$ROOT/scripts/nfl/check_omega_week2_universe_0330.py" --root "$ROOT"
+
+echo
 echo "===== OMEGA 0.33 FREEZE WEEK 2 CONTROL + ROLE-POINT CHALLENGER ====="
 "$PY" "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0330.py" --root "$ROOT" --week 2
 
 echo
 echo "OMEGA 0.33 WEEK 2 DUAL-TRACK PIPELINE PASS"
-echo "PASS Week 1 admitted as prior state only · Week 2 outcomes 0 · refits 0 · market fields 0"
+echo "PASS Week 1 admitted as prior state only · full Week 2 slate frozen pre-kickoff · Week 2 outcomes 0 · refits 0 · market fields 0"
