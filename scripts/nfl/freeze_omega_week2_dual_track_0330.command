@@ -17,6 +17,7 @@ fi
   "$ROOT/scripts/nfl/refresh_nflverse_2026_results_0250.py" \
   "$ROOT/scripts/nfl/refresh_omega_2026_snap_counts_0290.py" \
   "$ROOT/scripts/nfl/capture_omega_tackle_016_2026_pregame.py" \
+  "$ROOT/scripts/nfl/capture_omega_week2_pregame_0330.py" \
   "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0330.py"
 
 echo
@@ -31,7 +32,9 @@ echo "===== OMEGA 0.33 REFRESH 2026 SNAP COUNTS ====="
 
 echo
 echo "===== OMEGA 0.33 CAPTURE FRESH WEEK 2 PREGAME ROLE/ROSTER STATE ====="
-"$PY" "$ROOT/scripts/nfl/capture_omega_tackle_016_2026_pregame.py" --root "$ROOT" --week 2
+# Hardened 0.33 wrapper preserves the 0.16 source contract but requires one exact
+# latest TEAM depth snapshot, preventing stale per-player depth carry-forward.
+"$PY" "$ROOT/scripts/nfl/capture_omega_week2_pregame_0330.py" --root "$ROOT" --week 2
 
 echo
 echo "===== OMEGA 0.33 FREEZE WEEK 2 CONTROL + ROLE-POINT CHALLENGER ====="
