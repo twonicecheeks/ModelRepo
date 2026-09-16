@@ -46,9 +46,11 @@ Before any Week 2 forecast is created:
 5. Reconstruct Week 1 standard defensive-scrimmage tackle events, H008 team opportunity state, family state, player snap history and player family-rate state.
 6. Append Week 1 state after the complete 2025 prior state. No model fitting is permitted.
 7. Capture fresh Week 2 roster/injury/depth state before the earliest Week 2 kickoff.
-8. Derive previous depth role for Week 2 from a depth snapshot strictly before each team’s Week 1 game day. Current Week 2 role comes from the fresh Week 2 pregame capture.
+8. Require the captured game IDs to equal the complete 2026 Week 2 REG schedule. A partial slate after the first kickoff is prohibited.
+9. For current Week 2 depth, use one exact latest TEAM snapshot as of capture; do not carry a stale player forward merely because that player had an older individual depth row.
+10. Derive previous depth role for Week 2 from a depth snapshot strictly before each team’s Week 1 game day.
 
-The freeze must fail closed if Week 1 is incomplete, Week 1 snap data is missing for a scheduled game, role/depth coverage is suspicious, the Week 2 source was captured at/after kickoff, or packaging finishes at/after the earliest Week 2 kickoff.
+The freeze must fail closed if Week 1 is incomplete, Week 1 snap data is missing for a scheduled game, the Week 2 capture is not the full scheduled slate, role/depth coverage is suspicious, the Week 2 source was captured at/after kickoff, or packaging finishes at/after the earliest Week 2 kickoff.
 
 ## Frozen inputs
 
