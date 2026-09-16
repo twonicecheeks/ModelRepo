@@ -19,7 +19,8 @@ fi
   "$ROOT/scripts/nfl/capture_omega_tackle_016_2026_pregame.py" \
   "$ROOT/scripts/nfl/capture_omega_week2_pregame_0330.py" \
   "$ROOT/scripts/nfl/check_omega_week2_universe_0330.py" \
-  "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0330.py"
+  "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0330.py" \
+  "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0331.py"
 
 echo
 echo "===== OMEGA 0.33 REFRESH ISOLATED 2026 RESULTS ====="
@@ -43,7 +44,9 @@ echo "===== OMEGA 0.33 VERIFY COMPLETE WEEK 2 UNIVERSE ====="
 
 echo
 echo "===== OMEGA 0.33 FREEZE WEEK 2 CONTROL + ROLE-POINT CHALLENGER ====="
-"$PY" "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0330.py" --root "$ROOT" --week 2
+# 0.33.1 is an I/O-only compatibility shim for extensionless nflverse blob paths.
+# It delegates to the exact 0.33 forecast logic without changing model behavior.
+"$PY" "$ROOT/scripts/nfl/freeze_omega_week2_dual_track_0331.py" --root "$ROOT" --week 2
 
 echo
 echo "OMEGA 0.33 WEEK 2 DUAL-TRACK PIPELINE PASS"
