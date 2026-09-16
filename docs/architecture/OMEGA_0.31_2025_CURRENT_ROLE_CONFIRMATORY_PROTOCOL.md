@@ -1,10 +1,16 @@
 # OMEGA 0.31 — Sealed 2025 Current-Role Point Confirmatory Holdout
 
-**Protocol frozen before this evaluator opens 2025 depth-chart or snap-share outcomes.**
+**Protocol frozen before this evaluator opens 2025 depth-chart or snap-share outcomes for the current-role component.**
+
+## Scientific status
+
+2025 was previously consumed by the project for the older OMEGA 0.13 tackle-count holdout. It is therefore **not a globally virgin season for the project or its human developers**. However, OMEGA 0.2.7 current-role development explicitly read zero 2025 exposure rows and zero 2025 depth-chart rows, and its serialized coefficients were fixed before this test. Accordingly, this is a **component-level confirmatory holdout for the current-role point correction**, not a claim of project-wide blind independence.
+
+No 2025 result from this current-role confirmatory evaluation may be used to alter the frozen 0.2.7 coefficients before the verdict is recorded.
 
 ## Purpose
 
-Determine whether the already-fitted OMEGA 0.2.7 current-role **point correction** generalizes to an untouched season strongly enough to change its Week 2 operational status. This is an exposure-model test only. Frozen OMEGA remains the control and is not modified.
+Determine whether the already-fitted OMEGA 0.2.7 current-role **point correction** generalizes to its sealed season strongly enough to change its Week 2 operational status. This is an exposure-model test only. Frozen OMEGA remains the control and is not modified.
 
 ## Immutable challenger
 
@@ -99,7 +105,7 @@ The full snap-share distribution mixture is **not** under test here and cannot b
 
 ## Integrity requirements
 
-- 2025 is opened once for this confirmatory purpose.
+- The current-role component opens 2025 once for this confirmatory purpose.
 - Model refits: 0.
 - Hyperparameter searches after opening 2025: 0.
 - Market fields read: 0.
