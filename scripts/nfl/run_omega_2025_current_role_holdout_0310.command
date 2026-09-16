@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="${MODEL_ROOT_OVERRIDE:-/Users/abbeyfelix/Developer/MODEL}"
 VENV="${MODEL_NFL_VENV_OVERRIDE:-$HOME/Library/Application Support/MODEL/nfl-python/phase1b}"
 PY="$VENV/bin/python"
-SCRIPT="$ROOT/scripts/nfl/score_omega_2025_current_role_holdout_0311.py"
+SCRIPT="$ROOT/scripts/nfl/score_omega_2025_current_role_holdout_0312.py"
 
 cd "$ROOT"
 
