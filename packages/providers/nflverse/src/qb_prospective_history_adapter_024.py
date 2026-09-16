@@ -1,8 +1,8 @@
 """NFL QB Model 0.2.4 — immutable 2026 prospective-history source acquisition.
 
 Acquires only public nflverse source assets needed to construct lagged 2026 QB
-passing-yards features: current-season play-by-play and weekly player statistics.
-The files are stored content-addressed and accompanied by an immutable manifest.
+passing-yards features: the schedule, current-season play-by-play and weekly player
+statistics. Source bytes are stored content-addressed with an immutable manifest.
 This adapter does not parse target/current-week outcomes, fit a model, or access any
 sportsbook/market source.
 """
@@ -82,11 +82,12 @@ def _store_blob(root: Path, temp: Path, digest: str) -> Path:
 
 
 def acquire(root: Path, *, target_week: int) -> Path:
-    """Acquire immutable 2026 PBP/player-stat assets for a target-week as-of score.
+    """Acquire immutable 2026 sources for one target-week as-of score.
 
-    Full source parquet bytes are archived for reproducibility. The scorer is
-    responsible for parquet predicate filtering to REG rows with week < target_week;
-    target/current-week rows are never admitted into the model feature table.
+    Full source files are archived for reproducibility. The scorer must predicate-
+    filter PBP/player stats to REG rows with week < target_week before constructing
+    features. The schedule is used only to prove that the prior-week team-game
+    universe is complete; schedule outcomes/market columns are never features.
     """
     root = Path(root).expanduser().resolve()
     tw = int(target_week)
@@ -94,6 +95,7 @@ def acquire(root: Path, *, target_week: int) -> Path:
         raise ValueError("target_week out of range")
     specs = source_specs()
     plans = [
+        ("schedules", specs["schedules"].url_for_season(), "games.csv"),
         ("play_by_play", specs["play_by_play"].url_for_season(PROSPECTIVE_SEASON), f"play_by_play_{PROSPECTIVE_SEASON}.parquet"),
         ("player_stats_weekly", PLAYER_STATS_URL.format(season=PROSPECTIVE_SEASON), f"stats_player_week_{PROSPECTIVE_SEASON}.parquet"),
     ]
@@ -105,8 +107,9 @@ def acquire(root: Path, *, target_week: int) -> Path:
     assets: list[dict[str, Any]] = []
     try:
         for source, url, filename in plans:
-            print(f"DOWNLOAD nflverse {source} {PROSPECTIVE_SEASON} — as-of source archive")
-            fd, tmpname = tempfile.mkstemp(prefix="qb024_", suffix=".parquet", dir=str(stage))
+            print(f"DOWNLOAD nflverse {source}" + (f" {PROSPECTIVE_SEASON}" if source != "schedules" else "") + " — as-of source archive")
+            suffix = ".csv" if source == "schedules" else ".parquet"
+            fd, tmpname = tempfile.mkstemp(prefix="qb024_", suffix=suffix, dir=str(stage))
             os.close(fd)
             temp = Path(tmpname)
             meta = _download(url, temp)
@@ -116,7 +119,7 @@ def acquire(root: Path, *, target_week: int) -> Path:
             blob = _store_blob(root, temp, digest)
             assets.append({
                 "source": source,
-                "season": PROSPECTIVE_SEASON,
+                "season": None if source == "schedules" else PROSPECTIVE_SEASON,
                 "filename": filename,
                 "url": url,
                 "sha256": digest,
@@ -134,6 +137,7 @@ def acquire(root: Path, *, target_week: int) -> Path:
             "prospectiveSeason": PROSPECTIVE_SEASON,
             "targetWeek": tw,
             "featureAdmissionRule": f"REG only; season={PROSPECTIVE_SEASON}; week < {tw}",
+            "scheduleRole": "identity/completeness audit only; schedule outcomes and market columns forbidden",
             "targetOrLaterOutcomeAdmissionAllowed": False,
             "coefficientFitAllowed": False,
             "marketDependency": False,
