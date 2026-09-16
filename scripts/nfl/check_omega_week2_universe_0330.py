@@ -5,6 +5,11 @@ The legacy pregame capture intentionally emits only future games. For a full Wee
 prospective freeze that behavior must not silently allow a partial slate after the
 first Week 2 kickoff. This gate compares the captured target-game IDs with the full
 2026 Week 2 REG schedule from the dedicated results snapshot and requires equality.
+
+nflverse snapshot blobs are content-addressed and therefore extensionless. Asset
+format is taken from the immutable manifest filename first, with a content sniff as
+a defensive fallback. This is an I/O compatibility repair only; no forecast logic
+or model state is changed.
 """
 from __future__ import annotations
 
@@ -35,12 +40,22 @@ def parse_ts(v):
     return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
 
 
-def read_rows(path: Path):
-    if path.suffix.lower()==".csv": return rcsv(path)
-    if path.suffix.lower()==".parquet":
+def read_rows(path: Path, filename_hint: str = ""):
+    """Read a content-addressed nflverse blob without trusting blob suffixes."""
+    suffix=Path(str(filename_hint or "")).suffix.lower() or path.suffix.lower()
+    if suffix==".csv": return rcsv(path)
+    if suffix==".parquet":
         import pyarrow.parquet as pq
         return pq.read_table(path).to_pylist()
-    raise SystemExit(f"FAIL unsupported schedule asset: {path}")
+    with path.open("rb") as f:
+        magic=f.read(4)
+    if magic==b"PAR1":
+        import pyarrow.parquet as pq
+        return pq.read_table(path).to_pylist()
+    try:
+        return rcsv(path)
+    except (UnicodeDecodeError, csv.Error) as exc:
+        raise SystemExit(f"FAIL unsupported schedule asset format: {path} ({exc})") from exc
 
 
 def main() -> int:
@@ -68,7 +83,7 @@ def main() -> int:
     if not sched_path.exists() or (sa.get("sha256") and sha(sched_path)!=sa.get("sha256")):
         raise SystemExit("FAIL schedules asset/hash mismatch")
     full=[]
-    for r in read_rows(sched_path):
+    for r in read_rows(sched_path, str(sa.get("filename") or "")):
         if int(float(r.get("season") or 0))!=SEASON or int(float(r.get("week") or 0))!=WEEK: continue
         gt=str(r.get("game_type") or r.get("season_type") or "REG").strip().upper()
         if gt not in {"REG",""}: continue
@@ -87,6 +102,7 @@ def main() -> int:
     print("OMEGA 0.33 — FULL WEEK 2 UNIVERSE GATE")
     print(f"PASS captured games {len(captured_ids)} == full scheduled REG games {len(full_ids)}")
     print(f"PASS source {sid} captured {sm.get('capturedAt')} before earliest kickoff {earliest.astimezone(timezone.utc).isoformat().replace('+00:00','Z')}")
+    print("PASS extensionless nflverse schedule blob resolved via immutable manifest filename")
     print("PASS partial-slate freeze prohibited")
     return 0
 
