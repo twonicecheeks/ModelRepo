@@ -1,15 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "MODEL \u2014 MLB + NFL Matchup Center",
-  "version": "3.2.0",
-  "version_name": "3.2.0 Personnel & Matchup Impact",
-  "description": "MODEL 3.2: non-mutating MLB lineup-transition impact and NFL depth-chart-weighted personnel/unit matchup intelligence, with Matchup Intelligence and research materiality hardening.",
+  "name": "MODEL — MLB + NFL Matchup Center",
+  "version": "3.2.1",
+  "version_name": "3.2.1 NFL T+A Auto Capture",
+  "description": "MODEL 3.2.1: non-mutating MLB lineup-transition impact and NFL depth-chart-weighted personnel/unit matchup intelligence, with automated Week 2 T+A reference-market capture.",
   "permissions": [
     "activeTab",
     "scripting",
     "clipboardWrite",
     "storage",
     "tabs",
+    "downloads",
+    "alarms",
     "unlimitedStorage"
   ],
   "host_permissions": [
@@ -24,6 +26,9 @@
     "https://www.fanduel.com/*",
     "https://site.api.espn.com/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "MODEL Matchup Center"
