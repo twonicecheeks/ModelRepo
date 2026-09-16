@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import importlib.util
+import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 P = ROOT / "packages/models/nfl/game/qb_starter_resolver_013.py"
-spec = importlib.util.spec_from_file_location("m", P)
+spec = importlib.util.spec_from_file_location("model_nfl_qb_starter_resolver_013_test", P)
 m = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
+# Python 3.14 dataclasses resolve annotation types through sys.modules while the
+# class decorator runs. Register dynamic-import modules before exec_module, exactly
+# as a normal import would, rather than relying on older importlib behavior.
+sys.modules[spec.name] = m
 spec.loader.exec_module(m)
 
 assert m.assert_development_only([2016, 2024]) == (2016, 2024)
