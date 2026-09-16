@@ -2,7 +2,7 @@
 from __future__ import annotations
 from pathlib import Path
 from datetime import datetime, timezone
-import hashlib, json, os, subprocess, sys
+import hashlib, json, os, subprocess
 
 ROOT=Path('/Users/abbeyfelix/Developer/MODEL')
 DOWNLOADS=Path.home()/'Downloads'
@@ -10,6 +10,7 @@ APP=Path.home()/'Library'/'Application Support'/'MODEL'
 STATE=APP/'omega_ta_auto_state.json'
 LOCK=APP/'omega_ta_auto_ingest.lock'
 PATTERN='OMEGA_0176_PROPSMADNESS_NFL_TA_DIRECT_CAPTURE_*.json'
+ARCHIVE=ROOT/'data/raw/nfl/omega/propsmadness_ta_direct_01711'
 
 
 def now(): return datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
@@ -24,6 +25,13 @@ def load_state():
 def save_state(x):
     APP.mkdir(parents=True,exist_ok=True)
     tmp=STATE.with_suffix('.tmp'); tmp.write_text(json.dumps(x,indent=2)+'\n'); os.replace(tmp,STATE)
+def already_archived(digest:str)->bool:
+    if not ARCHIVE.exists(): return False
+    for p in ARCHIVE.glob('*/PROPSMADNESS_NFL_TA_DIRECT_CAPTURE.json'):
+        try:
+            if sha(p)==digest: return True
+        except Exception: pass
+    return False
 
 def main():
     APP.mkdir(parents=True,exist_ok=True)
@@ -37,14 +45,18 @@ def main():
         src=files[0]; digest=sha(src); state=load_state()
         if state.get('lastSuccessfulSha256')==digest:
             print(f'NOOP latest capture already processed · {src.name}'); return 0
+        if already_archived(digest):
+            state.update({'lastAttemptAt':now(),'lastSuccessfulAt':now(),'lastSuccessfulFile':str(src),'lastSuccessfulSha256':digest,'lastStatus':'ALREADY_ARCHIVED'})
+            save_state(state)
+            print(f'NOOP latest capture already exists in immutable 0.17.11 archive · {src.name}')
+            return 0
         print(f'OMEGA 0.37.1 AUTO INGEST · processing {src.name} · sha {digest[:12]}')
-        env=dict(os.environ); env['OMEGA_TA_AUTO_CAPTURE_FILE']=str(src)
         cmds=[
             ['zsh',str(ROOT/'scripts/nfl/import_omega_propsmadness_nfl_ta_direct_01711.command')],
             ['zsh',str(ROOT/'scripts/nfl/build_omega_ta_reference_market_movement_0370.command')],
         ]
         for cmd in cmds:
-            r=subprocess.run(cmd,cwd=ROOT,env=env,text=True)
+            r=subprocess.run(cmd,cwd=ROOT,text=True)
             if r.returncode!=0:
                 state.update({'lastAttemptAt':now(),'lastAttemptFile':str(src),'lastAttemptSha256':digest,'lastStatus':'FAIL','failedCommand':' '.join(cmd)})
                 save_state(state); return r.returncode
