@@ -23,11 +23,17 @@ const TEAM_CODE_NICKNAME = Object.freeze({
 
 const HISTORICAL_VENUE_ALIASES = Object.freeze({
   'dodger stadium':'UNIQLO Field at Dodger Stadium',
-  'minute maid park':'Daikin Park'
+  'minute maid park':'Daikin Park',
+  'at t park':'Oracle Park',
+  'miller park':'American Family Field',
+  'suntrust park':'Truist Park',
+  'guaranteed rate field':'Rate Field',
+  'safeco field':'T-Mobile Park',
+  'marlins park':'loanDepot park'
 });
 
-const VERSION='0.5.3';
-const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.3-venue-alias-2026-09-19';
+const VERSION='0.5.4';
+const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.4-ruleset-diagnostics-2026-09-19';
 
 function readJson(p){ return JSON.parse(fs.readFileSync(p,'utf8')); }
 function readText(p){ return fs.readFileSync(p,'utf8'); }
@@ -71,6 +77,11 @@ function teamCode(starterCore,team){
   return TEAM_ID_CODE[String(team?.team_id||'')]||null;
 }
 
+
+function rulesetForSeason(season){
+  const y=Number(season);
+  return y===2020 || y>=2022 ? 'UNIVERSAL_DH' : 'PRE_UNIVERSAL_DH';
+}
 function normalizeLabel(v){
   return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
@@ -351,7 +362,12 @@ function main(){
             savantBundles.batter[season],h.mlbId,savantCore,{minCurrent:20,minPrevious:80}
           );
           const kr=kSkillRow(kCore,savantBundles.batter[season],h.mlbId);
-          if(!mr||!kr)throw new Error(`${side} opponent Savant hitter unavailable: ${h.name} ${h.mlbId}`);
+          if(!mr||!kr){
+            if(String(h.position||'').toUpperCase()==='P'){
+              throw new Error(`${side} historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: ${h.name} ${h.mlbId}`);
+            }
+            throw new Error(`${side} opponent Savant hitter unavailable: ${h.name} ${h.mlbId}`);
+          }
           const wr=wrcCore.getForSavantRow(wrcBundles[season],h.mlbId,mr);
           if(!wr||!Number.isFinite(num(wr.wrcPlus)))throw new Error(`${side} opponent wRC+ unavailable: ${h.name}`);
           const metrics={...(mr.metrics||{}),'wRC+':Number(wr.wrcPlus)};
@@ -406,6 +422,7 @@ function main(){
         model_variant:'POST_HISTORY_PROXY',stage:'RESEARCH',thesis:'REG_SEASON_SKILL_HISTORY_WORKLOAD_PROXY'
       };
       const mlOut=replay.replayML(mlInput);
+      mlOut.ruleset=rulesetForSeason(season);
       mlOut.away_workload_proxy_source=sideData.away.workloadMode;
       mlOut.home_workload_proxy_source=sideData.home.workloadMode;
       mlOut.park_resolution_method=parkResolved.method;
@@ -428,6 +445,7 @@ function main(){
           stage:'RESEARCH',thesis:'REG_SEASON_SKILL_HISTORY_WORKLOAD_PROXY'
         };
         const kOut=replay.replayKDistributionOnly(kInput);
+        kOut.ruleset=rulesetForSeason(season);
         kOut.workload_proxy_source=d.workloadMode;
         kOut.park_resolution_method=parkResolved.method;
         ledger.push(kOut);
@@ -504,5 +522,5 @@ if(require.main===module)main();
 module.exports={
   VERSION,LINEAGE,TEAM_ID_CODE,TEAM_CODE_NICKNAME,HISTORICAL_VENUE_ALIASES,mean,num,ipToOuts,priorDate,
   parsePitchingGameLog,selectWorkloadHistory,historyMarket,workloadMarkets,kSkillRow,
-  mlOpponentMetrics,teamCode,normalizeLabel,resolvePark,historicalStartingLineup
+  mlOpponentMetrics,teamCode,rulesetForSeason,normalizeLabel,resolvePark,historicalStartingLineup
 };
