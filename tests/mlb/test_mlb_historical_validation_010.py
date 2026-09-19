@@ -76,6 +76,27 @@ def main():
     assert ps["scored_n"] == 0
     assert ps["betting"]["profit_units"] == 0
 
+
+    xk_only = {
+        "game_id": "kx1",
+        "game_date": "2025-10-03",
+        "season": 2025,
+        "season_type": "POST",
+        "market_type": "K",
+        "evaluation_mode": "XK_ONLY",
+        "pitcher": "PX",
+        "xk": 6.2,
+        "actual_k": 7,
+        "model_variant": "POST_USAGE_PROXY",
+        "stage": "RESEARCH",
+        "thesis": "WORKLOAD_PROXY",
+    }
+    xs = m.summarize([xk_only])
+    assert xs["n"] == 1 and xs["scored_n"] == 0
+    assert abs(xs["xk"]["mae"] - 0.8) < 1e-12
+    assert "brier" not in xs
+    m.validate_row(xk_only)
+
     variants = [
         ml("p1", 2025, "POST", 0.55, 1, variant="BASE"),
         ml("p1", 2025, "POST", 0.65, 1, variant="CHALL"),
@@ -88,7 +109,7 @@ def main():
     assert fa["rows"] == 6
     assert "brier" in fa["postseason_shift"]
 
-    print("PASS MLB historical validation 0.1.0")
+    print("PASS MLB historical validation 0.1.1")
 
 
 if __name__ == "__main__":
