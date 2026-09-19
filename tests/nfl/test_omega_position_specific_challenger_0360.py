@@ -15,6 +15,9 @@ assert m.canonical_position_row({'position':'DE','position_group':'LB'})=='EDGE'
 assert m.canonical_position_row({'position':'EDGE','position_group':'LB'})=='EDGE'
 assert m.canonical_position_row({'position':'CB','position_group':'DB'})=='DB'
 assert m.canonical_position_row({'position':'MLB','position_group':'LB'})=='LB'
+assert m.canonical_position_row({'position':'LB','position_group':'LB','current_depth_position':'DE'})=='EDGE'
+assert m.canonical_position_row({'position':'LB','position_group':'DL'})=='EDGE'
+assert m.canonical_position_row({'position':'LB','position_group':'LB','current_depth_position':'OLB'})=='EDGE'
 
 base={
  'position_group':'LB','control_xtc':6.0,'predicted_xto':45,'predicted_snap_share':.9,'prior_games':8,
