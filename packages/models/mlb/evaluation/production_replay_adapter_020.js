@@ -4,8 +4,8 @@
   const mlCore = require('../moneyline/structured_ml_core.js');
   const kCore = require('../k/structured_k_core.js');
 
-  const VERSION = '0.2.0';
-  const LINEAGE = 'mlb-production-replay-adapter-v0.2.0-2026-09-19';
+  const VERSION = '0.2.1';
+  const LINEAGE = 'mlb-production-replay-adapter-v0.2.1-xk-only-2026-09-19';
 
   const finite = v => v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v));
   const clean = v => v == null ? '' : String(v).trim();
@@ -115,6 +115,49 @@
     throw new Error(`K replay side must be OVER or UNDER; got ${side}`);
   }
 
+  function replayKDistributionOnly(row) {
+    const starter = row.starter_input || row.starter;
+    const lineup = row.lineup_rows || row.lineup;
+    const pitcher = row.pitcher_row || row.pitcher_skill;
+    if (!starter || !Array.isArray(lineup) || !pitcher) {
+      throw new Error('K xK-only replay requires starter_input, lineup_rows[], and pitcher_row');
+    }
+    if (lineup.length !== 9) {
+      throw new Error(`K xK-only replay requires 9 lineup rows; got ${lineup.length}`);
+    }
+    const actualK = Number(row.actual_k);
+    if (!Number.isFinite(actualK) || actualK < 0) throw new Error('K xK-only replay requires nonnegative actual_k');
+
+    const nowMs = timestampMs(row);
+    const distribution = kCore.buildDistribution(starter, lineup, pitcher, nowMs);
+    if (!distribution || !Number.isFinite(Number(distribution.expectedK))) {
+      throw new Error('K xK-only production replay failed to build distribution');
+    }
+
+    return {
+      ...common(row, 'K'),
+      evaluation_mode: 'XK_ONLY',
+      pitcher: clean(row.pitcher || starter.officialName || distribution.player),
+      team: clean(row.team || starter.team || distribution.team),
+      xk: distribution.expectedK,
+      actual_k: actualK,
+      workload_state: distribution.workloadState,
+      workload_limited: !!distribution.workloadLimited,
+      uncertainty_multiplier: distribution.uncertaintyMultiplier,
+      expected_batters_faced: distribution.components?.expectedBF ?? null,
+      expected_outs: distribution.components?.expectedOuts ?? null,
+      structural_k: distribution.components?.structuralK ?? null,
+      pitcher_k_rate: distribution.components?.pitcherK ?? null,
+      opponent_k_rate: distribution.components?.opponentK ?? null,
+      production_engine_version: kCore.VERSION,
+      production_model_version: kCore.MODEL_VERSION,
+      calibration_status: kCore.CALIBRATION_STATUS,
+      target_k_market_excluded_from_expected_k: distribution.targetKMarketExcludedFromExpectedK,
+      distribution_independent_of_target_k_line: distribution.distributionIndependentOfTargetKLine,
+      k_projection: distribution,
+    };
+  }
+
   function replayK(row) {
     const starter = row.starter_input || row.starter;
     const lineup = row.lineup_rows || row.lineup;
@@ -180,6 +223,7 @@
   function replayRow(row) {
     const type = clean(row.replay_type || row.market_type).toUpperCase();
     if (type === 'ML') return replayML(row);
+    if (type === 'K' && clean(row.evaluation_mode).toUpperCase() === 'XK_ONLY') return replayKDistributionOnly(row);
     if (type === 'K') return replayK(row);
     throw new Error(`replay_type/market_type must be ML or K; got ${type}`);
   }
@@ -202,6 +246,6 @@
     };
   }
 
-  const api = {VERSION,LINEAGE,replayML,replayK,replayRow,coreIdentity};
+  const api = {VERSION,LINEAGE,replayML,replayK,replayKDistributionOnly,replayRow,coreIdentity};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })();
