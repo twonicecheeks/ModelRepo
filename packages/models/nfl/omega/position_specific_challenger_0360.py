@@ -26,7 +26,7 @@ HOLDOUT_SEASON=2025
 PROSPECTIVE_SEASON=2026
 FIXED_L2=1.0
 MAX_ABS_CORRECTION=2.5
-POSITIONS=("DL","LB","DB")
+POSITIONS=("DL","EDGE","LB","DB")
 
 LB_FEATURES=(
     "control_xtc","predicted_xto","predicted_snap_share","prior_games_log",
@@ -56,8 +56,9 @@ def num(v:Any,default:float=0.0)->float:
 def canonical_position(v:Any)->str:
     x=str(v or "").strip().upper()
     if x in {"DB","CB","S","FS","SS","SAFETY"}:return "DB"
-    if x in {"LB","ILB","OLB","MLB"}:return "LB"
-    if x in {"DL","DE","DT","NT","EDGE"}:return "DL"
+    if x in {"LB","ILB","MLB"}:return "LB"
+    if x in {"EDGE","DE","OLB"}:return "EDGE"
+    if x in {"DL","DT","NT"}:return "DL"
     return x or "UNK"
 
 
@@ -71,11 +72,13 @@ def canonical_position_row(row:dict[str,Any])->str:
     under LB.
     """
     raw=str(row.get("position") or "").strip().upper()
-    if raw in {"DE","DT","NT","DL","EDGE"}:
+    if raw in {"DE","EDGE","OLB"}:
+        return "EDGE"
+    if raw in {"DT","NT","DL"}:
         return "DL"
     if raw in {"CB","S","FS","SS","DB","SAFETY"}:
         return "DB"
-    if raw in {"ILB","MLB"}:
+    if raw in {"LB","ILB","MLB"}:
         return "LB"
     return canonical_position(row.get("position_group") or raw)
 
@@ -93,7 +96,7 @@ def candidate_feature_names(position:str)->tuple[str,...]:
     p=canonical_position(position)
     if p=="LB":return LB_FEATURES
     if p=="DB":return DB_FEATURES
-    if p=="DL":return ()
+    if p in {"DL","EDGE"}:return ()
     raise ValueError(f"unsupported position group {position}")
 
 
@@ -201,7 +204,7 @@ class ResidualModel:
 def fit_residual(rows:Sequence[dict[str,Any]],position:str,l2:float=FIXED_L2)->ResidualModel:
     p=canonical_position(position)
     names=candidate_feature_names(p)
-    if p=="DL":raise ValueError("DL is no-change control in 0.36")
+    if p in {"DL","EDGE"}:raise ValueError(f"{p} is no-change control in 0.36")
     rr=[r for r in rows if canonical_position_row(r)==p]
     if len(rr)<50:raise ValueError(f"insufficient {p} training rows: {len(rr)}")
     xs=[vector(r,p) for r in rr]
@@ -230,6 +233,8 @@ def apply_challengers(rows:Sequence[dict[str,Any]],models:dict[str,ResidualModel
         z=dict(r);p=canonical_position_row(r);base=max(0.0,num(r.get("control_xtc")))
         if p=="DL":
             pred=base;corr=0.0;track="DL_CONTROL_NO_CHANGE"
+        elif p=="EDGE":
+            pred=base;corr=0.0;track="EDGE_OLB_CONTROL_NO_CHANGE"
         elif p in models:
             pred=models[p].predict(r);corr=pred-base;track=f"{p}_RESIDUAL_SHADOW"
         else:
@@ -269,8 +274,8 @@ def paired_game_bootstrap(rows:Sequence[dict[str,Any]],base_key:str,cand_key:str
 
 def promotion_gate(position:str,base:dict[str,Any],cand:dict[str,Any],boot:dict[str,Any],brier_improvement:float|None)->dict[str,Any]:
     p=canonical_position(position)
-    if p=="DL":
-        return {"status":"KEEP_CONTROL","reason":"DL preregistered no-change reference in 0.36"}
+    if p in {"DL","EDGE"}:
+        return {"status":"KEEP_CONTROL","reason":f"{p} preregistered no-change reference in 0.36"}
     mae=base.get("mae",0)-cand.get("mae",0);rmse=base.get("rmse",0)-cand.get("rmse",0)
     ci=boot.get("ci95",{})
     qualifies=bool(mae>0 and rmse>0 and brier_improvement is not None and brier_improvement>0
