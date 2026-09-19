@@ -145,6 +145,17 @@ def main() -> int:
             parts.append(f"xK MAE {s['xk']['mae']:.3f}")
             parts.append(f"xK bias {s['xk']['bias']:+.3f}")
         print(" · ".join(parts))
+    for ruleset, s in report.get("ruleset", {}).items():
+        if ruleset == "UNKNOWN":
+            continue
+        parts = [f"ruleset {ruleset}: n {s.get('n', 0)}"]
+        if s.get("brier") is not None:
+            parts.append(f"Brier {s['brier']:.6f}")
+            parts.append(f"bias {s['probability_bias']:+.4f}")
+        if s.get("xk"):
+            parts.append(f"xK MAE {s['xk']['mae']:.3f}")
+            parts.append(f"xK bias {s['xk']['bias']:+.3f}")
+        print(" · ".join(parts))
 
     print()
     print("POSTSEASON REGIME AUDIT")
