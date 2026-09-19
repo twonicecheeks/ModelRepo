@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import importlib.util
+import sys
 root=Path(__file__).resolve().parents[2]
 p=root/'packages/models/nfl/omega/position_specific_challenger_0360.py'
-spec=importlib.util.spec_from_file_location('m',p);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+spec=importlib.util.spec_from_file_location('m',p);m=importlib.util.module_from_spec(spec);sys.modules['m']=m;spec.loader.exec_module(m)
 
 assert m.assert_development_only([2017,2024])==(2017,2024)
 try:m.assert_development_only([2025])
@@ -27,7 +28,7 @@ for i in range(80):
  r=dict(base);r['game_id']=f'G{i//4}';r['player_id']=f'P{i}';r['actual_xtc']=5.5 + (i%3)*.2
  rows.append(r)
 mdl=m.fit_residual(rows,'LB')
-z=m.apply_challengers(rows[:2],[].__class__ and {'LB':mdl})
+z=m.apply_challengers(rows[:2],{'LB':mdl})
 assert len(z)==2 and all(r['position_challenger_track']=='LB_RESIDUAL_SHADOW' for r in z)
 
 dl=dict(base);dl.update({'position_group':'DL','actual_xtc':3,'control_xtc':3.1})
