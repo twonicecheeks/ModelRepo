@@ -142,10 +142,10 @@ def main()->int:
         for pos in ("LB","DB"):
             models[pos]=pc.fit_residual(train,pos,pc.FIXED_L2)
         scored=pc.apply_challengers(test,models)
-        for r in scored:pooled[pc.canonical_position(r.get("position_group"))].append(r)
+        for r in scored:pooled[pc.canonical_position_row(r)].append(r)
         fold={"season":year,"trainRows":len(train),"testRows":len(test),"positions":{}}
         for pos in pc.POSITIONS:
-            rr=[r for r in scored if pc.canonical_position(r.get("position_group"))==pos]
+            rr=[r for r in scored if pc.canonical_position_row(r)==pos]
             if not rr:continue
             base=pc.count_metrics(rr,"control_xtc");cand=pc.count_metrics(rr,"position_challenger_xtc")
             bp=probability_metrics(rr,"control_xtc",dist,params);cp=probability_metrics(rr,"position_challenger_xtc",dist,params)
