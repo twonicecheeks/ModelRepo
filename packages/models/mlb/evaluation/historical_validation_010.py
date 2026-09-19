@@ -26,8 +26,8 @@ from random import Random
 from statistics import fmean
 from typing import Any, Iterable
 
-VERSION = "0.1.1"
-LINEAGE = "mlb-historical-validation-v0.1.1-xk-only-2026-09-19"
+VERSION = "0.1.2"
+LINEAGE = "mlb-historical-validation-v0.1.2-diagnostic-splits-2026-09-19"
 EPS = 1e-12
 
 
@@ -453,6 +453,9 @@ def full_audit(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "season_type": split_summary(rs, "season_type"),
         "market_type": split_summary(rs, "market_type"),
         "model_variant": split_summary(rs, "model_variant"),
+        "season": split_summary(rs, "season"),
+        "workload_proxy_source": split_summary(rs, "workload_proxy_source"),
+        "park_resolution_method": split_summary(rs, "park_resolution_method"),
         "stage": split_summary(rs, "stage"),
         "thesis": split_summary(rs, "thesis"),
         "postseason_shift": {
