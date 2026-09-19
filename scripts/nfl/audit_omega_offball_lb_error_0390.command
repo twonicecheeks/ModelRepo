@@ -1,6 +1,8 @@
 #!/bin/zsh
 set -euo pipefail
-ROOT="${MODEL_ROOT_OVERRIDE:-/Users/abbeyfelix/Developer/MODEL}"
+SCRIPT_DIR="${0:A:h}"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+ROOT="${MODEL_ROOT_OVERRIDE:-$REPO_ROOT}"
 VENV="${MODEL_NFL_VENV_OVERRIDE:-$HOME/Library/Application Support/MODEL/nfl-python/phase1b}"
 PY="$VENV/bin/python"
 cd "$ROOT"
