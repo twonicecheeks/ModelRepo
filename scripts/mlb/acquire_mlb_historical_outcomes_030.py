@@ -23,8 +23,8 @@ import uuid
 BASE = "https://statsapi.mlb.com/api/v1"
 POST_TYPES = ("F", "D", "L", "W")
 REG_TYPES = ("R",)
-VERSION = "0.3.1"
-LINEAGE = "mlb-statsapi-historical-outcomes-v0.3.1-tls-fallback-2026-09-19"
+VERSION = "0.3.2"
+LINEAGE = "mlb-statsapi-historical-outcomes-v0.3.2-venue-2026-09-19"
 
 
 def tls_context() -> ssl.SSLContext:
@@ -87,7 +87,7 @@ def fetch_json_with_curl(url: str) -> dict:
             "--max-time",
             "60",
             "--header",
-            "User-Agent: MODEL-MLB-HistoricalValidation/0.3.1",
+            "User-Agent: MODEL-MLB-HistoricalValidation/0.3.2",
             "--header",
             "Accept: application/json",
             url,
@@ -112,7 +112,7 @@ def fetch_json(url: str, retries: int = 4) -> dict:
             req = Request(
                 url,
                 headers={
-                    "User-Agent": "MODEL-MLB-HistoricalValidation/0.3.1",
+                    "User-Agent": "MODEL-MLB-HistoricalValidation/0.3.2",
                     "Accept": "application/json",
                 },
             )
@@ -259,6 +259,8 @@ def game_target(schedule_game: dict, box: dict) -> dict:
         "season": int(str(schedule_game.get("season") or str(schedule_game.get("officialDate") or "")[:4])),
         "game_type": game_type,
         "season_type": "REG" if game_type == "R" else "POST",
+        "venue_id": (schedule_game.get("venue") or {}).get("id"),
+        "venue_name": (schedule_game.get("venue") or {}).get("name"),
         "away": {
             "team_id": away_team.get("id"),
             "name": away_team.get("name"),
