@@ -55,6 +55,7 @@ def main():
         "gameDate": "2025-10-08T23:08:00Z",
         "season": "2025",
         "gameType": "D",
+        "venue": {"id": 3313, "name": "Example Park"},
         "status": {"abstractGameState": "Final", "codedGameState": "F"},
         "teams": {
             "away": {"team": {"id": 1, "name": "Away Club"}, "score": 3},
@@ -83,6 +84,8 @@ def main():
     row = m.game_target(schedule, box)
     assert row["season_type"] == "POST"
     assert row["actual_home_win"] == 1
+    assert row["venue_id"] == 3313
+    assert row["venue_name"] == "Example Park"
     assert row["away"]["starter"]["mlb_id"] == "101"
     assert row["away"]["starter"]["strikeouts"] == 7
     assert row["home"]["starter"]["mlb_id"] == "201"
@@ -90,7 +93,7 @@ def main():
     assert row["source_role"] == "OUTCOME_TARGET_ONLY"
     assert row["outcome_is_postgame_only"] is True
 
-    print("PASS MLB historical outcomes parser 0.3.1")
+    print("PASS MLB historical outcomes parser 0.3.2")
 
 
 if __name__ == "__main__":
