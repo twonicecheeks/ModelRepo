@@ -36,8 +36,8 @@ import subprocess
 import time
 import uuid
 
-VERSION = "0.7.1"
-LINEAGE = "mlb-late-regular-control-v0.7.1-dedupe-coverage-2026-09-19"
+VERSION = "0.7.4"
+LINEAGE = "mlb-late-regular-control-v0.7.4-dedupe-coverage-2026-09-19"
 MLB_BASE = "https://statsapi.mlb.com/api/v1"
 SAVANT_CUSTOM = "https://baseballsavant.mlb.com/leaderboard/custom"
 SAVANT_SEARCH = "https://baseballsavant.mlb.com/statcast_search/csv"
