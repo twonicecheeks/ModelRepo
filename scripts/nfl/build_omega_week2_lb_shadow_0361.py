@@ -97,8 +97,8 @@ def main()->int:
     import tackle_count_distribution as dist
 
     oid,odir,bake,models=resolve_position_artifact(root)
-    if bake.get("positionTaxonomy")!="RAW_POSITION_PRECEDENCE_V1":
-        raise SystemExit("FAIL OMEGA 0.36 artifact predates hardened edge-defender taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
+    if bake.get("positionTaxonomy")!="RAW_POSITION_EDGE_SPLIT_V2":
+        raise SystemExit("FAIL OMEGA 0.36 artifact predates four-way DL/EDGE/LB/DB taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
     gates=bake.get("gateSummary",{})
     if gates.get("LB")!="NEXT_STAGE_SHADOW_SIGNAL":
         raise SystemExit(f"FAIL LB has not cleared historical shadow gate: {gates.get('LB')}")
@@ -106,6 +106,8 @@ def main()->int:
         raise SystemExit("FAIL DB unexpectedly cleared gate; 0.36.1 is intentionally LB-only")
     if gates.get("DL")!="KEEP_CONTROL":
         raise SystemExit("FAIL DL control-preservation gate drift")
+    if gates.get("EDGE")!="KEEP_CONTROL":
+        raise SystemExit("FAIL EDGE/OLB control-preservation gate drift")
     if bake.get("holdoutOpened") is not False or int(bake.get("prospectiveRowsRead") or 0)!=0:
         raise SystemExit("FAIL OMEGA 0.36 development integrity drift")
 
@@ -185,7 +187,7 @@ def main()->int:
         "sourceWeek2FreezeId":fid,"sourceWeek2FreezeSha256":sha(dual),
         "sourcePositionArtifactId":oid,"sourcePositionBakeoffSha256":sha(odir/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json"),
         "rows":len(out),"games":len({r["game_id"] for r in out}),"lbRows":lb_n,"lbShiftedRows":shifted,
-        "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1","reclassifiedRows":reclassified,
+        "positionTaxonomy":"RAW_POSITION_EDGE_SPLIT_V2","reclassifiedRows":reclassified,
         "excludedAlreadyStartedGames":sorted(excluded_games),
         "gateSummary":gates,
         "trackPolicy":{"LB":"0.36 residual shadow","DB":"frozen control","DL":"frozen control","EDGE":"frozen control"},
