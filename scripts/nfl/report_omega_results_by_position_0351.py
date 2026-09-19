@@ -66,6 +66,24 @@ def pos_label(v) -> str:
     return x or "UNKNOWN"
 
 
+def canonical_position_row(row:dict) -> str:
+    raw=str(row.get("position") or "").strip().upper()
+    if raw in {"DE","DT","NT","DL","EDGE"}:
+        return "DL"
+    if raw in {"CB","S","FS","SS","DB","SAFETY"}:
+        return "DB"
+    if raw in {"ILB","MLB"}:
+        return "LB"
+    grp=str(row.get("position_group") or raw).strip().upper()
+    if grp in {"DE","DT","NT","DL","EDGE"}:
+        return "DL"
+    if grp in {"CB","S","FS","SS","DB","SAFETY"}:
+        return "DB"
+    if grp in {"LB","ILB","OLB","MLB"}:
+        return "LB"
+    return grp or "UNKNOWN"
+
+
 def evaluation_times(rows:list[dict]) -> dict[str,str]:
     out={}
     for r in rows:
@@ -123,7 +141,7 @@ def dedupe_decisions(rows:list[dict]) -> list[dict]:
 
 def position_map(player_rows:list[dict]) -> dict[tuple[str,str],str]:
     return {
-        (str(r.get("game_id") or ""),str(r.get("player_id") or "")):pos_label(r.get("position_group"))
+        (str(r.get("game_id") or ""),str(r.get("player_id") or "")):canonical_position_row(r)
         for r in player_rows
     }
 
@@ -133,7 +151,7 @@ def with_positions(rows:list[dict], pmap:dict[tuple[str,str],str]) -> list[dict]
     for r in rows:
         x=dict(r)
         key=(str(x.get("game_id") or ""),str(x.get("player_id") or ""))
-        x["position_group"]=pos_label(x.get("position_group") or pmap.get(key))
+        x["position_group"]=pmap.get(key) or canonical_position_row(x)
         out.append(x)
     return out
 
@@ -327,6 +345,9 @@ def main():
 
     et=evaluation_times(evals)
     latest_players,latest_eid=latest_player_rows(players,et)
+    reclassified_forecasts=sum(canonical_position_row(r)!=pos_label(r.get("position_group")) for r in latest_players)
+    for r in latest_players:
+        r["position_group"]=canonical_position_row(r)
     latest_thresholds=latest_threshold_rows(thresholds,latest_eid)
     pmap=position_map(latest_players)
     latest_thresholds=with_positions(latest_thresholds,pmap)
@@ -385,6 +406,8 @@ def main():
         "coverage":{
             "sourceEvaluationRows":len(evals),"sourcePlayerScoreRows":len(players),
             "latestUniquePlayerGameForecasts":len(latest_players),
+            "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1",
+            "reclassifiedForecastRows":reclassified_forecasts,
             "latestThresholdRows":len(latest_thresholds),
             "dedupedDecisionRows":len(decisions),
             "currentGenerationMarket035Rows":len(market035),
@@ -432,6 +455,7 @@ def main():
         "",
         f"Season: {a.season}",
         f"Unique latest player-game forecasts: {len(latest_players)}",
+        f"Position taxonomy: RAW_POSITION_PRECEDENCE_V1 · reclassified forecast rows {reclassified_forecasts}",
         f"Threshold probability rows: {len(latest_thresholds)}",
         f"Deduped legacy/prospective decisions: {len(decisions)}",
         f"Current-generation 0.35 graded market rows: {len(market035)} · clean subset {len(market035_clean)}",
