@@ -72,7 +72,7 @@ def main():
     assert row["source_role"] == "OUTCOME_TARGET_ONLY"
     assert row["outcome_is_postgame_only"] is True
 
-    print("PASS MLB historical outcomes parser 0.3.0")
+    print("PASS MLB historical outcomes parser 0.3.1")
 
 
 if __name__ == "__main__":
