@@ -40,4 +40,14 @@ dd=m.with_positions(dd,pmap)
 by=m.grouped(dd,m.decision_metrics)
 assert by['LB']['wins']==1 and by['DB']['losses']==1
 assert by['LB']['sampleStatus']=='VERY_SMALL_SAMPLE'
+
+m35=[
+ {'position_group':'LB','control_selected_hit':'1','control_realized_roi':'1.1','control_selected_probability':'.65'},
+ {'position_group':'LB','control_selected_hit':'0','control_realized_roi':'-1','control_selected_probability':'.62'},
+ {'position_group':'DB','control_selected_hit':'1','control_realized_roi':'.9','control_selected_probability':'.58'},
+]
+m35all=m.market035_metrics(m35)
+assert m35all['n']==3 and m35all['wins']==2 and m35all['losses']==1
+m35by=m.grouped(m35,m.market035_metrics)
+assert m35by['LB']['n']==2 and m35by['DB']['wins']==1
 print('PASS OMEGA 0.35.1 cumulative results-by-position contracts')
