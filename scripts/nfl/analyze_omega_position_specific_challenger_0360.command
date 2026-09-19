@@ -8,4 +8,5 @@ if [[ ! -x "$PY" ]]; then
   zsh scripts/nfl/bootstrap_phase1_python.command >/dev/null
 fi
 "$PY" tests/nfl/test_omega_position_specific_challenger_0360.py
+"$PY" tests/nfl/test_omega_lb_edge_archetype_0363.py
 exec "$PY" scripts/nfl/analyze_omega_position_specific_challenger_0360.py   --root "$ROOT"   --evaluation-seasons "${MODEL_OMEGA_POSITION_EVAL_SEASONS:-2021,2022,2023,2024}"   --bootstrap-reps "${MODEL_OMEGA_POSITION_BOOTSTRAP_REPS:-1000}"
