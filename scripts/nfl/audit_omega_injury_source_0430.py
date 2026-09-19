@@ -34,12 +34,13 @@ SEALED_YEAR=2025
 PROSPECTIVE_YEAR=2026
 INJURY_BASE="https://github.com/nflverse/nflverse-data/releases/download/injuries"
 SCHEDULE_URL="https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv"
-REQUIRED=(
-    "season","season_type","team","week","gsis_id","position","full_name",
+CORE_REQUIRED=(
+    "season","team","week","gsis_id","position","full_name",
     "report_primary_injury","report_secondary_injury","report_status",
     "practice_primary_injury","practice_secondary_injury","practice_status",
     "date_modified",
 )
+SEASON_TYPE_ALIASES=("season_type","game_type")
 
 def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z")
@@ -109,9 +110,12 @@ def load_schedule(path:Path,years:set[int]):
 def parquet_rows(path:Path):
     import pyarrow.parquet as pq
     pf=pq.ParquetFile(path);names=list(pf.schema_arrow.names)
-    miss=[c for c in REQUIRED if c not in names]
+    miss=[c for c in CORE_REQUIRED if c not in names]
     if miss:raise ValueError(f"{path.name} missing required injury columns: {miss}")
-    return names,pf.read(columns=list(REQUIRED)).to_pylist()
+    type_field=next((x for x in SEASON_TYPE_ALIASES if x in names),None)
+    cols=list(CORE_REQUIRED)+([type_field] if type_field else [])
+    rows=pf.read(columns=cols).to_pylist()
+    return names,type_field,rows
 
 def timing_class(modified,gameday):
     md=parse_date(modified);gd=parse_date(gameday)
@@ -121,8 +125,18 @@ def timing_class(modified,gameday):
     if md==gd:return "SAME_GAMEDAY"
     return "AFTER_GAMEDAY"
 
-def summarize_year(year,rows,schedule):
-    reg=[r for r in rows if str(r.get("season_type") or "").strip().upper()=="REG"]
+def summarize_year(year,rows,schedule,type_field):
+    schedule_weeks=[k[1] for k in schedule if k[0]==year]
+    max_reg_week=max(schedule_weeks) if schedule_weeks else 0
+    if type_field:
+        reg=[r for r in rows if str(r.get(type_field) or "").strip().upper()=="REG"]
+        season_type_policy=f"EXPLICIT_{type_field.upper()}"
+    else:
+        # Conservative legacy fallback: keep only rows whose week falls inside the
+        # regular-season schedule window. Team-week schedule coverage is still audited
+        # below, so malformed/unjoinable regular-window rows remain visible as failures.
+        reg=[r for r in rows if 1<=asint(r.get("week"))<=max_reg_week]
+        season_type_policy="INFERRED_FROM_REGULAR_SCHEDULE_WEEK_WINDOW"
     keys=Counter()
     report=Counter();practice=Counter();timing=Counter();weeks=Counter()
     gsis=0;joined=0;parsed=0
@@ -148,7 +162,8 @@ def summarize_year(year,rows,schedule):
     n=len(reg)
     dated=sum(timing[x] for x in ("STRICT_PRIOR_DAY","SAME_GAMEDAY","AFTER_GAMEDAY"))
     return {
-        "year":year,"rows":n,"uniquePlayerTeamWeekKeys":len(keys),
+        "year":year,"rows":n,"seasonTypeField":type_field,"seasonTypePolicy":season_type_policy,
+        "regularSeasonMaxWeek":max_reg_week,"uniquePlayerTeamWeekKeys":len(keys),
         "duplicateExtraRows":duplicate_rows,"duplicatedKeys":duplicated_keys,
         "duplicateExtraRowRate":duplicate_rows/n if n else None,
         "gsisIdCoverage":gsis/n if n else None,
@@ -185,14 +200,14 @@ def main():
         for year in years:
             name=f"injuries_{year}.parquet";url=f"{INJURY_BASE}/{name}";p=staging/name
             print(f"FETCH injury {year}: {url}");download(url,p)
-            names,rows=parquet_rows(p)
-            summary=summarize_year(year,rows,schedule);summary["columns"]=names
+            names,type_field,rows=parquet_rows(p)
+            summary=summarize_year(year,rows,schedule,type_field);summary["columns"]=names
             summaries.append(summary)
             assets.append({"source":"injuries","year":year,"filename":name,"url":url,
                            "sha256":sha(p),"bytes":p.stat().st_size,"rows":len(rows)})
 
         target=[s for s in summaries if s["year"] in {2021,2022,2023,2024}]
-        required_schema=all(all(c in s["columns"] for c in REQUIRED) for s in target)
+        required_schema=all(all(c in s["columns"] for c in CORE_REQUIRED) for s in target)
         gsis_ok=all((s["gsisIdCoverage"] or 0)>=.98 for s in target)
         join_ok=all((s["scheduleJoinCoverage"] or 0)>=.98 for s in target)
         parse_ok=all((s["dateParseCoverage"] or 0)>=.98 for s in target)
@@ -227,7 +242,7 @@ def main():
                f"CONCLUSION: {conclusion}",f"NEXT GATE: {next_gate}",""]
         for s in summaries:
             lines += [
-                f"{s['year']} · rows {s['rows']:,} · GSIS {s['gsisIdCoverage']:.1%} · schedule join {s['scheduleJoinCoverage']:.1%} · "
+                f"{s['year']} · rows {s['rows']:,} · type {s['seasonTypePolicy']} · GSIS {s['gsisIdCoverage']:.1%} · schedule join {s['scheduleJoinCoverage']:.1%} · "
                 f"date parse {s['dateParseCoverage']:.1%} · duplicate-extra {s['duplicateExtraRowRate']:.2%}",
                 f"  timing: prior {s['strictPriorDayRateAmongDated']:.1%} · same-day {s['sameGamedayRateAmongDated']:.1%} · after {s['afterGamedayRateAmongDated']:.1%}",
                 f"  report statuses: {json.dumps(s['reportStatusCounts'],sort_keys=True)}",
