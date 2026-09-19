@@ -118,8 +118,8 @@ def main()->int:
         "sourcePositionShadow":str(shadow.relative_to(root)),"sourcePositionShadowSha256":sha(shadow),
         "sourceMarketComparison":str(comparison.relative_to(root) if comparison.is_relative_to(root) else comparison),
         "sourceMarketComparisonSha256":sha(comparison),"rows":len(out),"unmatchedPastOrUnavailableRows":missing,
-        "lbRows":sum(str(r.get("position_group"))=="LB" for r in out),
-        "lbSideChangesVsControl":sum(str(r.get("position_group"))=="LB" and r.get("position_shadow_agrees_control")=="FALSE" for r in out),
+        "lbRows":sum(str(r.get("position_shadow_track") or "").startswith("LB_") for r in out),
+        "lbSideChangesVsControl":sum(str(r.get("position_shadow_track") or "").startswith("LB_") and r.get("position_shadow_agrees_control")=="FALSE" for r in out),
         "integrity":{"marketReadDownstreamOnly":True,"modelRefits":0,"frozenOmegaMutation":False,
                      "positionShadowPromotion":False,"oddsPapiRequests":0},
     }
@@ -128,11 +128,11 @@ def main()->int:
     print("OMEGA 0.36.2 — POSITION SHADOW DOWNSTREAM MARKET COMPARISON")
     print(f"PASS rows {len(out)} · LB {audit['lbRows']} · LB control-side changes {audit['lbSideChangesVsControl']}")
     print("PASS SHADOW ONLY · frozen control unchanged · market downstream only")
-    ranked=sorted([r for r in out if str(r.get("position_group"))=="LB"],key=lambda r:float(r.get("position_shadow_best_ev") or -999),reverse=True)
+    ranked=sorted([r for r in out if str(r.get("position_shadow_track") or "").startswith("LB_")],key=lambda r:float(r.get("position_shadow_best_ev") or -999),reverse=True)
     print("TOP LB SHADOW ROWS:")
     for r in ranked[:15]:
         cev=num(r.get("control_best_ev"));sev=num(r.get("position_shadow_best_ev"))
-        print(f"  {r.get('game_id')} · {r.get('player_name')} · CONTROL {r.get('control_best_side')} {'' if cev is None else f'{100*cev:+.1f}%'} · LB-shadow {r.get('position_shadow_best_side')} {'' if sev is None else f'{100*sev:+.1f}%'} · ΔxTC {float(r.get('position_shadow_delta_xtc') or 0):+.3f}")
+        print(f"  {r.get('game_id')} · {r.get('player_name')} · {r.get('book')} {r.get('line')} · CONTROL {r.get('control_best_side')} {'' if cev is None else f'{100*cev:+.1f}%'} · LB-shadow {r.get('position_shadow_best_side')} {'' if sev is None else f'{100*sev:+.1f}%'} · ΔxTC {float(r.get('position_shadow_delta_xtc') or 0):+.3f}")
     print(f"COMPARISON: {cp}")
     print(f"AUDIT: {apath}")
     return 0
