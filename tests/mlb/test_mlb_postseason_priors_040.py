@@ -49,6 +49,7 @@ def main():
     assert g["gameType"] == ["R"]
 
     assert m.prior_date("2024-10-01") == "2024-09-30"
+    assert m.VERSION == "0.4.1"
     cert = ssl.SSLCertVerificationError(1, "CERTIFICATE_VERIFY_FAILED")
     assert m.certificate_verify_error(cert)
     assert not m.certificate_verify_error(RuntimeError("other error"))
@@ -71,7 +72,7 @@ def main():
         pointer.write_text("data/normalized/mlb/historical_outcomes_030/run\n", encoding="utf-8")
         assert m.resolve_outcomes(root, None) == out
 
-    print("PASS MLB postseason priors acquisition 0.4.0")
+    print("PASS MLB postseason priors acquisition 0.4.1")
 
 
 if __name__ == "__main__":
