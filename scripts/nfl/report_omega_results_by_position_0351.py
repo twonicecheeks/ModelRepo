@@ -143,6 +143,23 @@ def dedupe_decisions(rows:list[dict]) -> list[dict]:
     return [v[2] for v in best.values()]
 
 
+def week2_position_map(root:Path) -> dict[tuple[str,str],str]:
+    """Canonical player-game positions from immutable Week-2 dual-track freeze."""
+    ptr=root/"data/prospective/nfl/omega/CURRENT_OMEGA_WEEK2_DUAL_TRACK_FREEZE"
+    if not ptr.exists():
+        return {}
+    fid=ptr.read_text(encoding="utf-8").strip()
+    p=root/"data/prospective/nfl/omega_week2_dual_track_0330"/fid/"OMEGA_0.33_WEEK2_DUAL_TRACK.csv"
+    if not p.exists():
+        return {}
+    out={}
+    for r in read_csv(p):
+        gid=str(r.get("game_id") or "");pid=str(r.get("player_id") or "")
+        if gid and pid:
+            out[(gid,pid)]=canonical_position_row(r)
+    return out
+
+
 def position_map(player_rows:list[dict]) -> dict[tuple[str,str],str]:
     return {
         (str(r.get("game_id") or ""),str(r.get("player_id") or "")):canonical_position_row(r)
@@ -354,6 +371,8 @@ def main():
         r["position_group"]=canonical_position_row(r)
     latest_thresholds=latest_threshold_rows(thresholds,latest_eid)
     pmap=position_map(latest_players)
+    week2_pmap=week2_position_map(root)
+    pmap.update(week2_pmap)
     latest_thresholds=with_positions(latest_thresholds,pmap)
     decisions=with_positions(dedupe_decisions(decisions),pmap)
     market035=load_market_calibration_0350(root,a.season)
@@ -412,6 +431,7 @@ def main():
             "latestUniquePlayerGameForecasts":len(latest_players),
             "positionTaxonomy":"RAW_POSITION_EDGE_SPLIT_V2",
             "reclassifiedForecastRows":reclassified_forecasts,
+            "week2CanonicalPositionRows":len(week2_pmap),
             "latestThresholdRows":len(latest_thresholds),
             "dedupedDecisionRows":len(decisions),
             "currentGenerationMarket035Rows":len(market035),
@@ -459,7 +479,7 @@ def main():
         "",
         f"Season: {a.season}",
         f"Unique latest player-game forecasts: {len(latest_players)}",
-        f"Position taxonomy: RAW_POSITION_EDGE_SPLIT_V2 · reclassified forecast rows {reclassified_forecasts}",
+        f"Position taxonomy: RAW_POSITION_EDGE_SPLIT_V2 · reclassified forecast rows {reclassified_forecasts} · Week2 canonical map {len(week2_pmap)}",
         f"Threshold probability rows: {len(latest_thresholds)}",
         f"Deduped legacy/prospective decisions: {len(decisions)}",
         f"Current-generation 0.35 graded market rows: {len(market035)} · clean subset {len(market035_clean)}",
