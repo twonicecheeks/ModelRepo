@@ -67,24 +67,26 @@ def pos_label(v) -> str:
 
 
 def canonical_position_row(row:dict) -> str:
-    raw=str(row.get("position") or "").strip().upper()
-    if raw in {"DE","EDGE","OLB"}:
-        return "EDGE"
-    if raw in {"DT","NT","DL"}:
-        return "DL"
-    if raw in {"CB","S","FS","SS","DB","SAFETY"}:
-        return "DB"
-    if raw in {"LB","ILB","MLB"}:
-        return "LB"
-    grp=str(row.get("position_group") or raw).strip().upper()
-    if grp in {"DE","EDGE","OLB"}:
-        return "EDGE"
-    if grp in {"DT","NT","DL"}:
-        return "DL"
-    if grp in {"CB","S","FS","SS","DB","SAFETY"}:
-        return "DB"
-    if grp in {"LB","ILB","MLB"}:
-        return "LB"
+    vals=[]
+    for key in (
+        "position","position_group","depth_position","current_depth_position",
+        "previous_week_depth_position","depth_role",
+    ):
+        s=str(row.get(key) or "").strip().upper()
+        if s:
+            vals.append(s.replace("-","").replace("_","").replace(" ",""))
+    toks=set(vals)
+    db={"DB","CB","S","FS","SS","SAFETY"}
+    edge={"DE","EDGE","OLB","LDE","RDE","LE","RE","LEO","RUSH","JACK"}
+    interior={"DL","DT","NT","IDL","LDT","RDT"}
+    offball={"LB","ILB","MLB"}
+    if toks & db:return "DB"
+    if toks & edge:return "EDGE"
+    if (toks & offball) and (toks & interior):return "EDGE"
+    if toks & interior:return "DL"
+    if toks & {"ILB","MLB"}:return "LB"
+    if "LB" in toks:return "LB"
+    grp=str(row.get("position_group") or row.get("position") or "").strip().upper()
     return grp or "UNKNOWN"
 
 
@@ -429,7 +431,7 @@ def main():
         "coverage":{
             "sourceEvaluationRows":len(evals),"sourcePlayerScoreRows":len(players),
             "latestUniquePlayerGameForecasts":len(latest_players),
-            "positionTaxonomy":"RAW_POSITION_EDGE_SPLIT_V2",
+            "positionTaxonomy":"DEPTH_CONFLICT_EDGE_SPLIT_V3",
             "reclassifiedForecastRows":reclassified_forecasts,
             "week2CanonicalPositionRows":len(week2_pmap),
             "latestThresholdRows":len(latest_thresholds),
@@ -479,7 +481,7 @@ def main():
         "",
         f"Season: {a.season}",
         f"Unique latest player-game forecasts: {len(latest_players)}",
-        f"Position taxonomy: RAW_POSITION_EDGE_SPLIT_V2 · reclassified forecast rows {reclassified_forecasts} · Week2 canonical map {len(week2_pmap)}",
+        f"Position taxonomy: DEPTH_CONFLICT_EDGE_SPLIT_V3 · reclassified forecast rows {reclassified_forecasts} · Week2 canonical map {len(week2_pmap)}",
         f"Threshold probability rows: {len(latest_thresholds)}",
         f"Deduped legacy/prospective decisions: {len(decisions)}",
         f"Current-generation 0.35 graded market rows: {len(market035)} · clean subset {len(market035_clean)}",
