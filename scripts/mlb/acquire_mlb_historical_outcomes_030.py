@@ -53,6 +53,57 @@ def atomic_write(path: Path, data: bytes) -> None:
     os.replace(tmp, path)
 
 
+def certificate_verify_error(exc: BaseException) -> bool:
+    cur: BaseException | None = exc
+    seen: set[int] = set()
+    while cur is not None and id(cur) not in seen:
+        seen.add(id(cur))
+        if isinstance(cur, ssl.SSLCertVerificationError):
+            return True
+        if "CERTIFICATE_VERIFY_FAILED" in str(cur).upper():
+            return True
+        nxt = getattr(cur, "reason", None)
+        if isinstance(nxt, BaseException):
+            cur = nxt
+            continue
+        cur = getattr(cur, "__cause__", None) or getattr(cur, "__context__", None)
+    return False
+
+
+def fetch_json_with_curl(url: str) -> dict:
+    curl = Path("/usr/bin/curl")
+    if not curl.exists():
+        raise RuntimeError("Python TLS verification failed and /usr/bin/curl is unavailable")
+    proc = subprocess.run(
+        [
+            str(curl),
+            "--fail",
+            "--silent",
+            "--show-error",
+            "--location",
+            "--connect-timeout",
+            "20",
+            "--max-time",
+            "60",
+            "--header",
+            "User-Agent: MODEL-MLB-HistoricalValidation/0.3.1",
+            "--header",
+            "Accept: application/json",
+            url,
+        ],
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if proc.returncode != 0:
+        err = proc.stderr.decode("utf-8", errors="replace").strip()
+        raise RuntimeError(f"curl GET failed ({proc.returncode}): {err}")
+    try:
+        return json.loads(proc.stdout.decode("utf-8"))
+    except Exception as exc:
+        raise RuntimeError(f"curl returned invalid JSON from {url}: {exc}") from exc
+
+
 def fetch_json(url: str, retries: int = 4) -> dict:
     last = None
     for attempt in range(retries):
@@ -60,7 +111,7 @@ def fetch_json(url: str, retries: int = 4) -> dict:
             req = Request(
                 url,
                 headers={
-                    "User-Agent": "MODEL-MLB-HistoricalValidation/0.3.0",
+                    "User-Agent": "MODEL-MLB-HistoricalValidation/0.3.1",
                     "Accept": "application/json",
                 },
             )
@@ -68,6 +119,14 @@ def fetch_json(url: str, retries: int = 4) -> dict:
                 return json.load(resp)
         except Exception as exc:
             last = exc
+            if certificate_verify_error(exc):
+                # macOS Python installations can lack the system trust chain even
+                # while the OS-native curl transport verifies the same HTTPS peer.
+                # Preserve certificate verification; never use an unverified context.
+                try:
+                    return fetch_json_with_curl(url)
+                except Exception as curl_exc:
+                    last = RuntimeError(f"Python TLS failed ({exc}); curl fallback failed ({curl_exc})")
             if attempt + 1 < retries:
                 time.sleep(0.5 * (2 ** attempt))
     raise RuntimeError(f"GET failed after {retries} attempts: {url}: {last}")
@@ -307,7 +366,7 @@ def main() -> int:
     atomic_write(pointer, (str(out_dir.relative_to(root)) + "\n").encode("utf-8"))
 
     print()
-    print("MLB HISTORICAL OUTCOMES 0.3.0")
+    print(f"MLB HISTORICAL OUTCOMES {VERSION}")
     print(f"Scope: {args.scope} · seasons {seasons[0]}-{seasons[-1]}")
     print(f"Rows: {len(rows):,} · errors {len(errors)}")
     print(f"Boxscore cache hits: {cache_hits:,} · downloads {downloads:,}")
