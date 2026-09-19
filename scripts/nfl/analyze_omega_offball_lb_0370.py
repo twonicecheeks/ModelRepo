@@ -101,8 +101,8 @@ def main()->int:
         test_team=[r for r in team_dec if int(r["season"])==year]
         train_player=[r for r in player_dec if int(r["season"])<year]
         test_player=[r for r in player_dec if int(r["season"])==year]
-        train_alloc=[r for r in train_player if float(r.get("actual_lb_pool") or 0)>0]
-        test_alloc=[r for r in test_player if float(r.get("actual_lb_pool") or 0)>0]
+        train_alloc=[r for r in train_player if float(r.get("actual_lb_pool") or 0)>0 and float(r.get("lb_player_count") or 0)>=2]
+        test_alloc=[r for r in test_player if float(r.get("actual_lb_pool") or 0)>0 and float(r.get("lb_player_count") or 0)>=2]
         if min(len(train_team),len(train_player),len(test_team),len(test_player))<=0:
             raise ValueError(f"empty OMEGA 0.37 fold {year}")
 
@@ -159,7 +159,7 @@ def main()->int:
     tbase=lb.team_metrics(pooled_teams,"control_lb_pool")
     tcand=lb.team_metrics(pooled_teams,"omega_037_team_pool")
     # Allocation share is defined only when the realized clean-LB pool is positive.
-    pooled_alloc=[r for r in pooled_players if float(r.get("actual_lb_pool") or 0)>0]
+    pooled_alloc=[r for r in pooled_players if float(r.get("actual_lb_pool") or 0)>0 and float(r.get("lb_player_count") or 0)>=2]
     abase=lb.allocation_metrics(pooled_alloc,"control_lb_share")
     acand=lb.allocation_metrics(pooled_alloc,"predicted_lb_share")
     team_imp=tbase["mae"]-tcand["mae"]
@@ -179,7 +179,7 @@ def main()->int:
     full_clean=[r for r in full_control if arch.explicit_role_label(r)=="OFFBALL_LB" and 2017<=int(r["season"])<=2024]
     full_team,full_player=lb.build_decomposition_rows(full_clean)
     team_model=lb.fit_ridge(full_team,lb.TEAM_FEATURES,"actual_lb_pool",lb.FIXED_L2_TEAM)
-    full_alloc=[r for r in full_player if float(r.get("actual_lb_pool") or 0)>0]
+    full_alloc=[r for r in full_player if float(r.get("actual_lb_pool") or 0)>0 and float(r.get("lb_player_count") or 0)>=2]
     alloc_model=lb.fit_ridge(full_alloc,lb.ALLOC_FEATURES,"actual_lb_share",lb.FIXED_L2_ALLOC,clip_high=1.0)
 
     run_id=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")+"_"+uuid.uuid4().hex[:8]
