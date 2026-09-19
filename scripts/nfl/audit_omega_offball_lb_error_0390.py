@@ -134,8 +134,10 @@ def grouped(rows,key):
 def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--root",default="/Users/abbeyfelix/Developer/MODEL")
+    ap.add_argument("--data-root",default="")
     ap.add_argument("--evaluation-seasons",default="2021,2022,2023,2024")
     args=ap.parse_args();root=Path(args.root).expanduser().resolve()
+    data_root=Path(args.data_root).expanduser().resolve() if args.data_root else root
     years=[int(x) for x in args.evaluation_seasons.split(",") if x.strip()]
     if years!=sorted(years) or not years or min(years)<2018 or max(years)>=2025:
         raise ValueError("evaluation seasons must be chronological development years <2025")
@@ -148,11 +150,11 @@ def main()->int:
     import lb_edge_archetype_0363 as arch
     import analyze_omega_position_specific_challenger_0360 as base
 
-    ptr=root/"data/models/nfl/CURRENT_OMEGA_TACKLE_PROBABILITY_FROZEN"
+    ptr=data_root/"data/models/nfl/CURRENT_OMEGA_TACKLE_PROBABILITY_FROZEN"
     if not ptr.exists():raise FileNotFoundError(ptr)
     sid=ptr.read_text(encoding="utf-8").strip()
-    foundation=root/"data/normalized/nfl/omega_tackle"/sid
-    exdir=root/"data/normalized/nfl/omega_tackle_exposure"/sid
+    foundation=data_root/"data/normalized/nfl/omega_tackle"/sid
+    exdir=data_root/"data/normalized/nfl/omega_tackle_exposure"/sid
     histp=rcsv(foundation/"omega_tackle_play_opportunities.csv")
     histe=rcsv(foundation/"omega_tackle_credit_events.csv")
     histex=rcsv(exdir/"omega_tackle_exposure_player_games.csv")
@@ -211,6 +213,7 @@ def main()->int:
     report={
         "schemaVersion":"OMEGA_OFFBALL_LB_ERROR_ATTRIBUTION_0.39.0",
         "createdAt":datetime.now(timezone.utc).isoformat(),"sourceSnapshotId":sid,
+        "codeRoot":str(root),"dataRoot":str(data_root),
         "evaluationSeasons":years,"sealedHoldoutSeason":2025,"prospectiveSeason":2026,
         "holdoutOpened":False,"prospectiveRowsRead":0,"marketFieldsRead":0,"oddsPapiRequests":0,
         "rows":len(pooled),"pooled":p,"folds":folds,
@@ -221,7 +224,7 @@ def main()->int:
         "integrity":{"diagnosticOracleOnly":True,"modelFit":False,"productionPromotion":False,"frozenOmegaMutation":False},
     }
     run_id=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")+"_"+uuid.uuid4().hex[:8]
-    out=root/"data/models/nfl/omega_lb_error_audit_0390"/run_id;out.mkdir(parents=True,exist_ok=False)
+    out=data_root/"data/models/nfl/omega_lb_error_audit_0390"/run_id;out.mkdir(parents=True,exist_ok=False)
     jp=out/"OMEGA_0.39.0_LB_ERROR_ATTRIBUTION.json";jp.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     lines=[
         "OMEGA 0.39.0 — OFF-BALL LB ERROR ATTRIBUTION","",
@@ -255,7 +258,7 @@ def main()->int:
     lines += ["","Oracle swaps are historical diagnostics only; they are not forecast features.",
               f"REPORT: {jp}"]
     tp=out/"OMEGA_0.39.0_LB_ERROR_ATTRIBUTION.txt";tp.write_text("\n".join(lines)+"\n",encoding="utf-8")
-    ptr=root/"data/models/nfl/CURRENT_OMEGA_LB_ERROR_AUDIT_0390";ptr.parent.mkdir(parents=True,exist_ok=True)
+    ptr=data_root/"data/models/nfl/CURRENT_OMEGA_LB_ERROR_AUDIT_0390";ptr.parent.mkdir(parents=True,exist_ok=True)
     tmp=ptr.with_name("."+ptr.name+".tmp");tmp.write_text(run_id+"\n",encoding="utf-8");os.replace(tmp,ptr)
     print();print(tp.read_text(encoding="utf-8"))
     print("PASS OMEGA 0.39 error attribution · diagnostic only · production unchanged")
