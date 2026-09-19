@@ -63,15 +63,24 @@ const m=require(path.join(ROOT,'scripts/mlb/build_mlb_postseason_replay_050.js')
   assert(!lu.hitters.some(x=>x.mlbId==='99'));
 })();
 
-(function testParkTeamFallback(){
-  const fakeCore={getForVenue:()=>null};
+(function testParkAliasesAndTeamFallback(){
   const bundle={rows:[
     {team:'Dodgers',venue:'UNIQLO Field at Dodger Stadium'},
     {team:'Astros',venue:'Daikin Park'}
   ]};
-  const x=m.resolvePark(fakeCore,bundle,'Dodger Stadium','LAD');
-  assert.strictEqual(x.method,'HOME_TEAM_IDENTITY');
-  assert.strictEqual(x.row.team,'Dodgers');
+  const fakeCore={
+    getForVenue:(b,name)=>b.rows.find(r=>r.venue===name)||null
+  };
+  const lad=m.resolvePark(fakeCore,bundle,'Dodger Stadium','LAD');
+  assert.strictEqual(lad.method,'HISTORICAL_VENUE_ALIAS');
+  assert.strictEqual(lad.row.team,'Dodgers');
+  const hou=m.resolvePark(fakeCore,bundle,'Minute Maid Park','HOU');
+  assert.strictEqual(hou.method,'HISTORICAL_VENUE_ALIAS');
+  assert.strictEqual(hou.row.team,'Astros');
+
+  const noAliasCore={getForVenue:()=>null};
+  const fallback=m.resolvePark(noAliasCore,{rows:[{team:'Dodgers',venue:'some dodger stadium label'}]},'Unknown','LAD');
+  assert.strictEqual(fallback.method,'HOME_TEAM_IDENTITY');
 })();
 
 (function testLegacyTeamCode(){
@@ -85,4 +94,4 @@ const m=require(path.join(ROOT,'scripts/mlb/build_mlb_postseason_replay_050.js')
   assert.strictEqual(m.priorDate('2025-01-01'),'2024-12-31');
 })();
 
-console.log('PASS MLB postseason history-proxy replay builder 0.5.2');
+console.log('PASS MLB postseason history-proxy replay builder 0.5.3');
