@@ -16,14 +16,15 @@ import hashlib
 import json
 import os
 import ssl
+import subprocess
 import time
 import uuid
 
 BASE = "https://statsapi.mlb.com/api/v1"
 POST_TYPES = ("F", "D", "L", "W")
 REG_TYPES = ("R",)
-VERSION = "0.3.0"
-LINEAGE = "mlb-statsapi-historical-outcomes-v0.3.0-2026-09-19"
+VERSION = "0.3.1"
+LINEAGE = "mlb-statsapi-historical-outcomes-v0.3.1-tls-fallback-2026-09-19"
 
 
 def tls_context() -> ssl.SSLContext:
