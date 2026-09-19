@@ -47,10 +47,10 @@ for gid in sorted({r['game_id'] for r in player}):
         rr=[r for r in player if r['game_id']==gid and r['team']==tm]
         assert abs(sum(r['actual_lb_share'] for r in rr)-1)<1e-12
 
-train_team=[r for r in team if r['week']<=7]
-test_team=[r for r in team if r['week']>=8]
-train_player=[r for r in player if r['week']<=7]
-test_player=[r for r in player if r['week']>=8]
+train_team=[r for r in team if r['week']<=60]
+test_team=[r for r in team if r['week']>=61]
+train_player=[r for r in player if r['week']<=60]
+test_player=[r for r in player if r['week']>=61]
 tm=m.fit_ridge(train_team,m.TEAM_FEATURES,'actual_lb_pool',m.FIXED_L2_TEAM)
 am=m.fit_ridge(train_player,m.ALLOC_FEATURES,'actual_lb_share',m.FIXED_L2_ALLOC,clip_high=1.0)
 sc=m.apply_combined(test_team,test_player,tm,am)
