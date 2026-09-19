@@ -97,6 +97,8 @@ def main()->int:
     import tackle_count_distribution as dist
 
     oid,odir,bake,models=resolve_position_artifact(root)
+    if bake.get("positionTaxonomy")!="RAW_POSITION_PRECEDENCE_V1":
+        raise SystemExit("FAIL OMEGA 0.36 artifact predates hardened edge-defender taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
     gates=bake.get("gateSummary",{})
     if gates.get("LB")!="NEXT_STAGE_SHADOW_SIGNAL":
         raise SystemExit(f"FAIL LB has not cleared historical shadow gate: {gates.get('LB')}")
@@ -129,10 +131,16 @@ def main()->int:
     pmeta=json.loads(pspec.read_text(encoding="utf-8"))
     params=pmeta["distributionParamsFitThrough2024"]
 
-    out=[];lb_n=0;shifted=0
+    out=[];lb_n=0;shifted=0;reclassified=[]
     for r in future:
         z=dict(r)
         pos=pc.canonical_position_row(r)
+        source_group=pc.canonical_position(r.get("position_group"))
+        if pos!=source_group:
+            reclassified.append({
+                "game_id":r.get("game_id"),"player_id":r.get("player_id"),"player_name":r.get("player_name"),
+                "raw_position":r.get("position"),"source_position_group":r.get("position_group"),"challenger_position_group":pos,
+            })
         base=max(0.0,pc.num(r.get("control_xtc")))
         if pos=="LB":
             shadow=lb.predict(r);track="LB_RESIDUAL_SHADOW";lb_n+=1
@@ -175,6 +183,7 @@ def main()->int:
         "sourceWeek2FreezeId":fid,"sourceWeek2FreezeSha256":sha(dual),
         "sourcePositionArtifactId":oid,"sourcePositionBakeoffSha256":sha(odir/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json"),
         "rows":len(out),"games":len({r["game_id"] for r in out}),"lbRows":lb_n,"lbShiftedRows":shifted,
+        "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1","reclassifiedRows":reclassified,
         "excludedAlreadyStartedGames":sorted(excluded_games),
         "gateSummary":gates,
         "trackPolicy":{"LB":"0.36 residual shadow","DB":"frozen control","DL":"frozen control"},
@@ -191,6 +200,9 @@ def main()->int:
     print("OMEGA 0.36.1 — WEEK 2 POSITION-SPECIFIC PROSPECTIVE SHADOW")
     print(f"PASS future games {audit['games']} · rows {len(out)} · LB rows {lb_n} · shifted {shifted}")
     print(f"PASS LB shadow only · DB control · DL control · already-started games excluded {len(excluded_games)}")
+    print(f"PASS hardened position taxonomy · reclassified rows {len(reclassified)}")
+    for rr in reclassified[:20]:
+        print(f"  RECLASS {rr['player_name']} · {rr['raw_position']}/{rr['source_position_group']} -> {rr['challenger_position_group']}")
     print("PASS frozen control dispersion · outcomes 0 · market fields 0 · frozen OMEGA mutation NO")
     print(f"SHADOW: {csvp}")
     print(f"AUDIT: {apath}")
