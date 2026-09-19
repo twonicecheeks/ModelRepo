@@ -24,7 +24,7 @@ for fam,actual_opp,pred_opp,rate,actual_credit in [
     row[f'pred_credit_{fam}']=pred_opp*.60*rate
 
 z=m.enrich([row])[0]
-assert z['audit_snap_bucket']=='>=0.75'
+assert z['audit_snap_bucket']=='0.50-0.75'
 assert z['audit_history_bucket']=='>=6'
 assert abs(z['audit_oracle_opp_RUSH']-(20*.60*.10))<1e-12
 assert abs(z['audit_oracle_snap_RUSH']-(15*.80*.10))<1e-12
