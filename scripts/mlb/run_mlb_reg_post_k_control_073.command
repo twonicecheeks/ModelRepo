@@ -53,6 +53,6 @@ python3 scripts/mlb/audit_mlb_historical_validation_010.py \
   --label "REG_VS_POST_K_2026_RESEARCH"
 
 echo
-echo "PASS MLB REG-vs-POST K control study 0.7.3"
+echo "PASS MLB REG-vs-POST K control study 0.7.4"
 echo "Regular ledger: $REG_LEDGER"
 echo "Combined ledger: $COMBINED_LEDGER"
