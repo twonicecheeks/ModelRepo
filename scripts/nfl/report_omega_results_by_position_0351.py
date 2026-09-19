@@ -269,6 +269,15 @@ def grouped(rows:list[dict], fn) -> dict[str,dict]:
     return {k:fn(v) for k,v in sorted(g.items())}
 
 
+def grouped_position_side(rows:list[dict], fn, side_key:str) -> dict[str,dict]:
+    g=defaultdict(list)
+    for r in rows:
+        pos=pos_label(r.get("position_group"))
+        side=str(r.get(side_key) or "").strip().upper() or "UNKNOWN"
+        g[f"{pos}|{side}"].append(r)
+    return {k:fn(v) for k,v in sorted(g.items())}
+
+
 def flatten_rows(forecast_by,prob_by,decision_by):
     cats=sorted(set(forecast_by)|set(prob_by)|set(decision_by))
     out=[]
@@ -338,6 +347,9 @@ def main():
     by_dec=grouped(decisions,decision_metrics)
     by_m035=grouped(market035,market035_metrics)
     by_m035_clean=grouped(market035_clean,market035_metrics)
+    by_pos_side_dec=grouped_position_side(decisions,decision_metrics,"side")
+    by_pos_side_m035=grouped_position_side(market035,market035_metrics,"control_best_side")
+    by_pos_side_m035_clean=grouped_position_side(market035_clean,market035_metrics,"control_best_side")
     flat=flatten_rows(by_forecast,by_prob,by_dec)
     for row in flat:
         pos=row["position_group"]
@@ -388,11 +400,31 @@ def main():
                 "currentGenerationCleanMarket035":by_m035_clean.get(pos,{"n":0}),
             } for pos in sorted(set(by_forecast)|set(by_prob)|set(by_dec)|set(by_m035)|set(by_m035_clean))
         },
+        "byPositionSide":{
+            "legacyProspectiveDecisions":by_pos_side_dec,
+            "currentGenerationMarket035":by_pos_side_m035,
+            "currentGenerationCleanMarket035":by_pos_side_m035_clean,
+        },
         "interpretationGuard":"Compare positions only with sample size/calibration in view. ROI alone is noisy; forecast error and Brier/log loss are included to separate model quality from price/result variance.",
         "integrity":{"sourceScoresModified":False,"omegaModelModified":False,"modelRefitPerformed":False},
     }
     (out/"OMEGA_0.35.1_POSITION_RESULTS_REPORT.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     write_csv(out/"OMEGA_0.35.1_POSITION_RESULTS_SUMMARY.csv",flat)
+    side_rows=[]
+    side_keys=sorted(set(by_pos_side_dec)|set(by_pos_side_m035)|set(by_pos_side_m035_clean))
+    for key in side_keys:
+        pos,side=key.split("|",1)
+        d=by_pos_side_dec.get(key,{"n":0});m=by_pos_side_m035.get(key,{"n":0});mc=by_pos_side_m035_clean.get(key,{"n":0})
+        side_rows.append({
+            "position_group":pos,"side":side,
+            "legacy_n":d.get("n",0),"legacy_wins":d.get("wins"),"legacy_losses":d.get("losses"),"legacy_pushes":d.get("pushes"),
+            "legacy_hit_rate":d.get("hitRateExPush"),"legacy_units":d.get("unitsAt1uEach"),"legacy_roi":d.get("roi"),"legacy_brier":d.get("brier"),
+            "market035_n":m.get("n",0),"market035_wins":m.get("wins"),"market035_losses":m.get("losses"),
+            "market035_hit_rate":m.get("hitRateExPush"),"market035_units":m.get("unitsAt1uEach"),"market035_roi":m.get("roi"),"market035_brier":m.get("brier"),
+            "market035_clean_n":mc.get("n",0),"market035_clean_wins":mc.get("wins"),"market035_clean_losses":mc.get("losses"),
+            "market035_clean_hit_rate":mc.get("hitRateExPush"),"market035_clean_units":mc.get("unitsAt1uEach"),"market035_clean_roi":mc.get("roi"),"market035_clean_brier":mc.get("brier"),
+        })
+    write_csv(out/"OMEGA_0.35.1_POSITION_SIDE_RESULTS_SUMMARY.csv",side_rows)
 
     o=overall;dm=o["decisions"];fm=o["forecast"];pm=o["probability"];m35=o["currentGenerationMarket035"];m35c=o["currentGenerationCleanMarket035"]
     lines=[
@@ -426,6 +458,18 @@ def main():
         ]
     lines += [
         "",
+        "POSITION × SIDE",
+    ]
+    for key in sorted(set(by_pos_side_dec)|set(by_pos_side_m035)|set(by_pos_side_m035_clean)):
+        pos,side=key.split("|",1);d=by_pos_side_dec.get(key,{"n":0});m=by_pos_side_m035.get(key,{"n":0});mc=by_pos_side_m035_clean.get(key,{"n":0})
+        lines += [
+            f"  {pos} {side}",
+            f"    legacy: n {d.get('n',0)} · W-L-P {d.get('wins',0)}-{d.get('losses',0)}-{d.get('pushes',0)} · hit {pct(d.get('hitRateExPush'))} · ROI {pct(d.get('roi'))}",
+            f"    current 0.35 all: n {m.get('n',0)} · W-L {m.get('wins',0)}-{m.get('losses',0)} · hit {pct(m.get('hitRateExPush'))} · ROI {pct(m.get('roi'))} · Brier {fmt(m.get('brier'),4)}",
+            f"    current 0.35 clean: n {mc.get('n',0)} · W-L {mc.get('wins',0)}-{mc.get('losses',0)} · hit {pct(mc.get('hitRateExPush'))} · ROI {pct(mc.get('roi'))} · Brier {fmt(mc.get('brier'),4)}",
+        ]
+    lines += [
+        "",
         "READING THE REPORT",
         "  MAE/RMSE: lower is better for tackle-count projection.",
         "  Bias: positive = OMEGA predicts too many tackles; negative = too few.",
@@ -435,6 +479,7 @@ def main():
         "",
         f"JSON: {out/'OMEGA_0.35.1_POSITION_RESULTS_REPORT.json'}",
         f"CSV: {out/'OMEGA_0.35.1_POSITION_RESULTS_SUMMARY.csv'}",
+        f"SIDE CSV: {out/'OMEGA_0.35.1_POSITION_SIDE_RESULTS_SUMMARY.csv'}",
     ]
     txt=out/"OMEGA_0.35.1_POSITION_RESULTS_REPORT.txt"
     txt.write_text("\n".join(lines)+"\n",encoding="utf-8")
