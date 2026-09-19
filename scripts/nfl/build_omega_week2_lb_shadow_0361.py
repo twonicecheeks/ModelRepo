@@ -94,11 +94,12 @@ def main()->int:
     args=ap.parse_args();root=Path(args.root).expanduser().resolve()
     sys.path[:0]=[str(root/"packages/models/nfl/omega")]
     import position_specific_challenger_0360 as pc
+    import lb_edge_archetype_0363 as arch
     import tackle_count_distribution as dist
 
     oid,odir,bake,models=resolve_position_artifact(root)
-    if bake.get("positionTaxonomy")!="DEPTH_CONFLICT_EDGE_SPLIT_V3":
-        raise SystemExit("FAIL OMEGA 0.36 artifact predates depth/conflict-aware DL/EDGE/LB/DB taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
+    if bake.get("positionTaxonomy")!="ARCHETYPE_GATED_LB_V4":
+        raise SystemExit("FAIL OMEGA 0.36 artifact predates archetype-gated LB taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
     gates=bake.get("gateSummary",{})
     if gates.get("LB")!="NEXT_STAGE_SHADOW_SIGNAL":
         raise SystemExit(f"FAIL LB has not cleared historical shadow gate: {gates.get('LB')}")
@@ -112,6 +113,7 @@ def main()->int:
         raise SystemExit("FAIL OMEGA 0.36 development integrity drift")
 
     lb=pc.ResidualModel.from_dict(models["LB"])
+    archetype=arch.ArchetypeModel.from_dict(models["lbEdgeArchetype"])
     fid,fdir,fmeta,dual=resolve_week2_freeze(root)
     rows=rcsv(dual)
     if not rows:raise SystemExit("FAIL empty Week 2 control freeze")
@@ -134,27 +136,47 @@ def main()->int:
     params=pmeta["distributionParamsFitThrough2024"]
 
     out=[];lb_n=0;shifted=0;reclassified=[]
+    explicit_lb_n=0;generic_lb_evaluated=0;generic_lb_eligible=0;generic_lb_blocked=0
     for r in future:
         z=dict(r)
-        pos=pc.canonical_position_row(r)
+        role=arch.classify(r,archetype)
+        explicit=arch.explicit_role_label(r)
         source_group=pc.canonical_position(r.get("position_group"))
-        if pos!=source_group:
-            reclassified.append({
-                "game_id":r.get("game_id"),"player_id":r.get("player_id"),"player_name":r.get("player_name"),
-                "raw_position":r.get("position"),"source_position_group":r.get("position_group"),"challenger_position_group":pos,
-            })
         base=max(0.0,pc.num(r.get("control_xtc")))
-        if pos=="LB":
-            shadow=lb.predict(r);track="LB_RESIDUAL_SHADOW";lb_n+=1
+
+        if explicit=="AMBIG_LB":
+            generic_lb_evaluated+=1
+            if role["eligibleForLbChallenger"]:generic_lb_eligible+=1
+            else:generic_lb_blocked+=1
+
+        if role["eligibleForLbChallenger"]:
+            shadow=lb.predict(r);lb_n+=1
+            if explicit=="OFFBALL_LB":
+                track="LB_RESIDUAL_SHADOW_EXPLICIT_OFFBALL";explicit_lb_n+=1
+            else:
+                track="LB_RESIDUAL_SHADOW_ARCHETYPE_GATED"
             if abs(shadow-base)>1e-12:shifted+=1
-        elif pos=="DL":
+        elif role["role"]=="EDGE":
+            shadow=base;track="EDGE_CONTROL_NO_CHANGE"
+        elif role["role"]=="EDGE_OR_AMBIG_LB":
+            shadow=base;track="AMBIG_LB_CONTROL_ARCHETYPE_BLOCKED"
+        elif role["role"]=="DL":
             shadow=base;track="DL_CONTROL_NO_CHANGE"
-        elif pos=="EDGE":
-            shadow=base;track="EDGE_OLB_CONTROL_NO_CHANGE"
-        elif pos=="DB":
+        elif role["role"]=="DB":
             shadow=base;track="DB_CONTROL_NO_PROMOTION"
         else:
             shadow=base;track="CONTROL_FALLBACK"
+
+        canonical=role["role"]
+        if canonical=="OFFBALL_LB":canonical="LB"
+        elif canonical=="EDGE_OR_AMBIG_LB":canonical="AMBIG_LB"
+        if canonical!=source_group:
+            reclassified.append({
+                "game_id":r.get("game_id"),"player_id":r.get("player_id"),"player_name":r.get("player_name"),
+                "raw_position":r.get("position"),"source_position_group":r.get("position_group"),
+                "challenger_position_group":canonical,
+                "offball_probability":role.get("offballProbability"),"eligibility_reason":role.get("reason"),
+            })
         tier=str(r.get("control_distribution_role_tier") or "")
         if not tier:
             tier=dist.role_tier(pc.num(r.get("control_h012_snap_share")))
@@ -168,6 +190,11 @@ def main()->int:
             "position_shadow_dispersion_policy":"FIXED_CONTROL_H012_TIER",
             "position_shadow_status":"SHADOW_ONLY_NOT_PROMOTED",
             "position_shadow_market_dependency":"FALSE",
+            "lb_archetype_role":role.get("role"),
+            "lb_archetype_offball_probability":role.get("offballProbability"),
+            "lb_archetype_threshold":archetype.threshold,
+            "lb_archetype_eligibility_reason":role.get("reason"),
+            "lb_challenger_eligible":"TRUE" if role.get("eligibleForLbChallenger") else "FALSE",
         })
         for whole in range(15):
             line=whole+.5;tag=str(line).replace(".","_")
@@ -187,10 +214,13 @@ def main()->int:
         "sourceWeek2FreezeId":fid,"sourceWeek2FreezeSha256":sha(dual),
         "sourcePositionArtifactId":oid,"sourcePositionBakeoffSha256":sha(odir/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json"),
         "rows":len(out),"games":len({r["game_id"] for r in out}),"lbRows":lb_n,"lbShiftedRows":shifted,
-        "positionTaxonomy":"DEPTH_CONFLICT_EDGE_SPLIT_V3","reclassifiedRows":reclassified,
+        "positionTaxonomy":"ARCHETYPE_GATED_LB_V4","reclassifiedRows":reclassified,
+        "lbArchetype":{"version":arch.VERSION,"threshold":archetype.threshold,
+            "explicitOffballLbRows":explicit_lb_n,"genericLbEvaluated":generic_lb_evaluated,
+            "genericLbEligible":generic_lb_eligible,"genericLbBlocked":generic_lb_blocked},
         "excludedAlreadyStartedGames":sorted(excluded_games),
         "gateSummary":gates,
-        "trackPolicy":{"LB":"0.36 residual shadow","DB":"frozen control","DL":"frozen control","EDGE":"frozen control"},
+        "trackPolicy":{"explicit ILB/MLB":"0.36 residual shadow","generic LB":f"0.36 residual only if archetype p(offball)>={archetype.threshold:.2f}","DB":"frozen control","DL":"frozen control","EDGE":"frozen control"},
         "dispersionPolicy":"FIXED_CONTROL_H012_TIER",
         "hypothesisTiming":"post-DET-BUF discovery; model parameters fit development-only 2017-2024",
         "sourceForecastTiming":"OMEGA 0.33 rows were frozen before Week 2 earliest kickoff",
@@ -202,11 +232,13 @@ def main()->int:
     (final/"OMEGA_OUTPUT_HASHES.json").write_text(json.dumps({csvp.name:sha(csvp),apath.name:sha(apath)},indent=2)+"\n",encoding="utf-8")
     atomic(root/"data/prospective/nfl/omega/CURRENT_OMEGA_POSITION_SHADOW_0361",str(final.relative_to(root)))
     print("OMEGA 0.36.1 — WEEK 2 POSITION-SPECIFIC PROSPECTIVE SHADOW")
-    print(f"PASS future games {audit['games']} · rows {len(out)} · LB rows {lb_n} · shifted {shifted}")
-    print(f"PASS LB shadow only · DB/DL/EDGE control · already-started games excluded {len(excluded_games)}")
-    print(f"PASS hardened position taxonomy · reclassified rows {len(reclassified)}")
+    print(f"PASS future games {audit['games']} · rows {len(out)} · LB-shadow rows {lb_n} · shifted {shifted}")
+    print(f"PASS explicit off-ball LB {explicit_lb_n} · generic LB evaluated {generic_lb_evaluated} · eligible {generic_lb_eligible} · blocked {generic_lb_blocked}")
+    print(f"PASS LB shadow only after archetype gate · DB/DL/EDGE/blocked-generic-LB control · already-started games excluded {len(excluded_games)}")
+    print(f"PASS archetype taxonomy V4 · reclassified rows {len(reclassified)}")
     for rr in reclassified[:20]:
-        print(f"  RECLASS {rr['player_name']} · {rr['raw_position']}/{rr['source_position_group']} -> {rr['challenger_position_group']}")
+        p=rr.get("offball_probability");ps="NA" if p is None else f"{float(p):.3f}"
+        print(f"  RECLASS {rr['player_name']} · {rr['raw_position']}/{rr['source_position_group']} -> {rr['challenger_position_group']} · p(offball) {ps} · {rr.get('eligibility_reason')}")
     print("PASS frozen control dispersion · outcomes 0 · market fields 0 · frozen OMEGA mutation NO")
     print(f"SHADOW: {csvp}")
     print(f"AUDIT: {apath}")
