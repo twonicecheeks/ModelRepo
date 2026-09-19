@@ -50,4 +50,7 @@ m35all=m.market035_metrics(m35)
 assert m35all['n']==3 and m35all['wins']==2 and m35all['losses']==1
 m35by=m.grouped(m35,m.market035_metrics)
 assert m35by['LB']['n']==2 and m35by['DB']['wins']==1
+for r,side in zip(m35,['UNDER','OVER','UNDER']):r['control_best_side']=side
+ps=m.grouped_position_side(m35,m.market035_metrics,'control_best_side')
+assert ps['LB|UNDER']['n']==1 and ps['LB|OVER']['n']==1 and ps['DB|UNDER']['wins']==1
 print('PASS OMEGA 0.35.1 cumulative results-by-position contracts')
