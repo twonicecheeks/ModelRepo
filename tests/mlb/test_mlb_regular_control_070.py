@@ -65,7 +65,30 @@ def main():
     assert row["actual_home_win"] == 1
     assert row["away"]["starter"]["mlb_id"] == "101"
 
-    print("PASS MLB late regular control acquisition 0.7.0")
+
+    # Duplicate schedule representations collapse to one gamePk and preserve
+    # the earliest game placement while retaining the most complete final row.
+    dup_a = dict(g)
+    dup_b = dict(g)
+    dup_a["officialDate"] = "2024-09-28"
+    dup_a["gameDate"] = "2024-09-28T19:05:00Z"
+    dup_b["officialDate"] = "2024-09-29"
+    dup_b["gameDate"] = "2024-09-29T19:05:00Z"
+    deduped, removed = m.dedupe_schedule_games([dup_b, dup_a])
+    assert removed == 1
+    assert len(deduped) == 1
+    assert deduped[0]["officialDate"] == "2024-09-28"
+
+    tie_g = dict(g)
+    tie_g["teams"] = {
+        "away": {"team": {"id": 10, "name": "Away"}, "score": 3},
+        "home": {"team": {"id": 20, "name": "Home"}, "score": 3},
+    }
+    tie = m.control_target(tie_g, box, {10}, __import__("datetime").date(2024, 9, 29))
+    assert tie["outcome_tied"] is True
+    assert tie["actual_home_win"] is None
+
+    print("PASS MLB late regular control acquisition 0.7.1")
 
 if __name__ == "__main__":
     main()
