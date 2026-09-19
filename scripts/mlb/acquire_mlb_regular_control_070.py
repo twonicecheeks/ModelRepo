@@ -36,8 +36,8 @@ import subprocess
 import time
 import uuid
 
-VERSION = "0.7.0"
-LINEAGE = "mlb-late-regular-control-v0.7.0-2026-09-19"
+VERSION = "0.7.1"
+LINEAGE = "mlb-late-regular-control-v0.7.1-dedupe-coverage-2026-09-19"
 MLB_BASE = "https://statsapi.mlb.com/api/v1"
 SAVANT_CUSTOM = "https://baseballsavant.mlb.com/leaderboard/custom"
 SAVANT_SEARCH = "https://baseballsavant.mlb.com/statcast_search/csv"
@@ -293,6 +293,58 @@ def flatten_schedule(payload: dict) -> list[dict]:
                 out.append(g)
     return out
 
+def _game_quality(g: dict) -> tuple[int, str]:
+    teams = g.get("teams") or {}
+    away = teams.get("away") or {}
+    home = teams.get("home") or {}
+    score = 0
+    if away.get("score") is not None:
+        score += 2
+    if home.get("score") is not None:
+        score += 2
+    if (away.get("team") or {}).get("id") is not None:
+        score += 1
+    if (home.get("team") or {}).get("id") is not None:
+        score += 1
+    if g.get("gameDate"):
+        score += 1
+    if (g.get("venue") or {}).get("id") is not None:
+        score += 1
+    return score, str(g.get("officialDate") or "")
+
+def dedupe_schedule_games(games: list[dict]) -> tuple[list[dict], int]:
+    grouped: dict[int, list[dict]] = {}
+    for g in games:
+        pk = int(g["gamePk"])
+        grouped.setdefault(pk, []).append(g)
+    out = []
+    duplicate_rows = 0
+    for pk, rows in grouped.items():
+        duplicate_rows += max(0, len(rows) - 1)
+        # Prefer the most complete final representation. For equally complete
+        # representations use the earliest official date to preserve the
+        # original game placement rather than a later resume/completion listing.
+        best = sorted(rows, key=lambda g: (-_game_quality(g)[0], _game_quality(g)[1]))[0]
+        if len(rows) > 1:
+            dates = sorted(
+                str(g.get("officialDate") or "")[:10]
+                for g in rows
+                if g.get("officialDate")
+            )
+            starts = sorted(
+                str(g.get("gameDate") or "")
+                for g in rows
+                if g.get("gameDate")
+            )
+            best = dict(best)
+            if dates:
+                best["officialDate"] = dates[0]
+            if starts:
+                best["gameDate"] = starts[0]
+        out.append(best)
+    out.sort(key=lambda g: (str(g.get("officialDate") or ""), int(g["gamePk"])))
+    return out, duplicate_rows
+
 def original_starter_from_box(team_box: dict) -> dict | None:
     pitchers = [str(x) for x in (team_box.get("pitchers") or [])]
     players = team_box.get("players") or {}
@@ -344,8 +396,9 @@ def control_target(g: dict, box: dict, postseason_team_ids: set[int], season_end
     home_team = home.get("team") or {}
     away_score = safe_num(away.get("score"))
     home_score = safe_num(home.get("score"))
-    if away_score is None or home_score is None or away_score == home_score:
-        raise ValueError(f"game {game_pk}: invalid final score")
+    if away_score is None or home_score is None:
+        raise ValueError(f"game {game_pk}: final score unavailable")
+    tied = away_score == home_score
     bt = box.get("teams") or {}
     ast = original_starter_from_box(bt.get("away") or {})
     hst = original_starter_from_box(bt.get("home") or {})
@@ -384,7 +437,8 @@ def control_target(g: dict, box: dict, postseason_team_ids: set[int], season_end
             "score": home_score,
             "starter": hst,
         },
-        "actual_home_win": 1 if home_score > away_score else 0,
+        "actual_home_win": None if tied else (1 if home_score > away_score else 0),
+        "outcome_tied": tied,
         "outcome_is_postgame_only": True,
     }
 
@@ -410,9 +464,11 @@ def main() -> int:
     seasons = sorted(postseason_teams)
 
     assets: list[dict] = []
-    errors: list[dict] = []
+    source_errors: list[dict] = []
+    target_exclusions: list[dict] = []
     schedules: dict[int, dict] = {}
     selected_games: list[tuple[int, dict, date]] = []
+    duplicate_schedule_rows = 0
 
     for season in seasons:
         rel = f"data/raw/mlb/regular_control_070/mlb/schedule/{season}.json"
@@ -420,7 +476,9 @@ def main() -> int:
         assets.append(a)
         payload = json.loads((root / rel).read_text(encoding="utf-8"))
         schedules[season] = payload
-        games = flatten_schedule(payload)
+        games_raw = flatten_schedule(payload)
+        games, dupes = dedupe_schedule_games(games_raw)
+        duplicate_schedule_rows += dupes
         if not games:
             raise ValueError(f"{season}: no completed regular-season games")
         end = max(date.fromisoformat(str(g["officialDate"])[:10]) for g in games)
@@ -478,9 +536,9 @@ def main() -> int:
                 try:
                     assets.append(fut.result())
                 except Exception as exc:
-                    errors.append({"path": rel, "error": str(exc)})
+                    source_errors.append({"path": rel, "error": str(exc)})
                 if i % 25 == 0 or i == len(items):
-                    print(f"{label} {i}/{len(items)} · errors {len(errors)}")
+                    print(f"{label} {i}/{len(items)} · source errors {len(source_errors)}")
 
     run_requests(recon_requests, "SAVANT RECON")
     run_requests(day_requests, "STATCAST DAYS")
@@ -500,7 +558,7 @@ def main() -> int:
         pk = int(g["gamePk"])
         bp = root / f"data/raw/mlb/regular_control_070/mlb/boxscore/{pk}.json"
         if not bp.exists():
-            errors.append({"game_pk": pk, "error": "boxscore missing after acquisition"})
+            target_exclusions.append({"game_pk": pk, "error": "boxscore missing after acquisition"})
             continue
         try:
             row = control_target(g, json.loads(bp.read_text(encoding="utf-8")), postseason_teams[season], season_end)
@@ -511,7 +569,7 @@ def main() -> int:
                 rel = f"data/raw/mlb/regular_control_070/mlb/starter_gamelog/{season}/{pid}.json"
                 starter_reqs.setdefault(rel, (player_game_log_url(pid, season), "json"))
         except Exception as exc:
-            errors.append({"game_pk": pk, "error": str(exc)})
+            target_exclusions.append({"game_pk": pk, "error": str(exc)})
 
     run_requests(starter_reqs, "STARTER GAMELOGS")
 
@@ -559,8 +617,13 @@ def main() -> int:
         "asset_count": len(assets),
         "cache_hits": sum(1 for a in assets if a["cache_hit"]),
         "downloads": sum(1 for a in assets if not a["cache_hit"]),
-        "errors": errors,
-        "error_count": len(errors),
+        "source_errors": source_errors,
+        "source_error_count": len(source_errors),
+        "target_exclusions": target_exclusions,
+        "target_exclusion_count": len(target_exclusions),
+        "duplicate_schedule_rows_removed": duplicate_schedule_rows,
+        "errors": source_errors,
+        "error_count": len(source_errors),
         "target_path": str(out.relative_to(root)),
         "target_sha256": sha256_file(out),
         "schedule_index_path": str(sched_out.relative_to(root)),
@@ -591,13 +654,17 @@ def main() -> int:
     )
     print(
         f"Assets: {len(assets):,} · cache hits {manifest['cache_hits']:,} · "
-        f"downloads {manifest['downloads']:,} · errors {len(errors)}"
+        f"downloads {manifest['downloads']:,} · source errors {len(source_errors)} · "
+        f"target exclusions {len(target_exclusions)}"
     )
+    print(f"Duplicate schedule rows removed: {duplicate_schedule_rows}")
+    for x in target_exclusions[:20]:
+        print(f"EXCLUDED target {x.get('game_pk')}: {x.get('error')}")
     print("Historical betting markets: NOT ACQUIRED")
     print("OddsPapi: 0 · production mutation: NO · refit: NO")
     print(f"Targets: {out}")
     print(f"Manifest: {mp}")
-    return 1 if errors else 0
+    return 1 if source_errors else 0
 
 if __name__ == "__main__":
     raise SystemExit(main())
