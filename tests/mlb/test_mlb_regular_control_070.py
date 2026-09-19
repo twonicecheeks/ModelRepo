@@ -88,7 +88,7 @@ def main():
     assert tie["outcome_tied"] is True
     assert tie["actual_home_win"] is None
 
-    print("PASS MLB late regular control acquisition 0.7.1")
+    print("PASS MLB late regular control acquisition 0.7.4")
 
 if __name__ == "__main__":
     main()
