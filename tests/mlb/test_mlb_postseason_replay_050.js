@@ -85,4 +85,4 @@ const m=require(path.join(ROOT,'scripts/mlb/build_mlb_postseason_replay_050.js')
   assert.strictEqual(m.priorDate('2025-01-01'),'2024-12-31');
 })();
 
-console.log('PASS MLB postseason history-proxy replay builder 0.5.1');
+console.log('PASS MLB postseason history-proxy replay builder 0.5.2');
