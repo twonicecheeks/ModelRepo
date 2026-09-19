@@ -28,6 +28,15 @@ for i in range(80):
  r=dict(base);r['game_id']=f'G{i//4}';r['player_id']=f'P{i}';r['actual_xtc']=5.5 + (i%3)*.2
  rows.append(r)
 mdl=m.fit_residual(rows,'LB')
+clone=m.ResidualModel.from_dict(mdl.to_dict())
+assert clone.position=='LB' and len(clone.coefficients)==len(mdl.coefficients)
+frozen=dict(base)
+frozen.pop('predicted_snap_share',None)
+for fam in ('RUSH','SCRAMBLE','COMPLETE_PASS','SACK','OTHER_PASS'):
+    frozen['control_pred_credit_'+fam]=frozen.pop('pred_credit_'+fam)
+frozen['control_h012_snap_share']=.9
+ff=m.feature_map(frozen,'LB')
+assert abs(ff['predicted_snap_share']-.9)<1e-12 and abs(ff['pred_credit_SCRAMBLE']-1)<1e-12
 z=m.apply_challengers(rows[:2],{'LB':mdl})
 assert len(z)==2 and all(r['position_challenger_track']=='LB_RESIDUAL_SHADOW' for r in z)
 
