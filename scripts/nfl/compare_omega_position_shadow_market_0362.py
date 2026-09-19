@@ -47,13 +47,43 @@ def latest_comparison(root:Path)->Path:
     return paths[-1]
 
 
-def resolve_shadow(root:Path)->Path:
+def current_position_artifact(root:Path):
+    ptr=root/"data/models/nfl/CURRENT_OMEGA_POSITION_CHALLENGER_0360"
+    if not ptr.exists():raise FileNotFoundError("current OMEGA 0.36 position artifact pointer missing")
+    oid=ptr.read_text(encoding="utf-8").strip()
+    d=root/"data/models/nfl/omega_position_challenger_0360"/oid
+    rp=d/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json"
+    if not rp.exists():raise FileNotFoundError(rp)
+    return oid,json.loads(rp.read_text(encoding="utf-8"))
+
+
+def resolve_shadow(root:Path):
+    current_oid,current_bake=current_position_artifact(root)
+    gates=current_bake.get("gateSummary",{})
+    if current_bake.get("positionTaxonomy")!="ARCHETYPE_GATED_LB_V4":
+        raise SystemExit("FAIL current OMEGA 0.36 artifact is not ARCHETYPE_GATED_LB_V4")
+    if gates.get("LB")!="NEXT_STAGE_SHADOW_SIGNAL":
+        raise SystemExit(f"FAIL current LB challenger has not cleared historical shadow gate: {gates.get('LB')}")
+
     ptr=root/"data/prospective/nfl/omega/CURRENT_OMEGA_POSITION_SHADOW_0361"
     if not ptr.exists():raise FileNotFoundError("OMEGA 0.36.1 position shadow pointer missing")
     d=root/ptr.read_text(encoding="utf-8").strip()
     p=d/"OMEGA_0.36.1_WEEK2_POSITION_SHADOW.csv"
+    ap=d/"OMEGA_0.36.1_WEEK2_POSITION_SHADOW_AUDIT.json"
     if not p.exists():raise FileNotFoundError(p)
-    return p
+    if not ap.exists():raise FileNotFoundError(ap)
+    audit=json.loads(ap.read_text(encoding="utf-8"))
+    if audit.get("sourcePositionArtifactId")!=current_oid:
+        raise SystemExit(
+            "FAIL stale OMEGA 0.36.1 shadow: source position artifact "
+            f"{audit.get('sourcePositionArtifactId')} != current {current_oid}"
+        )
+    if audit.get("positionTaxonomy")!="ARCHETYPE_GATED_LB_V4":
+        raise SystemExit(f"FAIL stale OMEGA 0.36.1 taxonomy: {audit.get('positionTaxonomy')}")
+    sg=audit.get("gateSummary",{})
+    if sg.get("LB")!="NEXT_STAGE_SHADOW_SIGNAL":
+        raise SystemExit(f"FAIL source shadow LB gate was not cleared: {sg.get('LB')}")
+    return p,ap,audit,current_oid
 
 
 def roi(prob:float,american:float)->float:
@@ -93,7 +123,7 @@ def main()->int:
     ap.add_argument("--root",default="/Users/abbeyfelix/Developer/MODEL")
     ap.add_argument("--comparison-path",default="")
     args=ap.parse_args();root=Path(args.root).expanduser().resolve()
-    shadow=resolve_shadow(root);srows=rcsv(shadow)
+    shadow,shadow_audit_path,shadow_audit,current_position_oid=resolve_shadow(root);srows=rcsv(shadow)
     smap={(str(r.get("game_id") or ""),str(r.get("player_id") or "")):r for r in srows}
     comparison=Path(args.comparison_path).expanduser().resolve() if args.comparison_path else latest_comparison(root)
     source_rows=rcsv(comparison)
@@ -139,6 +169,8 @@ def main()->int:
     audit={
         "version":VERSION,"createdAt":now.isoformat(),"runId":run_id,
         "sourcePositionShadow":str(shadow.relative_to(root)),"sourcePositionShadowSha256":sha(shadow),
+        "sourcePositionShadowAudit":str(shadow_audit_path.relative_to(root)),"sourcePositionShadowAuditSha256":sha(shadow_audit_path),
+        "sourcePositionArtifactId":current_position_oid,
         "sourceMarketComparison":str(comparison.relative_to(root) if comparison.is_relative_to(root) else comparison),
         "sourceMarketComparisonSha256":sha(comparison),"sourceRows":len(source_rows),
         "duplicateSourceRowsRemoved":duplicate_rows_removed,"rows":len(out),"unmatchedPastOrUnavailableRows":missing,
