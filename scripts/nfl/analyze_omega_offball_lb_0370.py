@@ -158,9 +158,10 @@ def main()->int:
 
     tbase=lb.team_metrics(pooled_teams,"control_lb_pool")
     tcand=lb.team_metrics(pooled_teams,"omega_037_team_pool")
-    # Allocation pooled from combined rows contains both shares.
-    abase=lb.allocation_metrics(pooled_players,"control_lb_share")
-    acand=lb.allocation_metrics(pooled_players,"predicted_lb_share")
+    # Allocation share is defined only when the realized clean-LB pool is positive.
+    pooled_alloc=[r for r in pooled_players if float(r.get("actual_lb_pool") or 0)>0]
+    abase=lb.allocation_metrics(pooled_alloc,"control_lb_share")
+    acand=lb.allocation_metrics(pooled_alloc,"predicted_lb_share")
     team_imp=tbase["mae"]-tcand["mae"]
     alloc_imp=abase["mae"]-acand["mae"]
     brier_imp=pb["brier"]-pc["brier"]
