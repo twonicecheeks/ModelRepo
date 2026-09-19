@@ -21,6 +21,8 @@ fm=m.forecast_metrics(latest)
 assert fm['n']==2 and abs(fm['mae']-1.25)<1e-12
 assert m.canonical_position_row({'position':'DE','position_group':'LB'})=='EDGE'
 assert m.canonical_position_row({'position':'EDGE','position_group':'LB'})=='EDGE'
+assert m.canonical_position_row({'position':'LB','position_group':'LB','current_depth_position':'DE'})=='EDGE'
+assert m.canonical_position_row({'position':'LB','position_group':'DL'})=='EDGE'
 
 thresholds=[
  {'evaluation_id':'E1','game_id':'G','player_id':'P1','grade_status':'GRADED','model_probability':'.7','actual_event':'1'},
