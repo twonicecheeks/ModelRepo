@@ -11,6 +11,10 @@ try:m.assert_development_only([2025])
 except ValueError:pass
 else:raise AssertionError('2025 must remain sealed')
 assert m.canonical_position('MLB')=='LB' and m.canonical_position('CB')=='DB' and m.canonical_position('EDGE')=='DL'
+assert m.canonical_position_row({'position':'DE','position_group':'LB'})=='DL'
+assert m.canonical_position_row({'position':'EDGE','position_group':'LB'})=='DL'
+assert m.canonical_position_row({'position':'CB','position_group':'DB'})=='DB'
+assert m.canonical_position_row({'position':'MLB','position_group':'LB'})=='LB'
 
 base={
  'position_group':'LB','control_xtc':6.0,'predicted_xto':45,'predicted_snap_share':.9,'prior_games':8,
