@@ -97,8 +97,8 @@ def main()->int:
     import tackle_count_distribution as dist
 
     oid,odir,bake,models=resolve_position_artifact(root)
-    if bake.get("positionTaxonomy")!="RAW_POSITION_EDGE_SPLIT_V2":
-        raise SystemExit("FAIL OMEGA 0.36 artifact predates four-way DL/EDGE/LB/DB taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
+    if bake.get("positionTaxonomy")!="DEPTH_CONFLICT_EDGE_SPLIT_V3":
+        raise SystemExit("FAIL OMEGA 0.36 artifact predates depth/conflict-aware DL/EDGE/LB/DB taxonomy; rerun analyze_omega_position_specific_challenger_0360.command")
     gates=bake.get("gateSummary",{})
     if gates.get("LB")!="NEXT_STAGE_SHADOW_SIGNAL":
         raise SystemExit(f"FAIL LB has not cleared historical shadow gate: {gates.get('LB')}")
@@ -187,7 +187,7 @@ def main()->int:
         "sourceWeek2FreezeId":fid,"sourceWeek2FreezeSha256":sha(dual),
         "sourcePositionArtifactId":oid,"sourcePositionBakeoffSha256":sha(odir/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json"),
         "rows":len(out),"games":len({r["game_id"] for r in out}),"lbRows":lb_n,"lbShiftedRows":shifted,
-        "positionTaxonomy":"RAW_POSITION_EDGE_SPLIT_V2","reclassifiedRows":reclassified,
+        "positionTaxonomy":"DEPTH_CONFLICT_EDGE_SPLIT_V3","reclassifiedRows":reclassified,
         "excludedAlreadyStartedGames":sorted(excluded_games),
         "gateSummary":gates,
         "trackPolicy":{"LB":"0.36 residual shadow","DB":"frozen control","DL":"frozen control","EDGE":"frozen control"},
