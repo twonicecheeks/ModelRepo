@@ -81,11 +81,11 @@ def candidate_feature_names(position:str)->tuple[str,...]:
 def feature_map(row:dict[str,Any],position:str|None=None)->dict[str,float]:
     p=canonical_position(position or row.get("position_group"))
     control=max(0.0,num(row.get("control_xtc",row.get("topology_xtc",row.get("predicted_xtc")))))
-    rush=num(row.get("pred_credit_RUSH"))
-    scr=num(row.get("pred_credit_SCRAMBLE"))
-    sack=num(row.get("pred_credit_SACK"))
-    comp=num(row.get("pred_credit_COMPLETE_PASS"))
-    other=num(row.get("pred_credit_OTHER_PASS"))
+    rush=num(row.get("pred_credit_RUSH",row.get("control_pred_credit_RUSH")))
+    scr=num(row.get("pred_credit_SCRAMBLE",row.get("control_pred_credit_SCRAMBLE")))
+    sack=num(row.get("pred_credit_SACK",row.get("control_pred_credit_SACK")))
+    comp=num(row.get("pred_credit_COMPLETE_PASS",row.get("control_pred_credit_COMPLETE_PASS")))
+    other=num(row.get("pred_credit_OTHER_PASS",row.get("control_pred_credit_OTHER_PASS")))
     sr=num(row.get("pred_share_RUSH"))
     ss=num(row.get("pred_share_SCRAMBLE"))
     sc=num(row.get("pred_share_COMPLETE_PASS"))
@@ -94,7 +94,7 @@ def feature_map(row:dict[str,Any],position:str|None=None)->dict[str,float]:
     out={
         "control_xtc":control,
         "predicted_xto":max(0.0,num(row.get("predicted_xto"))),
-        "predicted_snap_share":max(0.0,min(1.0,num(row.get("predicted_snap_share")))),
+        "predicted_snap_share":max(0.0,min(1.0,num(row.get("predicted_snap_share",row.get("control_h012_snap_share"))))),
         "prior_games_log":log1p(max(0.0,num(row.get("prior_games")))),
         "pred_credit_RUSH":rush,
         "pred_credit_SCRAMBLE":scr,
@@ -165,6 +165,18 @@ class ResidualModel:
                 "featureNames":list(self.feature_names),"means":self.means,"scales":self.scales,
                 "intercept":self.intercept,"coefficients":self.coefficients,"l2":self.l2,
                 "target":"actual_xtc_minus_control_xtc","maxAbsCorrection":MAX_ABS_CORRECTION}
+
+    @classmethod
+    def from_dict(cls,d:dict[str,Any])->"ResidualModel":
+        return cls(
+            position=canonical_position(d["position"]),
+            feature_names=tuple(d["featureNames"]),
+            means=[float(x) for x in d["means"]],
+            scales=[float(x) for x in d["scales"]],
+            intercept=float(d["intercept"]),
+            coefficients=[float(x) for x in d["coefficients"]],
+            l2=float(d.get("l2",FIXED_L2)),
+        )
 
 
 def fit_residual(rows:Sequence[dict[str,Any]],position:str,l2:float=FIXED_L2)->ResidualModel:
