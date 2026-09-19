@@ -98,7 +98,7 @@ def main() -> int:
 
     overall = report["overall"]
     print()
-    print("MLB HISTORICAL VALIDATION 0.1.0")
+    print(f"MLB HISTORICAL VALIDATION {hv.VERSION}")
     print(f"Ledger: {ledger}")
     print(f"Rows: {report['rows']:,} · SHA256 {report['input_sha256']}")
     print("Production mutation: NO · refit: NO · market calls: 0 · OddsPapi: 0")
