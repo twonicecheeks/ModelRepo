@@ -11,14 +11,16 @@ evals=[
  {'evaluation_id':'E2','packaged_at':'2026-09-10T11:00:00Z'},
 ]
 players=[
- {'evaluation_id':'E1','game_id':'G','player_id':'P1','position_group':'LB','grade_status':'GRADED','predicted_xtc':'6','actual_xtc':'5'},
- {'evaluation_id':'E2','game_id':'G','player_id':'P1','position_group':'LB','grade_status':'GRADED','predicted_xtc':'5.5','actual_xtc':'5'},
- {'evaluation_id':'E1','game_id':'G','player_id':'P2','position_group':'DB','grade_status':'GRADED','predicted_xtc':'4','actual_xtc':'6'},
+ {'evaluation_id':'E1','game_id':'G','player_id':'P1','position':'MLB','position_group':'LB','grade_status':'GRADED','predicted_xtc':'6','actual_xtc':'5'},
+ {'evaluation_id':'E2','game_id':'G','player_id':'P1','position':'MLB','position_group':'LB','grade_status':'GRADED','predicted_xtc':'5.5','actual_xtc':'5'},
+ {'evaluation_id':'E1','game_id':'G','player_id':'P2','position':'CB','position_group':'DB','grade_status':'GRADED','predicted_xtc':'4','actual_xtc':'6'},
 ]
 latest,eids=m.latest_player_rows(players,m.evaluation_times(evals))
 assert len(latest)==2 and eids[('G','P1')]=='E2'
 fm=m.forecast_metrics(latest)
 assert fm['n']==2 and abs(fm['mae']-1.25)<1e-12
+assert m.canonical_position_row({'position':'DE','position_group':'LB'})=='DL'
+assert m.canonical_position_row({'position':'EDGE','position_group':'LB'})=='DL'
 
 thresholds=[
  {'evaluation_id':'E1','game_id':'G','player_id':'P1','grade_status':'GRADED','model_probability':'.7','actual_event':'1'},
