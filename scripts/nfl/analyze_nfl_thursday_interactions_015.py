@@ -133,8 +133,7 @@ def main() -> int:
         "nextGate": "REVIEW_HISTORICAL_DIAGNOSTICS_THEN_BUILD_PAIRED_CHALLENGERS_ONLY_FOR_SUPPORTED_FEATURES",
     }
     json_path = out_dir / "NFL_THURSDAY_INTERACTION_RESEARCH.json"
-    json_path.write_text(json.dumps(result, indent=2) + "
-", encoding="utf-8")
+    json_path.write_text(json.dumps(result, indent=2) + "\\n", encoding="utf-8")
 
     exp = summary["explosive_concentration"]
     response = summary["response_drives"]
@@ -178,15 +177,12 @@ def main() -> int:
         f"JSON: {json_path}",
     ]
     txt_path = out_dir / "NFL_THURSDAY_INTERACTION_RESEARCH.txt"
-    txt_path.write_text("
-".join(lines) + "
-", encoding="utf-8")
+    txt_path.write_text("\\n".join(lines) + "\\n", encoding="utf-8")
 
     current = root / "data/models/nfl/CURRENT_STATE_INTELLIGENCE_015"
     current.parent.mkdir(parents=True, exist_ok=True)
     tmp = current.with_name("." + current.name + ".tmp")
-    tmp.write_text(str(out_dir.relative_to(root)) + "
-", encoding="utf-8")
+    tmp.write_text(str(out_dir.relative_to(root)) + "\\n", encoding="utf-8")
     os.replace(tmp, current)
 
     print()
