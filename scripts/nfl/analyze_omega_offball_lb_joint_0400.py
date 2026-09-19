@@ -110,6 +110,9 @@ def main()->int:
         scored=m.score_ablation(clean_test,exposure_model,exp_map,opp_models,opp_map)
         if len(scored)!=len(clean_test):
             raise ValueError(f"OMEGA 0.40 join loss in {year}: scored {len(scored)} / clean {len(clean_test)}")
+        max_control_drift=max(abs(float(r.get("control_xtc") or 0)-float(r["omega040_control_xtc"])) for r in scored)
+        if max_control_drift>1e-8:
+            raise ValueError(f"OMEGA 0.40 control reconstruction drift in {year}: {max_control_drift}")
 
         base_met=m.metrics(scored,"omega040_control_xtc")
         exp_met=m.metrics(scored,"omega040_exposure_only_xtc")
@@ -128,6 +131,7 @@ def main()->int:
         fold={
             "season":year,
             "cleanLbTrainRows":len(clean_train),"cleanLbTestRows":len(clean_test),
+            "maxControlReconstructionDrift":max_control_drift,
             "exposureTrainRows":len(exp_train),"opportunityTrainRows":len(opp_train),
             "control":base_met,"exposureOnly":exp_met,"opportunityOnly":opp_met,"joint":joint_met,
             "exposureComponent":{
