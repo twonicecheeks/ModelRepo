@@ -21,8 +21,8 @@ const TEAM_CODE_NICKNAME = Object.freeze({
   SEA:'Mariners',STL:'Cardinals',TB:'Rays',TEX:'Rangers',TOR:'Blue Jays',WSH:'Nationals'
 });
 
-const VERSION='0.5.1';
-const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.1-reconciliation-2026-09-19';
+const VERSION='0.5.2';
+const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.2-coverage-semantics-2026-09-19';
 
 function readJson(p){ return JSON.parse(fs.readFileSync(p,'utf8')); }
 function readText(p){ return fs.readFileSync(p,'utf8'); }
@@ -214,13 +214,14 @@ function loadPriorDayUsage(root,game,bullpenCore){
   );
 }
 function parseArgs(argv){
-  const a={root:'/Users/abbeyfelix/Developer/MODEL',outcomes:null,priors:null,output:null};
+  const a={root:'/Users/abbeyfelix/Developer/MODEL',outcomes:null,priors:null,output:null,strictCoverage:false};
   for(let i=2;i<argv.length;i++){
     const x=argv[i];
     if(x==='--root')a.root=argv[++i];
     else if(x==='--outcomes')a.outcomes=argv[++i];
     else if(x==='--priors')a.priors=argv[++i];
     else if(x==='--output')a.output=argv[++i];
+    else if(x==='--strict-coverage')a.strictCoverage=true;
     else throw new Error(`unknown argument ${x}`);
   }
   return a;
@@ -458,6 +459,8 @@ function main(){
       'historical PropsMadness Pitcher Outs/ER/H/BB current-game lines',
       'historical actionable K line/price','historical K closing price'
     ],
+    coverage_status:blocked.length?'PARTIAL_FAIL_CLOSED':'COMPLETE',
+    strict_coverage_mode:!!args.strictCoverage,
     production_model_mutation:false,model_refit_performed:false,market_requests:0,oddsPapi_requests:0,
     core_identity:replay.coreIdentity(),
     ledger_path:ledgerPath,ledger_sha256:sha256File(ledgerPath),
@@ -476,11 +479,12 @@ function main(){
   console.log(`Ledger rows: ${ledger.length} · ML ${manifest.ml_rows} · K xK-only ${manifest.k_xk_rows}`);
   console.log('Exact production replay: NO · workload proxy clearly labeled');
   console.log('Historical K market fabricated: NO');
+  console.log(`Coverage: ${blocked.length?'PARTIAL FAIL-CLOSED':'COMPLETE'} · strict coverage: ${args.strictCoverage?'YES':'NO'}`);
   console.log('Production mutation: NO · refit: NO · OddsPapi: 0');
   if(blocked.length)blocked.slice(0,20).forEach(x=>console.log(`BLOCKED ${x.game_date} ${x.game_id}: ${x.error}`));
   console.log(`Ledger: ${ledgerPath}`);
   console.log(`Manifest: ${manifestPath}`);
-  process.exitCode=blocked.length?1:0;
+  process.exitCode=(args.strictCoverage&&blocked.length)?1:0;
 }
 
 if(require.main===module)main();
