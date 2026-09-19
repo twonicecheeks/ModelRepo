@@ -201,6 +201,68 @@ def decision_metrics(rows:list[dict]) -> dict:
     }
 
 
+def load_market_calibration_0350(root: Path, season: int) -> list[dict]:
+    """Load newest immutable 0.35 calibration row per market identity."""
+    base=root/"data/results/nfl/omega_market_calibration_0350"
+    best={}
+    if not base.exists():
+        return []
+    for game_dir in sorted(p for p in base.iterdir() if p.is_dir()):
+        try:
+            game_season=int(str(game_dir.name).split("_",1)[0])
+        except Exception:
+            game_season=season
+        if game_season!=season:
+            continue
+        for run_dir in sorted(p for p in game_dir.iterdir() if p.is_dir() and not p.name.startswith(".")):
+            sp=run_dir/"OMEGA_0.35_MARKET_CALIBRATION_SCORED.csv"
+            if not sp.exists():
+                continue
+            for i,r in enumerate(read_csv(sp)):
+                x=dict(r)
+                x["_calibration_run_id"]=run_dir.name
+                x["_calibration_game_id"]=game_dir.name
+                key=(
+                    str(x.get("game_id") or game_dir.name),
+                    str(x.get("player_id") or ""),
+                    str(x.get("book") or ""),
+                    str(x.get("line") or ""),
+                    str(x.get("control_best_side") or ""),
+                    str(x.get("control_selected_price_american") or x.get("over_odds_american") or x.get("under_odds_american") or ""),
+                )
+                stamp=(run_dir.name,i)
+                prior=best.get(key)
+                if prior is None or stamp>(prior[0],prior[1]):
+                    best[key]=(stamp[0],stamp[1],x)
+    return [v[2] for v in best.values()]
+
+
+def market035_metrics(rows:list[dict]) -> dict:
+    z=[r for r in rows if r.get("control_selected_hit") not in (None,"")]
+    if not z:return {"n":0,"sampleStatus":"NO_GRADED_ROWS"}
+    wins=sum(int(float(r.get("control_selected_hit") or 0))==1 for r in z)
+    losses=sum(int(float(r.get("control_selected_hit") or 0))==0 for r in z)
+    roi=[num(r.get("control_realized_roi")) for r in z];roi=[x for x in roi if x is not None]
+    cal=[]
+    for r in z:
+        p=num(r.get("control_selected_probability"))
+        if p is None:continue
+        y=float(r.get("control_selected_hit"))
+        cal.append((p,y))
+    resolved=wins+losses
+    return {
+        "n":len(z),"wins":wins,"losses":losses,"pushes":0,
+        "hitRateExPush":wins/resolved if resolved else None,
+        "unitsAt1uEach":sum(roi) if roi else None,
+        "roi":fmean(roi) if roi else None,
+        "meanModelProbability":fmean(p for p,_ in cal) if cal else None,
+        "eventRate":fmean(y for _,y in cal) if cal else None,
+        "brier":fmean((p-y)**2 for p,y in cal) if cal else None,
+        "logLoss":fmean(safe_logloss(p,y) for p,y in cal) if cal else None,
+        "sampleStatus":"ADEQUATE_FOR_MONITORING" if resolved>=50 else ("EARLY_SAMPLE" if resolved>=20 else "VERY_SMALL_SAMPLE"),
+    }
+
+
 def grouped(rows:list[dict], fn) -> dict[str,dict]:
     g=defaultdict(list)
     for r in rows:g[pos_label(r.get("position_group"))].append(r)
@@ -260,16 +322,44 @@ def main():
     pmap=position_map(latest_players)
     latest_thresholds=with_positions(latest_thresholds,pmap)
     decisions=with_positions(dedupe_decisions(decisions),pmap)
+    market035=load_market_calibration_0350(root,a.season)
+    market035=with_positions(market035,pmap)
+    market035_clean=[r for r in market035 if str(r.get("clean_role_state") or "").lower() in {"true","1"} and str(r.get("executable_quote") or "").lower() in {"true","1"} and str(r.get("quarantined_or_reference") or "").lower() not in {"true","1"}]
 
     overall={
         "forecast":forecast_metrics(latest_players),
         "probability":probability_metrics(latest_thresholds),
         "decisions":decision_metrics(decisions),
+        "currentGenerationMarket035":market035_metrics(market035),
+        "currentGenerationCleanMarket035":market035_metrics(market035_clean),
     }
     by_forecast=grouped(latest_players,forecast_metrics)
     by_prob=grouped(latest_thresholds,probability_metrics)
     by_dec=grouped(decisions,decision_metrics)
+    by_m035=grouped(market035,market035_metrics)
+    by_m035_clean=grouped(market035_clean,market035_metrics)
     flat=flatten_rows(by_forecast,by_prob,by_dec)
+    for row in flat:
+        pos=row["position_group"]
+        m=by_m035.get(pos,{"n":0});mc=by_m035_clean.get(pos,{"n":0})
+        row.update({
+            "market035_n":m.get("n",0),"market035_wins":m.get("wins"),"market035_losses":m.get("losses"),
+            "market035_hit_rate":m.get("hitRateExPush"),"market035_units":m.get("unitsAt1uEach"),
+            "market035_roi":m.get("roi"),"market035_brier":m.get("brier"),"market035_sample_status":m.get("sampleStatus"),
+            "market035_clean_n":mc.get("n",0),"market035_clean_wins":mc.get("wins"),"market035_clean_losses":mc.get("losses"),
+            "market035_clean_hit_rate":mc.get("hitRateExPush"),"market035_clean_units":mc.get("unitsAt1uEach"),
+            "market035_clean_roi":mc.get("roi"),"market035_clean_brier":mc.get("brier"),"market035_clean_sample_status":mc.get("sampleStatus"),
+        })
+    extra_positions=sorted((set(by_m035)|set(by_m035_clean))-{r["position_group"] for r in flat})
+    for pos in extra_positions:
+        m=by_m035.get(pos,{"n":0});mc=by_m035_clean.get(pos,{"n":0})
+        flat.append({"position_group":pos,"forecast_n":0,"probability_n":0,"decision_n":0,
+                     "market035_n":m.get("n",0),"market035_wins":m.get("wins"),"market035_losses":m.get("losses"),
+                     "market035_hit_rate":m.get("hitRateExPush"),"market035_units":m.get("unitsAt1uEach"),
+                     "market035_roi":m.get("roi"),"market035_brier":m.get("brier"),"market035_sample_status":m.get("sampleStatus"),
+                     "market035_clean_n":mc.get("n",0),"market035_clean_wins":mc.get("wins"),"market035_clean_losses":mc.get("losses"),
+                     "market035_clean_hit_rate":mc.get("hitRateExPush"),"market035_clean_units":mc.get("unitsAt1uEach"),
+                     "market035_clean_roi":mc.get("roi"),"market035_clean_brier":mc.get("brier"),"market035_clean_sample_status":mc.get("sampleStatus")})
 
     out=root/"data/results/nfl/omega/position_results_0351"/str(a.season)
     out.mkdir(parents=True,exist_ok=True)
@@ -285,6 +375,8 @@ def main():
             "latestUniquePlayerGameForecasts":len(latest_players),
             "latestThresholdRows":len(latest_thresholds),
             "dedupedDecisionRows":len(decisions),
+            "currentGenerationMarket035Rows":len(market035),
+            "currentGenerationCleanMarket035Rows":len(market035_clean),
         },
         "overall":overall,
         "byPosition":{
@@ -292,7 +384,9 @@ def main():
                 "forecast":by_forecast.get(pos,{"n":0}),
                 "probability":by_prob.get(pos,{"n":0}),
                 "decisions":by_dec.get(pos,{"n":0}),
-            } for pos in sorted(set(by_forecast)|set(by_prob)|set(by_dec))
+                "currentGenerationMarket035":by_m035.get(pos,{"n":0}),
+                "currentGenerationCleanMarket035":by_m035_clean.get(pos,{"n":0}),
+            } for pos in sorted(set(by_forecast)|set(by_prob)|set(by_dec)|set(by_m035)|set(by_m035_clean))
         },
         "interpretationGuard":"Compare positions only with sample size/calibration in view. ROI alone is noisy; forecast error and Brier/log loss are included to separate model quality from price/result variance.",
         "integrity":{"sourceScoresModified":False,"omegaModelModified":False,"modelRefitPerformed":False},
@@ -300,30 +394,35 @@ def main():
     (out/"OMEGA_0.35.1_POSITION_RESULTS_REPORT.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     write_csv(out/"OMEGA_0.35.1_POSITION_RESULTS_SUMMARY.csv",flat)
 
-    o=overall;dm=o["decisions"];fm=o["forecast"];pm=o["probability"]
+    o=overall;dm=o["decisions"];fm=o["forecast"];pm=o["probability"];m35=o["currentGenerationMarket035"];m35c=o["currentGenerationCleanMarket035"]
     lines=[
         "OMEGA 0.35.1 — CUMULATIVE RESULTS BY DEFENSIVE POSITION",
         "",
         f"Season: {a.season}",
         f"Unique latest player-game forecasts: {len(latest_players)}",
         f"Threshold probability rows: {len(latest_thresholds)}",
-        f"Deduped market decisions: {len(decisions)}",
+        f"Deduped legacy/prospective decisions: {len(decisions)}",
+        f"Current-generation 0.35 graded market rows: {len(market035)} · clean subset {len(market035_clean)}",
         "",
         "OVERALL",
         f"  Count forecast: n {fm.get('n',0)} · MAE {fmt(fm.get('mae'))} · RMSE {fmt(fm.get('rmse'))} · bias {fmt(fm.get('biasPredMinusActual'))}",
         f"  Probability: n {pm.get('n',0)} · Brier {fmt(pm.get('brier'),4)} · logloss {fmt(pm.get('logLoss'),4)} · mean p {pct(pm.get('meanPredictedProbability'))} · event {pct(pm.get('eventRate'))}",
-        f"  Decisions: n {dm.get('n',0)} · W-L-P {dm.get('wins',0)}-{dm.get('losses',0)}-{dm.get('pushes',0)} · hit {pct(dm.get('hitRateExPush'))} · units {fmt(dm.get('unitsAt1uEach'))} · ROI {pct(dm.get('roi'))} · Brier {fmt(dm.get('brier'),4)} · {dm.get('sampleStatus','')}",
+        f"  Legacy/prospective decisions: n {dm.get('n',0)} · W-L-P {dm.get('wins',0)}-{dm.get('losses',0)}-{dm.get('pushes',0)} · hit {pct(dm.get('hitRateExPush'))} · units {fmt(dm.get('unitsAt1uEach'))} · ROI {pct(dm.get('roi'))} · Brier {fmt(dm.get('brier'),4)} · {dm.get('sampleStatus','')}",
+        f"  Current 0.35 all graded rows: n {m35.get('n',0)} · W-L {m35.get('wins',0)}-{m35.get('losses',0)} · hit {pct(m35.get('hitRateExPush'))} · units {fmt(m35.get('unitsAt1uEach'))} · ROI {pct(m35.get('roi'))} · Brier {fmt(m35.get('brier'),4)} · {m35.get('sampleStatus','')}",
+        f"  Current 0.35 clean role/executable: n {m35c.get('n',0)} · W-L {m35c.get('wins',0)}-{m35c.get('losses',0)} · hit {pct(m35c.get('hitRateExPush'))} · units {fmt(m35c.get('unitsAt1uEach'))} · ROI {pct(m35c.get('roi'))} · Brier {fmt(m35c.get('brier'),4)} · {m35c.get('sampleStatus','')}",
         "",
         "BY POSITION",
     ]
     for pos in sorted(report["byPosition"]):
-        r=report["byPosition"][pos];f=r["forecast"];p=r["probability"];d=r["decisions"]
+        r=report["byPosition"][pos];f=r["forecast"];p=r["probability"];d=r["decisions"];m=r["currentGenerationMarket035"];mc=r["currentGenerationCleanMarket035"]
         lines += [
             "",
             f"  {pos}",
             f"    Count forecast: n {f.get('n',0)} · MAE {fmt(f.get('mae'))} · RMSE {fmt(f.get('rmse'))} · bias {fmt(f.get('biasPredMinusActual'))}",
             f"    Probability: n {p.get('n',0)} · Brier {fmt(p.get('brier'),4)} · logloss {fmt(p.get('logLoss'),4)} · mean p {pct(p.get('meanPredictedProbability'))} · event {pct(p.get('eventRate'))}",
-            f"    Decisions: n {d.get('n',0)} · W-L-P {d.get('wins',0)}-{d.get('losses',0)}-{d.get('pushes',0)} · hit {pct(d.get('hitRateExPush'))} · units {fmt(d.get('unitsAt1uEach'))} · ROI {pct(d.get('roi'))} · Brier {fmt(d.get('brier'),4)} · {d.get('sampleStatus','')}",
+            f"    Legacy/prospective decisions: n {d.get('n',0)} · W-L-P {d.get('wins',0)}-{d.get('losses',0)}-{d.get('pushes',0)} · hit {pct(d.get('hitRateExPush'))} · units {fmt(d.get('unitsAt1uEach'))} · ROI {pct(d.get('roi'))} · Brier {fmt(d.get('brier'),4)} · {d.get('sampleStatus','')}",
+            f"    Current 0.35 all: n {m.get('n',0)} · W-L {m.get('wins',0)}-{m.get('losses',0)} · hit {pct(m.get('hitRateExPush'))} · units {fmt(m.get('unitsAt1uEach'))} · ROI {pct(m.get('roi'))} · Brier {fmt(m.get('brier'),4)} · {m.get('sampleStatus','')}",
+            f"    Current 0.35 clean: n {mc.get('n',0)} · W-L {mc.get('wins',0)}-{mc.get('losses',0)} · hit {pct(mc.get('hitRateExPush'))} · units {fmt(mc.get('unitsAt1uEach'))} · ROI {pct(mc.get('roi'))} · Brier {fmt(mc.get('brier'),4)} · {mc.get('sampleStatus','')}",
         ]
     lines += [
         "",
