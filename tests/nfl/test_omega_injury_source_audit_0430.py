@@ -19,7 +19,7 @@ rows=[
  {'season':2024,'season_type':'REG','team':'A','week':1,'gsis_id':'P2','position':'LB','full_name':'A Two',
   'report_status':'Out','practice_status':'Did Not Participate','date_modified':'2024-09-08T10:00:00Z'},
 ]
-s=m.summarize_year(2024,rows,sched)
+s=m.summarize_year(2024,rows,sched,'season_type')
 assert s['rows']==2
 assert s['gsisIdCoverage']==1.0
 assert s['scheduleJoinCoverage']==1.0
