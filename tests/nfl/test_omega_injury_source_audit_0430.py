@@ -26,4 +26,16 @@ assert s['scheduleJoinCoverage']==1.0
 assert s['timingCounts']['STRICT_PRIOR_DAY']==1
 assert s['timingCounts']['SAME_GAMEDAY']==1
 assert s['duplicateExtraRows']==0
-print('PASS OMEGA 0.43 injury source timing audit contracts')
+assert s['seasonTypePolicy']=='EXPLICIT_SEASON_TYPE'
+
+game_rows=[dict(r,game_type=r['season_type']) for r in rows]
+for r in game_rows:r.pop('season_type',None)
+sg=m.summarize_year(2024,game_rows,sched,'game_type')
+assert sg['rows']==2
+assert sg['seasonTypePolicy']=='EXPLICIT_GAME_TYPE'
+
+legacy=[{k:v for k,v in r.items() if k!='season_type'} for r in rows]
+sl=m.summarize_year(2024,legacy,sched,None)
+assert sl['rows']==2
+assert sl['seasonTypePolicy']=='INFERRED_FROM_REGULAR_SCHEDULE_WEEK_WINDOW'
+print('PASS OMEGA 0.43 injury source timing audit contracts · season_type/game_type/legacy adapters')
