@@ -127,6 +127,19 @@ def main() -> int:
         )
 
     print()
+    print("SEASON TYPE SPLITS")
+    for season_type, s in report.get("season_type", {}).items():
+        parts = [f"{season_type}: n {s.get('n', 0)}"]
+        if s.get("brier") is not None:
+            parts.append(f"Brier {s['brier']:.6f}")
+            parts.append(f"bias {s['probability_bias']:+.4f}")
+        if s.get("xk"):
+            parts.append(f"xK MAE {s['xk']['mae']:.3f}")
+            parts.append(f"xK RMSE {s['xk']['rmse']:.3f}")
+            parts.append(f"xK bias {s['xk']['bias']:+.3f}")
+        print(" · ".join(parts))
+
+    print()
     print("DIAGNOSTIC SPLITS")
     for season, s in report.get("season", {}).items():
         parts = [f"season {season}: n {s.get('n', 0)}"]
