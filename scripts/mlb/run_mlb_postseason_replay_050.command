@@ -30,5 +30,5 @@ python3 scripts/mlb/audit_mlb_historical_validation_010.py \
   --label "POST_HISTORY_PROXY"
 
 echo
-echo "PASS MLB postseason history-proxy pipeline 0.5.3"
+echo "PASS MLB postseason history-proxy pipeline 0.5.4"
 echo "Replay ledger: $LEDGER"
