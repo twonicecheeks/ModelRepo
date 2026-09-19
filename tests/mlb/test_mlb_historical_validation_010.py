@@ -110,7 +110,7 @@ def main():
     assert "brier" in fa["postseason_shift"]
     assert "2024" in fa["season"] and "2025" in fa["season"]
 
-    print("PASS MLB historical validation 0.1.2")
+    print("PASS MLB historical validation 0.1.4")
 
 
 if __name__ == "__main__":
