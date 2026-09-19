@@ -21,8 +21,13 @@ const TEAM_CODE_NICKNAME = Object.freeze({
   SEA:'Mariners',STL:'Cardinals',TB:'Rays',TEX:'Rangers',TOR:'Blue Jays',WSH:'Nationals'
 });
 
-const VERSION='0.5.2';
-const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.2-coverage-semantics-2026-09-19';
+const HISTORICAL_VENUE_ALIASES = Object.freeze({
+  'dodger stadium':'UNIQLO Field at Dodger Stadium',
+  'minute maid park':'Daikin Park'
+});
+
+const VERSION='0.5.3';
+const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.3-venue-alias-2026-09-19';
 
 function readJson(p){ return JSON.parse(fs.readFileSync(p,'utf8')); }
 function readText(p){ return fs.readFileSync(p,'utf8'); }
@@ -73,11 +78,19 @@ function normalizeLabel(v){
 function resolvePark(parkCore,bundle,venueName,homeCode){
   const direct=parkCore.getForVenue(bundle,venueName);
   if(direct)return {row:direct,method:'VENUE_NAME'};
+  const alias=HISTORICAL_VENUE_ALIASES[normalizeLabel(venueName)];
+  if(alias){
+    const aliased=parkCore.getForVenue(bundle,alias);
+    if(aliased)return {row:aliased,method:'HISTORICAL_VENUE_ALIAS',alias};
+  }
   const nickname=normalizeLabel(TEAM_CODE_NICKNAME[homeCode]||'');
   if(!nickname)return {row:null,method:'UNRESOLVED'};
   const matches=(bundle?.rows||[]).filter(r=>{
     const t=normalizeLabel(r?.team);
-    return t===nickname || t.endsWith(' '+nickname) || nickname.endsWith(' '+t);
+    const v=normalizeLabel(r?.venue);
+    return t===nickname || t.endsWith(' '+nickname) || nickname.endsWith(' '+t) ||
+      (homeCode==='LAD'&&v.includes('dodger stadium')) ||
+      (homeCode==='HOU'&&(v.includes('daikin park')||v.includes('minute maid park')));
   });
   return matches.length===1?{row:matches[0],method:'HOME_TEAM_IDENTITY'}:{row:null,method:'UNRESOLVED'};
 }
@@ -489,7 +502,7 @@ function main(){
 
 if(require.main===module)main();
 module.exports={
-  VERSION,LINEAGE,TEAM_ID_CODE,TEAM_CODE_NICKNAME,mean,num,ipToOuts,priorDate,
+  VERSION,LINEAGE,TEAM_ID_CODE,TEAM_CODE_NICKNAME,HISTORICAL_VENUE_ALIASES,mean,num,ipToOuts,priorDate,
   parsePitchingGameLog,selectWorkloadHistory,historyMarket,workloadMarkets,kSkillRow,
   mlOpponentMetrics,teamCode,normalizeLabel,resolvePark,historicalStartingLineup
 };
