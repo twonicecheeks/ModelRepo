@@ -99,6 +99,7 @@ def main()->int:
     import tackle_opportunity_footprint as tf
     import tackle_count_distribution as dist
     import position_specific_challenger_0360 as pc
+    import lb_edge_archetype_0363 as arch
 
     pc.assert_development_only(range(2017,2025))
     ptr=root/"data/models/nfl/CURRENT_OMEGA_TACKLE_PROBABILITY_FROZEN"
@@ -138,14 +139,51 @@ def main()->int:
         )
         train=[r for r in control if 2017<=int(r["season"])<year]
         test=[r for r in control if int(r["season"])==year]
-        models={}
-        for pos in ("LB","DB"):
-            models[pos]=pc.fit_residual(train,pos,pc.FIXED_L2)
+
+        archetype_model=arch.fit(train,arch.FIXED_L2)
+        archetype_test=arch.metrics(test,archetype_model)
+
+        clean_lb_train=[r for r in train if arch.explicit_role_label(r)=="OFFBALL_LB"]
+        models={
+            "LB":pc.fit_residual(clean_lb_train,"LB",pc.FIXED_L2),
+            "DB":pc.fit_residual(train,"DB",pc.FIXED_L2),
+        }
         scored=pc.apply_challengers(test,models)
-        for r in scored:pooled[pc.canonical_position_row(r)].append(r)
-        fold={"season":year,"trainRows":len(train),"testRows":len(test),"positions":{}}
+        clean_scored=[]
+        ambiguous_control_n=0
+        for r in scored:
+            x=dict(r)
+            lab=arch.explicit_role_label(x)
+            if pc.canonical_position_row(x)=="LB" and lab!="OFFBALL_LB":
+                x["position_challenger_xtc"]=float(x.get("control_xtc") or 0.0)
+                x["position_challenger_correction"]=0.0
+                x["position_challenger_track"]="AMBIG_LB_CONTROL_EXCLUDED_FROM_HISTORICAL_LB_TEST"
+                ambiguous_control_n+=1
+            clean_scored.append(x)
+        scored=clean_scored
+
+        for r in scored:
+            lab=arch.explicit_role_label(r)
+            if lab=="OFFBALL_LB":
+                pooled["LB"].append(r)
+            elif lab=="EDGE":
+                pooled["EDGE"].append(r)
+            elif pc.canonical_position_row(r)=="DL":
+                pooled["DL"].append(r)
+            elif pc.canonical_position_row(r)=="DB":
+                pooled["DB"].append(r)
+
+        fold={"season":year,"trainRows":len(train),"testRows":len(test),
+              "cleanLbTrainRows":len(clean_lb_train),
+              "ambiguousGenericLbControlRows":ambiguous_control_n,
+              "archetypeMetrics":archetype_test,"positions":{}}
         for pos in pc.POSITIONS:
-            rr=[r for r in scored if pc.canonical_position_row(r)==pos]
+            if pos=="LB":
+                rr=[r for r in scored if arch.explicit_role_label(r)=="OFFBALL_LB"]
+            elif pos=="EDGE":
+                rr=[r for r in scored if arch.explicit_role_label(r)=="EDGE"]
+            else:
+                rr=[r for r in scored if pc.canonical_position_row(r)==pos]
             if not rr:continue
             base=pc.count_metrics(rr,"control_xtc");cand=pc.count_metrics(rr,"position_challenger_xtc")
             bp=probability_metrics(rr,"control_xtc",dist,params);cp=probability_metrics(rr,"position_challenger_xtc",dist,params)
@@ -158,7 +196,8 @@ def main()->int:
                 "brierImprovement":None if bp["brier"] is None or cp["brier"] is None else bp["brier"]-cp["brier"],
             }
         fold_rows.append(fold)
-        print(f"PASS chronological fold {year} · train {len(train):,} · test {len(test):,}")
+        print(f"PASS chronological fold {year} · train {len(train):,} · test {len(test):,} · clean LB train {len(clean_lb_train):,}")
+        print(f"  ARCHETYPE clean-label n {archetype_test['n']:,} · accuracy {archetype_test['accuracy']:.2%} · Brier {archetype_test['brier']:.5f} · high-conf accuracy {archetype_test['highConfidenceAccuracy'] if archetype_test['highConfidenceAccuracy'] is not None else 'NA'}")
 
     pooled_result={}
     gates={}
@@ -185,7 +224,12 @@ def main()->int:
         fit_end=2024,teamrows=teamrows,exposure_rows=exposure_rows,topology_rows=topology,
         fam_map=fam_map,xb=xb,er=er,tf=tf,fs=fs
     )
-    full_models={pos:pc.fit_residual(full_control,pos,pc.FIXED_L2) for pos in ("LB","DB")}
+    full_archetype=arch.fit(full_control,arch.FIXED_L2)
+    full_clean_lb=[r for r in full_control if arch.explicit_role_label(r)=="OFFBALL_LB"]
+    full_models={
+        "LB":pc.fit_residual(full_clean_lb,"LB",pc.FIXED_L2),
+        "DB":pc.fit_residual(full_control,"DB",pc.FIXED_L2),
+    }
 
     run_id=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")+"_"+uuid.uuid4().hex[:8]
     out=root/"data/models/nfl/omega_position_challenger_0360"/run_id
@@ -196,13 +240,21 @@ def main()->int:
         "developmentSeasons":[2017,2018,2019,2020,2021,2022,2023,2024],"evaluationSeasons":eval_years,
         "sealedHoldoutSeason":2025,"prospectiveSeason":2026,"holdoutOpened":False,"prospectiveRowsRead":0,
         "marketFieldsRead":0,"oddsPapiRequests":0,"frozenOmegaMutation":False,"productionPromotion":False,
-        "positionTaxonomy":"DEPTH_CONFLICT_EDGE_SPLIT_V3",
+        "positionTaxonomy":"ARCHETYPE_GATED_LB_V4",
         "challengerDesign":{
             "DL":"CONTROL_NO_CHANGE",
-            "LB":"fixed-L2 residual on H008/H012 rush/scramble/sack + role allocation features",
+            "EDGE":"CONTROL_NO_CHANGE",
+            "LB":"fixed-L2 residual trained/evaluated on clean explicit ILB/MLB rows; generic LB requires separate 0.36.3 archetype gate",
             "DB":"fixed-L2 residual on H008/H012 completed-pass/other-pass/rush + role allocation features",
             "l2":pc.FIXED_L2,"maxAbsCorrection":pc.MAX_ABS_CORRECTION,
             "hyperparameterSearches":0,
+        },
+        "lbEdgeArchetype":{
+            "version":arch.VERSION,
+            "fixedL2":arch.FIXED_L2,
+            "genericLbOffballThreshold":arch.GENERIC_LB_OFFBALL_THRESHOLD,
+            "chronologicalFoldMetrics":[{"season":f["season"],**f["archetypeMetrics"]} for f in fold_rows],
+            "trainingLabels":"clean explicit ILB/MLB vs DE/EDGE/OLB only",
         },
         "folds":fold_rows,"pooledByPosition":pooled_result,
         "overall":{"control":overall_control,"challenger":overall_cand,
@@ -213,7 +265,9 @@ def main()->int:
     }
     (out/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     models={"version":pc.VERSION,"status":"SHADOW_NOT_PROMOTED","sourceSnapshotId":sid,
+            "positionTaxonomy":"ARCHETYPE_GATED_LB_V4",
             "LB":full_models["LB"].to_dict(),"DB":full_models["DB"].to_dict(),
+            "lbEdgeArchetype":full_archetype.to_dict(),
             "DL":{"track":"CONTROL_NO_CHANGE"},"EDGE":{"track":"CONTROL_NO_CHANGE"}}
     (out/"OMEGA_0.36_POSITION_CHALLENGER_MODELS.json").write_text(json.dumps(models,indent=2)+"\n",encoding="utf-8")
 
@@ -244,7 +298,7 @@ def main()->int:
             f"    bootstrap RMSE improvement CI [{bt['rmseImprovement']['low']:+.4f}, {bt['rmseImprovement']['high']:+.4f}]",
         ]
     lines += ["","Interpretation:",
-              "  DL and EDGE/OLB are deliberately unchanged. LB/DB require paired count improvement, positive Brier improvement, and bootstrap support before even entering prospective shadow.",
+              "  DL and EDGE are deliberately unchanged. The LB residual is trained/evaluated only on clean explicit off-ball labels; generic LB rows require the separate 0.36.3 archetype gate before prospective use.",
               "  This command cannot promote a model into production or open the sealed 2025 holdout.",
               "",f"REPORT: {out/'OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json'}",
               f"MODELS: {out/'OMEGA_0.36_POSITION_CHALLENGER_MODELS.json'}"]
