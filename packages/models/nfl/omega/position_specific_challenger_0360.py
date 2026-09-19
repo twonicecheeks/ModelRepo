@@ -61,6 +61,25 @@ def canonical_position(v:Any)->str:
     return x or "UNK"
 
 
+def canonical_position_row(row:dict[str,Any])->str:
+    """Position taxonomy for position-specific challengers.
+
+    Raw football position takes precedence when it unambiguously identifies a
+    defensive lineman/edge or defensive back. Provider position_group is used for
+    true LB/ambiguous cases. This prevents DE/EDGE players from entering the
+    off-ball LB residual simply because an upstream provider groups edge rushers
+    under LB.
+    """
+    raw=str(row.get("position") or "").strip().upper()
+    if raw in {"DE","DT","NT","DL","EDGE"}:
+        return "DL"
+    if raw in {"CB","S","FS","SS","DB","SAFETY"}:
+        return "DB"
+    if raw in {"ILB","MLB"}:
+        return "LB"
+    return canonical_position(row.get("position_group") or raw)
+
+
 def assert_development_only(seasons:Iterable[int])->tuple[int,...]:
     s=tuple(sorted({int(x) for x in seasons}))
     if not s:raise ValueError("development seasons required")
@@ -79,7 +98,7 @@ def candidate_feature_names(position:str)->tuple[str,...]:
 
 
 def feature_map(row:dict[str,Any],position:str|None=None)->dict[str,float]:
-    p=canonical_position(position or row.get("position_group"))
+    p=canonical_position(position) if position is not None else canonical_position_row(row)
     control=max(0.0,num(row.get("control_xtc",row.get("topology_xtc",row.get("predicted_xtc")))))
     rush=num(row.get("pred_credit_RUSH",row.get("control_pred_credit_RUSH")))
     scr=num(row.get("pred_credit_SCRAMBLE",row.get("control_pred_credit_SCRAMBLE")))
@@ -183,7 +202,7 @@ def fit_residual(rows:Sequence[dict[str,Any]],position:str,l2:float=FIXED_L2)->R
     p=canonical_position(position)
     names=candidate_feature_names(p)
     if p=="DL":raise ValueError("DL is no-change control in 0.36")
-    rr=[r for r in rows if canonical_position(r.get("position_group"))==p]
+    rr=[r for r in rows if canonical_position_row(r)==p]
     if len(rr)<50:raise ValueError(f"insufficient {p} training rows: {len(rr)}")
     xs=[vector(r,p) for r in rr]
     ys=[num(r.get("actual_xtc"))-num(r.get("control_xtc")) for r in rr]
@@ -208,7 +227,7 @@ def fit_residual(rows:Sequence[dict[str,Any]],position:str,l2:float=FIXED_L2)->R
 def apply_challengers(rows:Sequence[dict[str,Any]],models:dict[str,ResidualModel],out_key:str="position_challenger_xtc")->list[dict[str,Any]]:
     out=[]
     for r in rows:
-        z=dict(r);p=canonical_position(r.get("position_group"));base=max(0.0,num(r.get("control_xtc")))
+        z=dict(r);p=canonical_position_row(r);base=max(0.0,num(r.get("control_xtc")))
         if p=="DL":
             pred=base;corr=0.0;track="DL_CONTROL_NO_CHANGE"
         elif p in models:
