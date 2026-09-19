@@ -13,7 +13,7 @@ except ValueError:pass
 else:raise AssertionError('2025 must remain sealed')
 
 rows=[]
-for week in range(1,10):
+for week in range(1,71):
     for team,opp in [('A','B'),('B','A')]:
         for j in range(2):
             pid=f'{team}{j}'
@@ -35,7 +35,7 @@ for week in range(1,10):
             rows.append(r)
 
 team,player=m.build_decomposition_rows(rows)
-assert len(team)==18 and len(player)==36
+assert len(team)==140 and len(player)==280
 # Week 1 histories use defaults; week 2 is allowed to use week 1, never same-week outcome.
 w1=[r for r in team if r['week']==1][0]
 w2=[r for r in team if r['week']==2 and r['team']==w1['team']][0]
