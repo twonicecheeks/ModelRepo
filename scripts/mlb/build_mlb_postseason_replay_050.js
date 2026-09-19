@@ -13,8 +13,16 @@ const TEAM_ID_CODE = Object.freeze({
   '147':'NYY','158':'MIL'
 });
 
-const VERSION='0.5.0';
-const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.0-2026-09-19';
+const TEAM_CODE_NICKNAME = Object.freeze({
+  ARI:'Diamondbacks',ATL:'Braves',BAL:'Orioles',BOS:'Red Sox',CHC:'Cubs',CWS:'White Sox',
+  CIN:'Reds',CLE:'Guardians',COL:'Rockies',DET:'Tigers',HOU:'Astros',KC:'Royals',
+  LAA:'Angels',LAD:'Dodgers',MIA:'Marlins',MIL:'Brewers',MIN:'Twins',NYM:'Mets',
+  NYY:'Yankees',OAK:'Athletics',PHI:'Phillies',PIT:'Pirates',SD:'Padres',SF:'Giants',
+  SEA:'Mariners',STL:'Cardinals',TB:'Rays',TEX:'Rangers',TOR:'Blue Jays',WSH:'Nationals'
+});
+
+const VERSION='0.5.1';
+const LINEAGE='mlb-postseason-history-proxy-replay-v0.5.1-reconciliation-2026-09-19';
 
 function readJson(p){ return JSON.parse(fs.readFileSync(p,'utf8')); }
 function readText(p){ return fs.readFileSync(p,'utf8'); }
@@ -57,6 +65,44 @@ function teamCode(starterCore,team){
   if(byName)return byName;
   return TEAM_ID_CODE[String(team?.team_id||'')]||null;
 }
+
+function normalizeLabel(v){
+  return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
+}
+function resolvePark(parkCore,bundle,venueName,homeCode){
+  const direct=parkCore.getForVenue(bundle,venueName);
+  if(direct)return {row:direct,method:'VENUE_NAME'};
+  const nickname=normalizeLabel(TEAM_CODE_NICKNAME[homeCode]||'');
+  if(!nickname)return {row:null,method:'UNRESOLVED'};
+  const matches=(bundle?.rows||[]).filter(r=>{
+    const t=normalizeLabel(r?.team);
+    return t===nickname || t.endsWith(' '+nickname) || nickname.endsWith(' '+t);
+  });
+  return matches.length===1?{row:matches[0],method:'HOME_TEAM_IDENTITY'}:{row:null,method:'UNRESOLVED'};
+}
+function historicalStartingLineup(boxscore,side){
+  const team=boxscore?.teams?.[side];
+  if(!team)return {state:'ERROR',count:0,hitters:[],reason:`boxscore missing teams.${side}`};
+  const rows=Object.values(team.players||{}).filter(p=>{
+    const bo=String(p?.battingOrder||'');
+    return /^\d00$/.test(bo) && p?.person?.id != null;
+  }).sort((a,b)=>Number(a.battingOrder)-Number(b.battingOrder));
+  const seen=new Set(),hitters=[];
+  for(const p of rows){
+    const id=String(p.person.id);
+    if(seen.has(id))continue;
+    seen.add(id);
+    hitters.push({
+      mlbId:id,name:p?.person?.fullName||null,order:Math.floor(Number(p.battingOrder)/100),
+      battingOrder:String(p.battingOrder),position:p?.position?.abbreviation||null
+    });
+  }
+  if(hitters.length===9&&hitters.every(x=>x.name&&x.order>=1&&x.order<=9)){
+    return {state:'OFFICIAL',count:9,hitters,reason:null,source:'completed MLB boxscore starter battingOrder codes'};
+  }
+  return {state:'INCOMPLETE',count:hitters.length,hitters,reason:`starter-coded boxscore lineup contains ${hitters.length}/9 hitters`};
+}
 function defaultPointer(root,rel,leaf){
   const p=path.join(root,rel);
   if(!fs.existsSync(p))throw new Error(`missing pointer ${p}`);
@@ -70,18 +116,17 @@ function statSplits(payload){
   for(const group of payload?.stats||[]) for(const split of group?.splits||[]) out.push(split);
   return out;
 }
-function parseStarterGameLog(payload){
+function parsePitchingGameLog(payload){
   const rows=[];
   for(const split of statSplits(payload)){
     const st=split?.stat||{};
-    const gs=num(st.gamesStarted,0);
-    if(gs<1)continue;
     const outs=ipToOuts(st.inningsPitched);
     const date=String(split?.date||split?.game?.gameDate||split?.gameDate||'').slice(0,10);
-    if(!date||outs===null)continue;
+    if(!date||outs===null||outs<=0)continue;
     rows.push({
       date,
       gamePk: split?.game?.gamePk??split?.game?.id??null,
+      gamesStarted:num(st.gamesStarted,0),
       outs,
       er:num(st.earnedRuns),
       hits:num(st.hits),
@@ -93,6 +138,13 @@ function parseStarterGameLog(payload){
   }
   rows.sort((a,b)=>a.date.localeCompare(b.date)||String(a.gamePk||'').localeCompare(String(b.gamePk||'')));
   return rows;
+}
+function selectWorkloadHistory(rows,snapshotAt){
+  const prior=(rows||[]).filter(x=>x.date < snapshotAt.slice(0,10));
+  const starts=prior.filter(x=>Number(x.gamesStarted)>=1);
+  if(starts.length)return {rows:starts,mode:'REGULAR_SEASON_STARTS'};
+  if(prior.length)return {rows:prior,mode:'REGULAR_SEASON_APPEARANCES_OPENER_FALLBACK'};
+  return {rows:[],mode:'EMPTY'};
 }
 function historyMarket(values,snapshotAt){
   const xs=(values||[]).map(Number).filter(Number.isFinite);
@@ -113,13 +165,18 @@ function historyMarket(values,snapshotAt){
   };
 }
 function workloadMarkets(gameLog,snapshotAt){
-  const logs=(gameLog||[]).filter(x=>x.date < snapshotAt.slice(0,10));
+  const selected=selectWorkloadHistory(gameLog,snapshotAt);
+  const logs=selected.rows;
   return {
-    'player-strikeouts':historyMarket(logs.map(x=>x.k),snapshotAt),
-    'player-pitcher-outs':historyMarket(logs.map(x=>x.outs),snapshotAt),
-    'player-earned-runs':historyMarket(logs.map(x=>x.er),snapshotAt),
-    'player-hits-allowed':historyMarket(logs.map(x=>x.hits),snapshotAt),
-    'player-walks':historyMarket(logs.map(x=>x.bb),snapshotAt),
+    mode:selected.mode,
+    logs,
+    markets:{
+      'player-strikeouts':historyMarket(logs.map(x=>x.k),snapshotAt),
+      'player-pitcher-outs':historyMarket(logs.map(x=>x.outs),snapshotAt),
+      'player-earned-runs':historyMarket(logs.map(x=>x.er),snapshotAt),
+      'player-hits-allowed':historyMarket(logs.map(x=>x.hits),snapshotAt),
+      'player-walks':historyMarket(logs.map(x=>x.bb),snapshotAt),
+    }
   };
 }
 function kSkillRow(kCore,bundle,id){
@@ -239,16 +296,17 @@ function main(){
       if(!game.boxscore_cache_path||!fs.existsSync(boxPath))throw new Error('postseason boxscore cache missing');
       const box=readJson(boxPath);
       const lus={
-        away:starterCore.parseBoxscoreLineup(box,'away'),
-        home:starterCore.parseBoxscoreLineup(box,'home')
+        away:historicalStartingLineup(box,'away'),
+        home:historicalStartingLineup(box,'home')
       };
       if(lus.away.state!=='OFFICIAL'||lus.home.state!=='OFFICIAL')throw new Error(
         `lineup unresolved away=${lus.away.state} home=${lus.home.state}`
       );
 
       const priorUsage=loadPriorDayUsage(root,game,bullpenCore);
-      const park=parkCore.getForVenue(parkBundles[season],game.venue_name);
-      if(!park)throw new Error(`park factor unresolved: ${game.venue_name}`);
+      const parkResolved=resolvePark(parkCore,parkBundles[season],game.venue_name,homeCode);
+      const park=parkResolved.row;
+      if(!park)throw new Error(`park factor unresolved: ${game.venue_name} (${homeCode})`);
       const parkConditions=parkCore.conditionLines(park);
 
       const sideData={};
@@ -259,11 +317,13 @@ function main(){
         if(!pid)throw new Error(`${side} starter id missing`);
 
         const logPath=path.join(root,`data/raw/mlb/historical_priors_040/mlb/starter_gamelog/${season}/${pid}.json`);
-        const gameLog=parseStarterGameLog(readJson(logPath));
-        if(!gameLog.length)throw new Error(`${side} regular-season starter game log empty: ${pid}`);
-        const markets=workloadMarkets(gameLog,snapshotAt);
+        const gameLog=parsePitchingGameLog(readJson(logPath));
+        if(!gameLog.length)throw new Error(`${side} regular-season pitching game log empty: ${pid}`);
+        const workload=workloadMarkets(gameLog,snapshotAt);
+        const markets=workload.markets;
         const proxyOuts=kCore.blendedCountExpectation(markets['player-pitcher-outs'],16.5,.36,.64);
         if(!Number.isFinite(proxyOuts))throw new Error(`${side} workload proxy unavailable`);
+        if(workload.mode==='EMPTY')throw new Error(`${side} no pregame workload history: ${pid}`);
 
         const mlPitcher=mlCore.structuredSavantRow(
           savantBundles.pitcher[season],pid,savantCore,{minCurrent:30,minPrevious:60}
@@ -301,7 +361,7 @@ function main(){
         );
 
         sideData[side]={
-          pid,code,st,markets,gameLog,proxyOuts,mlPitcher,kPitcher,mlLineup,kLineup,bullpen,
+          pid,code,st,markets,gameLog,workloadMode:workload.mode,proxyOuts,mlPitcher,kPitcher,mlLineup,kLineup,bullpen,
           mlCapture:{
             side,team:code,teamId:tid,officialName:st.name,officialMlbId:pid,
             pitcherMetrics:mlPitcher.metrics||{},
@@ -332,6 +392,9 @@ function main(){
         model_variant:'POST_HISTORY_PROXY',stage:'RESEARCH',thesis:'REG_SEASON_SKILL_HISTORY_WORKLOAD_PROXY'
       };
       const mlOut=replay.replayML(mlInput);
+      mlOut.away_workload_proxy_source=sideData.away.workloadMode;
+      mlOut.home_workload_proxy_source=sideData.home.workloadMode;
+      mlOut.park_resolution_method=parkResolved.method;
       ledger.push(mlOut);
       snapshotRows.push({...mlInput,target:'ML_HOME',production_input:undefined});
 
@@ -351,6 +414,8 @@ function main(){
           stage:'RESEARCH',thesis:'REG_SEASON_SKILL_HISTORY_WORKLOAD_PROXY'
         };
         const kOut=replay.replayKDistributionOnly(kInput);
+        kOut.workload_proxy_source=d.workloadMode;
+        kOut.park_resolution_method=parkResolved.method;
         ledger.push(kOut);
         snapshotRows.push({
           ...kInput,starter_input:undefined,lineup_rows:undefined,pitcher_row:undefined,
@@ -420,6 +485,7 @@ function main(){
 
 if(require.main===module)main();
 module.exports={
-  VERSION,LINEAGE,TEAM_ID_CODE,mean,num,ipToOuts,priorDate,parseStarterGameLog,
-  historyMarket,workloadMarkets,kSkillRow,mlOpponentMetrics,teamCode
+  VERSION,LINEAGE,TEAM_ID_CODE,TEAM_CODE_NICKNAME,mean,num,ipToOuts,priorDate,
+  parsePitchingGameLog,selectWorkloadHistory,historyMarket,workloadMarkets,kSkillRow,
+  mlOpponentMetrics,teamCode,normalizeLabel,resolvePark,historicalStartingLineup
 };
