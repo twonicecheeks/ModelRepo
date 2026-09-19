@@ -127,6 +127,26 @@ def main() -> int:
         )
 
     print()
+    print("DIAGNOSTIC SPLITS")
+    for season, s in report.get("season", {}).items():
+        parts = [f"season {season}: n {s.get('n', 0)}"]
+        if s.get("brier") is not None:
+            parts.append(f"Brier {s['brier']:.6f}")
+            parts.append(f"bias {s['probability_bias']:+.4f}")
+        if s.get("xk"):
+            parts.append(f"xK MAE {s['xk']['mae']:.3f}")
+            parts.append(f"xK bias {s['xk']['bias']:+.3f}")
+        print(" · ".join(parts))
+    for mode, s in report.get("workload_proxy_source", {}).items():
+        if mode == "UNKNOWN":
+            continue
+        parts = [f"workload {mode}: n {s.get('n', 0)}"]
+        if s.get("xk"):
+            parts.append(f"xK MAE {s['xk']['mae']:.3f}")
+            parts.append(f"xK bias {s['xk']['bias']:+.3f}")
+        print(" · ".join(parts))
+
+    print()
     print("POSTSEASON REGIME AUDIT")
     for name, item in report["postseason_shift"].items():
         status = item.get("status")
