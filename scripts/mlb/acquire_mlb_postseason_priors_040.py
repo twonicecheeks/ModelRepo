@@ -29,8 +29,8 @@ import subprocess
 import time
 import uuid
 
-VERSION = "0.4.0"
-LINEAGE = "mlb-postseason-pregame-priors-v0.4.0-2026-09-19"
+VERSION = "0.4.1"
+LINEAGE = "mlb-postseason-pregame-priors-v0.4.1-statcast-boundary-2026-09-19"
 MLB_BASE = "https://statsapi.mlb.com/api/v1"
 SAVANT_CUSTOM = "https://baseballsavant.mlb.com/leaderboard/custom"
 SAVANT_PARK = "https://baseballsavant.mlb.com/leaderboard/statcast-park-factors"
@@ -313,12 +313,13 @@ def main() -> int:
     # Season-end priors. For postseason dates, the current season's regular
     # season is complete, so these are pregame-eligible.
     for year in years_needed:
-        for ptype in ("pitcher", "batter"):
-            add(
-                f"data/raw/mlb/historical_priors_040/savant/{year}/{ptype}.csv",
-                savant_custom_url(year, ptype),
-                "savant_csv",
-            )
+        if year >= 2015:
+            for ptype in ("pitcher", "batter"):
+                add(
+                    f"data/raw/mlb/historical_priors_040/savant/{year}/{ptype}.csv",
+                    savant_custom_url(year, ptype),
+                    "savant_csv",
+                )
         add(
             f"data/raw/mlb/historical_priors_040/fangraphs/{year}/wrc.json",
             fangraphs_wrc_url(year),
@@ -465,6 +466,8 @@ def main() -> int:
         "postseason_games": len(rows),
         "seasons": seasons,
         "season_end_skill_years": years_needed,
+        "statcast_skill_years": [y for y in years_needed if y >= 2015],
+        "statcast_boundary_note": "Statcast skill acquisition begins in 2015; no 2014 Statcast fallback is fabricated.",
         "assets": assets,
         "asset_count": len(assets),
         "cache_hits": sum(1 for a in assets if a["cache_hit"]),
