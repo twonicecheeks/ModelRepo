@@ -108,8 +108,9 @@ def main():
     fa = m.full_audit(rows + kr)
     assert fa["rows"] == 6
     assert "brier" in fa["postseason_shift"]
+    assert "2024" in fa["season"] and "2025" in fa["season"]
 
-    print("PASS MLB historical validation 0.1.1")
+    print("PASS MLB historical validation 0.1.2")
 
 
 if __name__ == "__main__":
