@@ -68,18 +68,22 @@ def pos_label(v) -> str:
 
 def canonical_position_row(row:dict) -> str:
     raw=str(row.get("position") or "").strip().upper()
-    if raw in {"DE","DT","NT","DL","EDGE"}:
+    if raw in {"DE","EDGE","OLB"}:
+        return "EDGE"
+    if raw in {"DT","NT","DL"}:
         return "DL"
     if raw in {"CB","S","FS","SS","DB","SAFETY"}:
         return "DB"
-    if raw in {"ILB","MLB"}:
+    if raw in {"LB","ILB","MLB"}:
         return "LB"
     grp=str(row.get("position_group") or raw).strip().upper()
-    if grp in {"DE","DT","NT","DL","EDGE"}:
+    if grp in {"DE","EDGE","OLB"}:
+        return "EDGE"
+    if grp in {"DT","NT","DL"}:
         return "DL"
     if grp in {"CB","S","FS","SS","DB","SAFETY"}:
         return "DB"
-    if grp in {"LB","ILB","OLB","MLB"}:
+    if grp in {"LB","ILB","MLB"}:
         return "LB"
     return grp or "UNKNOWN"
 
