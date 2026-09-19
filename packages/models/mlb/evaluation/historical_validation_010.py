@@ -26,8 +26,8 @@ from random import Random
 from statistics import fmean
 from typing import Any, Iterable
 
-VERSION = "0.1.0"
-LINEAGE = "mlb-historical-validation-v0.1.0-2026-09-19"
+VERSION = "0.1.1"
+LINEAGE = "mlb-historical-validation-v0.1.1-xk-only-2026-09-19"
 EPS = 1e-12
 
 
@@ -152,30 +152,48 @@ def _k_outcome(row: dict[str, Any]) -> float:
     raise ValueError(f"K side must be OVER/UNDER; got {side!r}")
 
 
+def _xk_only(row: dict[str, Any]) -> bool:
+    return _market_type(row) == "K" and _s(row.get("evaluation_mode")).upper() == "XK_ONLY"
+
+
 def _binary_outcome(row: dict[str, Any]) -> float:
     if _market_type(row) == "ML":
         y = float(row["actual_win"])
         if y not in (0.0, 1.0):
             raise ValueError("ML actual_win must be 0/1")
         return y
+    if _xk_only(row):
+        raise ValueError("XK_ONLY row has no binary market outcome")
     return _k_outcome(row)
 
 
 def validate_row(row: dict[str, Any]) -> None:
-    for key in ("game_id", "season", "season_type", "model_probability", "market_type"):
+    for key in ("game_id", "season", "season_type", "market_type"):
         if row.get(key) in (None, ""):
             raise ValueError(f"missing required field {key}")
-    p = float(row["model_probability"])
-    if not 0 <= p <= 1:
-        raise ValueError(f"model_probability outside [0,1]: {p}")
     _season_type(row)
     mt = _market_type(row)
     if mt == "ML":
+        if row.get("model_probability") in (None, ""):
+            raise ValueError("ML row missing required field model_probability")
+        p = float(row["model_probability"])
+        if not 0 <= p <= 1:
+            raise ValueError(f"model_probability outside [0,1]: {p}")
         _binary_outcome(row)
     else:
-        for key in ("pitcher", "side", "line", "xk", "actual_k"):
+        for key in ("pitcher", "xk", "actual_k"):
             if row.get(key) in (None, ""):
                 raise ValueError(f"K row missing required field {key}")
+        if float(row["actual_k"]) < 0:
+            raise ValueError("K actual_k must be nonnegative")
+        if _xk_only(row):
+            return
+        for key in ("side", "line", "model_probability"):
+            if row.get(key) in (None, ""):
+                raise ValueError(f"K market row missing required field {key}")
+        p = float(row["model_probability"])
+        if not 0 <= p <= 1:
+            raise ValueError(f"model_probability outside [0,1]: {p}")
         _binary_outcome(row)
 
 
@@ -188,6 +206,8 @@ def summarize(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
 
     scored = []
     for r in rs:
+        if _xk_only(r):
+            continue
         y = _binary_outcome(r)
         if y == 0.5:
             continue
@@ -209,6 +229,8 @@ def summarize(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
 
     bet_rows = []
     for r in rs:
+        if _xk_only(r):
+            continue
         odds = _f(r.get("market_odds"))
         if odds is None:
             continue
@@ -367,6 +389,8 @@ def paired_variant_comparison(
     by_key: dict[tuple[str, str], dict[str, dict[str, Any]]] = defaultdict(dict)
     for r in rows:
         validate_row(r)
+        if _xk_only(r):
+            continue
         if _binary_outcome(r) == 0.5:
             continue
         target = _s(r.get("target"))
