@@ -1,5 +1,7 @@
 from pathlib import Path
+from urllib.error import URLError
 import importlib.util
+import ssl
 
 ROOT = Path(__file__).resolve().parents[2]
 PATH = ROOT / "scripts/mlb/acquire_mlb_historical_outcomes_030.py"
@@ -30,6 +32,22 @@ def player(pid, name, gs, k, ip, bf, pitches):
 
 def main():
     assert m.parse_seasons("2024-2025,2023") == [2023, 2024, 2025]
+    cert_exc = ssl.SSLCertVerificationError(1, "certificate verify failed: CERTIFICATE_VERIFY_FAILED")
+    assert m.certificate_verify_error(cert_exc)
+    assert m.certificate_verify_error(URLError(cert_exc))
+    assert not m.certificate_verify_error(RuntimeError("ordinary network failure"))
+
+    class FakeProc:
+        returncode = 0
+        stdout = b'{"ok": true}'
+        stderr = b""
+
+    original_run = m.subprocess.run
+    try:
+        m.subprocess.run = lambda *args, **kwargs: FakeProc()
+        assert m.fetch_json_with_curl("https://example.invalid/test") == {"ok": True}
+    finally:
+        m.subprocess.run = original_run
 
     schedule = {
         "gamePk": 999001,
