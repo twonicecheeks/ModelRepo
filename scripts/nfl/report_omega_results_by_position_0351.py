@@ -410,7 +410,7 @@ def main():
         "coverage":{
             "sourceEvaluationRows":len(evals),"sourcePlayerScoreRows":len(players),
             "latestUniquePlayerGameForecasts":len(latest_players),
-            "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1",
+            "positionTaxonomy":"RAW_POSITION_EDGE_SPLIT_V2",
             "reclassifiedForecastRows":reclassified_forecasts,
             "latestThresholdRows":len(latest_thresholds),
             "dedupedDecisionRows":len(decisions),
@@ -459,7 +459,7 @@ def main():
         "",
         f"Season: {a.season}",
         f"Unique latest player-game forecasts: {len(latest_players)}",
-        f"Position taxonomy: RAW_POSITION_PRECEDENCE_V1 · reclassified forecast rows {reclassified_forecasts}",
+        f"Position taxonomy: RAW_POSITION_EDGE_SPLIT_V2 · reclassified forecast rows {reclassified_forecasts}",
         f"Threshold probability rows: {len(latest_thresholds)}",
         f"Deduped legacy/prospective decisions: {len(decisions)}",
         f"Current-generation 0.35 graded market rows: {len(market035)} · clean subset {len(market035_clean)}",
