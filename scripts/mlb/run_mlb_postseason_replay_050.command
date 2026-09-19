@@ -7,6 +7,7 @@ cd "$ROOT"
 echo "== MLB postseason replay regression =="
 python3 tests/mlb/test_mlb_historical_validation_010.py
 node tests/mlb/test_mlb_production_replay_adapter_020.js
+python3 tests/mlb/test_mlb_historical_outcomes_030.py
 python3 tests/mlb/test_mlb_postseason_priors_040.py
 node tests/mlb/test_mlb_postseason_replay_050.js
 
@@ -29,5 +30,5 @@ python3 scripts/mlb/audit_mlb_historical_validation_010.py \
   --label "POST_HISTORY_PROXY"
 
 echo
-echo "PASS MLB postseason history-proxy pipeline 0.5.0"
+echo "PASS MLB postseason history-proxy pipeline 0.5.1"
 echo "Replay ledger: $LEDGER"
