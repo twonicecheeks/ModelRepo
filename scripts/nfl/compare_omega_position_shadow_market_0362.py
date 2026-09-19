@@ -66,6 +66,28 @@ def best(oe,ue):
     return max(z,key=lambda x:x[1]) if z else ("",None)
 
 
+def dedupe_market_rows(rows):
+    """Remove repeated copies of the same quoted offer.
+
+    Keep distinct books, lines, sides, and prices. If the same offer appears more
+    than once, retain the latest captured copy so refresh duplication cannot
+    overweight a player/market in shadow diagnostics.
+    """
+    best_rows={}
+    for i,r in enumerate(rows):
+        key=(
+            str(r.get("game_id") or ""),str(r.get("player_id") or ""),
+            str(r.get("book") or ""),str(r.get("line") or ""),
+            str(r.get("over_odds_american") or ""),str(r.get("under_odds_american") or ""),
+            str(r.get("one_sided_side") or ""),str(r.get("one_sided_odds_american") or ""),
+        )
+        stamp=(str(r.get("market_captured_at") or ""),i)
+        prior=best_rows.get(key)
+        if prior is None or stamp>(prior[0],prior[1]):
+            best_rows[key]=(stamp[0],stamp[1],r)
+    return [v[2] for v in best_rows.values()], len(rows)-len(best_rows)
+
+
 def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--root",default="/Users/abbeyfelix/Developer/MODEL")
@@ -74,7 +96,8 @@ def main()->int:
     shadow=resolve_shadow(root);srows=rcsv(shadow)
     smap={(str(r.get("game_id") or ""),str(r.get("player_id") or "")):r for r in srows}
     comparison=Path(args.comparison_path).expanduser().resolve() if args.comparison_path else latest_comparison(root)
-    rows=rcsv(comparison)
+    source_rows=rcsv(comparison)
+    rows,duplicate_rows_removed=dedupe_market_rows(source_rows)
     out=[];missing=0
     for r in rows:
         key=(str(r.get("game_id") or ""),str(r.get("player_id") or ""))
@@ -117,7 +140,8 @@ def main()->int:
         "version":VERSION,"createdAt":now.isoformat(),"runId":run_id,
         "sourcePositionShadow":str(shadow.relative_to(root)),"sourcePositionShadowSha256":sha(shadow),
         "sourceMarketComparison":str(comparison.relative_to(root) if comparison.is_relative_to(root) else comparison),
-        "sourceMarketComparisonSha256":sha(comparison),"rows":len(out),"unmatchedPastOrUnavailableRows":missing,
+        "sourceMarketComparisonSha256":sha(comparison),"sourceRows":len(source_rows),
+        "duplicateSourceRowsRemoved":duplicate_rows_removed,"rows":len(out),"unmatchedPastOrUnavailableRows":missing,
         "lbRows":sum(str(r.get("position_shadow_track") or "").startswith("LB_") for r in out),
         "lbSideChangesVsControl":sum(str(r.get("position_shadow_track") or "").startswith("LB_") and r.get("position_shadow_agrees_control")=="FALSE" for r in out),
         "integrity":{"marketReadDownstreamOnly":True,"modelRefits":0,"frozenOmegaMutation":False,
@@ -126,7 +150,7 @@ def main()->int:
     apath=final/"OMEGA_0.36.2_POSITION_SHADOW_MARKET_AUDIT.json";apath.write_text(json.dumps(audit,indent=2)+"\n",encoding="utf-8")
     atomic(root/"data/prospective/nfl/omega/CURRENT_OMEGA_POSITION_SHADOW_MARKET_0362",str(final.relative_to(root)))
     print("OMEGA 0.36.2 — POSITION SHADOW DOWNSTREAM MARKET COMPARISON")
-    print(f"PASS rows {len(out)} · LB {audit['lbRows']} · LB control-side changes {audit['lbSideChangesVsControl']}")
+    print(f"PASS rows {len(out)} · duplicate source offers removed {duplicate_rows_removed} · LB {audit['lbRows']} · LB control-side changes {audit['lbSideChangesVsControl']}")
     print("PASS SHADOW ONLY · frozen control unchanged · market downstream only")
     ranked=sorted([r for r in out if str(r.get("position_shadow_track") or "").startswith("LB_")],key=lambda r:float(r.get("position_shadow_best_ev") or -999),reverse=True)
     print("TOP LB SHADOW ROWS:")
