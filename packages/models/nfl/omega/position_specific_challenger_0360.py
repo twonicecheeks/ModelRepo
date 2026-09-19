@@ -62,25 +62,52 @@ def canonical_position(v:Any)->str:
     return x or "UNK"
 
 
-def canonical_position_row(row:dict[str,Any])->str:
-    """Position taxonomy for position-specific challengers.
+def _position_tokens(row:dict[str,Any])->set[str]:
+    vals=[]
+    for key in (
+        "position","position_group","depth_position","current_depth_position",
+        "previous_week_depth_position","depth_role",
+    ):
+        s=str(row.get(key) or "").strip().upper()
+        if s:
+            vals.append(s.replace("-","").replace("_","").replace(" ",""))
+    return set(vals)
 
-    Raw football position takes precedence when it unambiguously identifies a
-    defensive lineman/edge or defensive back. Provider position_group is used for
-    true LB/ambiguous cases. This prevents DE/EDGE players from entering the
-    off-ball LB residual simply because an upstream provider groups edge rushers
-    under LB.
+
+def canonical_position_row(row:dict[str,Any])->str:
+    """Four-way tackle taxonomy: interior DL / EDGE / off-ball LB / DB.
+
+    This classifier is intentionally conservative for the LB challenger. Any
+    explicit edge evidence (DE/EDGE/OLB or depth-chart equivalents), or a provider
+    conflict between generic LB and DL labels, is routed to EDGE and remains on
+    frozen control. Only clean LB/ILB/MLB evidence can enter the off-ball-LB
+    residual challenger.
     """
-    raw=str(row.get("position") or "").strip().upper()
-    if raw in {"DE","EDGE","OLB"}:
-        return "EDGE"
-    if raw in {"DT","NT","DL"}:
-        return "DL"
-    if raw in {"CB","S","FS","SS","DB","SAFETY"}:
+    toks=_position_tokens(row)
+
+    db={"DB","CB","S","FS","SS","SAFETY"}
+    edge={"DE","EDGE","OLB","LDE","RDE","LE","RE","LEO","RUSH","JACK"}
+    interior={"DL","DT","NT","IDL","LDT","RDT"}
+    offball={"LB","ILB","MLB"}
+
+    if toks & db:
         return "DB"
-    if raw in {"LB","ILB","MLB"}:
+    if toks & edge:
+        return "EDGE"
+
+    # Generic LB/DL disagreement is itself edge-like ambiguity. Do not allow such
+    # rows into the off-ball-LB challenger.
+    if (toks & offball) and (toks & interior):
+        return "EDGE"
+
+    if toks & interior:
+        return "DL"
+    if toks & {"ILB","MLB"}:
         return "LB"
-    return canonical_position(row.get("position_group") or raw)
+    if "LB" in toks:
+        return "LB"
+
+    return canonical_position(row.get("position_group") or row.get("position"))
 
 
 def assert_development_only(seasons:Iterable[int])->tuple[int,...]:
