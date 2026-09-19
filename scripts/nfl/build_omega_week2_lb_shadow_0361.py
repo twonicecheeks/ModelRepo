@@ -147,6 +147,8 @@ def main()->int:
             if abs(shadow-base)>1e-12:shifted+=1
         elif pos=="DL":
             shadow=base;track="DL_CONTROL_NO_CHANGE"
+        elif pos=="EDGE":
+            shadow=base;track="EDGE_OLB_CONTROL_NO_CHANGE"
         elif pos=="DB":
             shadow=base;track="DB_CONTROL_NO_PROMOTION"
         else:
@@ -186,7 +188,7 @@ def main()->int:
         "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1","reclassifiedRows":reclassified,
         "excludedAlreadyStartedGames":sorted(excluded_games),
         "gateSummary":gates,
-        "trackPolicy":{"LB":"0.36 residual shadow","DB":"frozen control","DL":"frozen control"},
+        "trackPolicy":{"LB":"0.36 residual shadow","DB":"frozen control","DL":"frozen control","EDGE":"frozen control"},
         "dispersionPolicy":"FIXED_CONTROL_H012_TIER",
         "hypothesisTiming":"post-DET-BUF discovery; model parameters fit development-only 2017-2024",
         "sourceForecastTiming":"OMEGA 0.33 rows were frozen before Week 2 earliest kickoff",
@@ -199,7 +201,7 @@ def main()->int:
     atomic(root/"data/prospective/nfl/omega/CURRENT_OMEGA_POSITION_SHADOW_0361",str(final.relative_to(root)))
     print("OMEGA 0.36.1 — WEEK 2 POSITION-SPECIFIC PROSPECTIVE SHADOW")
     print(f"PASS future games {audit['games']} · rows {len(out)} · LB rows {lb_n} · shifted {shifted}")
-    print(f"PASS LB shadow only · DB control · DL control · already-started games excluded {len(excluded_games)}")
+    print(f"PASS LB shadow only · DB/DL/EDGE control · already-started games excluded {len(excluded_games)}")
     print(f"PASS hardened position taxonomy · reclassified rows {len(reclassified)}")
     for rr in reclassified[:20]:
         print(f"  RECLASS {rr['player_name']} · {rr['raw_position']}/{rr['source_position_group']} -> {rr['challenger_position_group']}")
