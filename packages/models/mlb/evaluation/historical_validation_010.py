@@ -26,8 +26,8 @@ from random import Random
 from statistics import fmean
 from typing import Any, Iterable
 
-VERSION = "0.1.3"
-LINEAGE = "mlb-historical-validation-v0.1.3-ruleset-splits-2026-09-19"
+VERSION = "0.1.4"
+LINEAGE = "mlb-historical-validation-v0.1.4-reg-post-k-bias-2026-09-19"
 EPS = 1e-12
 
 
@@ -303,6 +303,8 @@ def _metric_value(rows: list[dict[str, Any]], metric: str) -> float | None:
         return s.get("probability_bias")
     if metric == "xk_mae":
         return (s.get("xk") or {}).get("mae")
+    if metric == "xk_bias":
+        return (s.get("xk") or {}).get("bias")
     raise ValueError(metric)
 
 
@@ -457,6 +459,7 @@ def full_audit(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "workload_proxy_source": split_summary(rs, "workload_proxy_source"),
         "park_resolution_method": split_summary(rs, "park_resolution_method"),
         "ruleset": split_summary(rs, "ruleset"),
+        "control_match_quality": split_summary(rs, "control_match_quality"),
         "stage": split_summary(rs, "stage"),
         "thesis": split_summary(rs, "thesis"),
         "postseason_shift": {
@@ -466,4 +469,5 @@ def full_audit(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
     }
     if any(_market_type(r) == "K" for r in rs):
         report["postseason_shift"]["xk_mae"] = postseason_shift_bootstrap(rs, "xk_mae")
+        report["postseason_shift"]["xk_bias"] = postseason_shift_bootstrap(rs, "xk_bias")
     return report
