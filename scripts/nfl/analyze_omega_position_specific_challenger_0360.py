@@ -196,7 +196,7 @@ def main()->int:
         "developmentSeasons":[2017,2018,2019,2020,2021,2022,2023,2024],"evaluationSeasons":eval_years,
         "sealedHoldoutSeason":2025,"prospectiveSeason":2026,"holdoutOpened":False,"prospectiveRowsRead":0,
         "marketFieldsRead":0,"oddsPapiRequests":0,"frozenOmegaMutation":False,"productionPromotion":False,
-        "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1",
+        "positionTaxonomy":"RAW_POSITION_EDGE_SPLIT_V2",
         "challengerDesign":{
             "DL":"CONTROL_NO_CHANGE",
             "LB":"fixed-L2 residual on H008/H012 rush/scramble/sack + role allocation features",
@@ -214,7 +214,7 @@ def main()->int:
     (out/"OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     models={"version":pc.VERSION,"status":"SHADOW_NOT_PROMOTED","sourceSnapshotId":sid,
             "LB":full_models["LB"].to_dict(),"DB":full_models["DB"].to_dict(),
-            "DL":{"track":"CONTROL_NO_CHANGE"}}
+            "DL":{"track":"CONTROL_NO_CHANGE"},"EDGE":{"track":"CONTROL_NO_CHANGE"}}
     (out/"OMEGA_0.36_POSITION_CHALLENGER_MODELS.json").write_text(json.dumps(models,indent=2)+"\n",encoding="utf-8")
 
     lines=[
@@ -244,7 +244,7 @@ def main()->int:
             f"    bootstrap RMSE improvement CI [{bt['rmseImprovement']['low']:+.4f}, {bt['rmseImprovement']['high']:+.4f}]",
         ]
     lines += ["","Interpretation:",
-              "  DL is deliberately unchanged. LB/DB require paired count improvement, positive Brier improvement, and bootstrap support before even entering prospective shadow.",
+              "  DL and EDGE/OLB are deliberately unchanged. LB/DB require paired count improvement, positive Brier improvement, and bootstrap support before even entering prospective shadow.",
               "  This command cannot promote a model into production or open the sealed 2025 holdout.",
               "",f"REPORT: {out/'OMEGA_0.36_POSITION_CHALLENGER_BAKEOFF.json'}",
               f"MODELS: {out/'OMEGA_0.36_POSITION_CHALLENGER_MODELS.json'}"]
