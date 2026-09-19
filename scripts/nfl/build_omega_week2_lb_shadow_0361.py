@@ -132,7 +132,7 @@ def main()->int:
     out=[];lb_n=0;shifted=0
     for r in future:
         z=dict(r)
-        pos=pc.canonical_position(r.get("position_group"))
+        pos=pc.canonical_position_row(r)
         base=max(0.0,pc.num(r.get("control_xtc")))
         if pos=="LB":
             shadow=lb.predict(r);track="LB_RESIDUAL_SHADOW";lb_n+=1
