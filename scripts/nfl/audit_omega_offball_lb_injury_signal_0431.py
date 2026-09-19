@@ -234,8 +234,17 @@ def main():
                 # silently reconciled.
                 old=injury[key]
                 od=parse_date(old.get("date_modified"));nd=parse_date(r.get("date_modified"))
-                if nd and od and nd>od:injury[key]=r
-                elif nd==od:raise ValueError(f"ambiguous equal-date injury duplicate {key}")
+                if nd and od and nd>od:
+                    injury[key]=r
+                elif nd==od:
+                    fields=("report_status","practice_status","report_primary_injury","report_secondary_injury",
+                            "practice_primary_injury","practice_secondary_injury")
+                    if any(str(old.get(x) or "").strip().upper()!=str(r.get(x) or "").strip().upper() for x in fields):
+                        raise ValueError(f"conflicting equal-date injury duplicate {key}")
+                    # Exact semantic duplicate: retain the first immutable row.
+                else:
+                    # Older duplicate carries no new pregame information.
+                    pass
             else:injury[key]=r
 
     sid=fptr.read_text().strip()
