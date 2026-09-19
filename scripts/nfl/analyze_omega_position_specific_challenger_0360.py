@@ -196,6 +196,7 @@ def main()->int:
         "developmentSeasons":[2017,2018,2019,2020,2021,2022,2023,2024],"evaluationSeasons":eval_years,
         "sealedHoldoutSeason":2025,"prospectiveSeason":2026,"holdoutOpened":False,"prospectiveRowsRead":0,
         "marketFieldsRead":0,"oddsPapiRequests":0,"frozenOmegaMutation":False,"productionPromotion":False,
+        "positionTaxonomy":"RAW_POSITION_PRECEDENCE_V1",
         "challengerDesign":{
             "DL":"CONTROL_NO_CHANGE",
             "LB":"fixed-L2 residual on H008/H012 rush/scramble/sack + role allocation features",
