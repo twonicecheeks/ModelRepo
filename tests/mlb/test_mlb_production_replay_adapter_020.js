@@ -130,6 +130,24 @@ function kInputs() {
   assert.strictEqual(out.distribution_independent_of_target_k_line,true);
 })();
 
+(function testKXKOnly(){
+  const {starter,lineup,pitcher,t} = kInputs();
+  const direct = k.buildDistribution(starter,lineup,pitcher,Date.parse(t));
+  const out = replay.replayRow({
+    replay_type:'K',
+    evaluation_mode:'XK_ONLY',
+    game_id:'gkx1',game_date:'2025-10-08',season:2025,season_type:'POST',
+    snapshot_at:t,
+    actual_k:7,
+    starter_input:starter,lineup_rows:lineup,pitcher_row:pitcher,
+    replay_input_mode:'WORKLOAD_PROXY',
+  });
+  assert.strictEqual(out.evaluation_mode,'XK_ONLY');
+  assert(Math.abs(out.xk-direct.expectedK)<1e-12);
+  assert.strictEqual(out.model_probability, undefined);
+  assert.strictEqual(out.line, undefined);
+})();
+
 (function testIdentity(){
   const id = replay.coreIdentity();
   assert.strictEqual(id.ml.modelVersion, ml.MODEL_VERSION);
@@ -137,4 +155,4 @@ function kInputs() {
   assert.strictEqual(id.k.targetKMarketWeight, 0);
 })();
 
-console.log('PASS MLB exact production replay adapter 0.2.0');
+console.log('PASS MLB exact production replay adapter 0.2.1');
