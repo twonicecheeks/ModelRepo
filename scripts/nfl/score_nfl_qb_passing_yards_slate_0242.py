@@ -83,6 +83,8 @@ def main():
           "--qb-gsis-id",r["qb_gsis_id"],"--qb-name",r["qb_name"],
           "--identity-source",r["identity_source"],
         ]
+        if shared_source_manifest is not None:
+            cmd.extend(["--source-manifest",str(shared_source_manifest)])
         print(f"\n===== QB {idx}/{len(rows)} · {r['game_id']} · {r['team']} · {r['qb_name']} =====")
         cp=subprocess.run(cmd,text=True)
         if cp.returncode!=0:raise SystemExit(cp.returncode)
@@ -90,6 +92,12 @@ def main():
         score_dir=data_root/pointer.read_text().strip()
         score_path=score_dir/"NFL_QB_PASSING_YARDS_ASOF_SCORE.json"
         score=json.loads(score_path.read_text())
+        if shared_source_manifest is None:
+            rel=str(score.get("sourceProspectiveManifest") or "").strip()
+            if not rel: raise ValueError("first QB score did not expose prospective source manifest")
+            shared_source_manifest=(data_root/rel).resolve()
+            if not shared_source_manifest.exists(): raise FileNotFoundError(shared_source_manifest)
+            print(f"PASS shared immutable prospective source: {shared_source_manifest}")
         target=score.get("target") or {}
         if str(target.get("game_id"))!=r["game_id"] or str(target.get("team"))!=r["team"] or str(target.get("qb_gsis_id"))!=r["qb_gsis_id"]:
             raise ValueError("batch scorer pointer target mismatch")
@@ -120,6 +128,7 @@ def main():
     report={
       "version":"0.2.4.2","createdAt":datetime.now(timezone.utc).isoformat(),"runId":run_id,
       "targets":len(out),"manifest":str(manifest),"codeRoot":str(code_root),"dataRoot":str(data_root),
+      "sharedProspectiveSourceManifest":str(shared_source_manifest) if shared_source_manifest else None,
       "decisionModel":"FROZEN_MODEL_A_DIRECT_0.2.1","marketDependency":False,
       "coefficientRefitPerformed":False,"candidateReselectionPerformed":False,
       "targetOrLater2026OutcomeRowsAdmitted":0,"oddsPapiRequests":0,"frozenOmegaMutation":False,
@@ -130,7 +139,7 @@ def main():
     print("\nNFL QB MODEL 0.2.4.2 — SLATE PROJECTION BOARD")
     for r in out:
         print(f"  {r['game_id']} · {r['qb_name']} ({r['team']}) · {float(r['projection_passing_yards']):.1f} yd · p50 {float(r['predictive_p50']):.1f} · C80 [{float(r['central80_low']):.1f},{float(r['central80_high']):.1f}]")
-    print("PASS market fields 0 · target/same-week outcomes 0 · refits 0")
+    print("PASS market fields 0 · target/same-week outcomes 0 · refits 0 · one shared prospective source snapshot")
     print(f"BOARD: {csvp}")
     print(f"AUDIT: {jp}")
     return 0
