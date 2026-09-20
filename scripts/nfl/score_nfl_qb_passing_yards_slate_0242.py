@@ -75,7 +75,9 @@ def main():
     pointer=data_root/"data/prospective/nfl/CURRENT_QB_PASSING_YARDS_024"
 
     out=[]
+    shared_source_manifest=None
     print(f"QB 0.2.4.2 — VERIFIED-STARTER SLATE BATCH · targets {len(rows)}")
+    print("Prospective source policy: acquire once on first score, reuse exact immutable manifest for remaining targets")
     for idx,r in enumerate(rows,1):
         cmd=[
           py,str(scorer),"--root",str(data_root),
