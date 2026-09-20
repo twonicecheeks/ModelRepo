@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import defaultdict
-import csv, json, re, unicodedata
+import csv, json, os, re, unicodedata
 
 ROOT=Path(os.environ.get("MODEL_DATA_ROOT_OVERRIDE","/Users/abbeyfelix/Developer/MODEL")).expanduser().resolve()
 SCHEMA="NFL_QB_PASSING_YARDS_DIRECT_CAPTURE_0.2.4.3"
