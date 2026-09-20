@@ -9,7 +9,7 @@ PY="$VENV/bin/python"
 [[ -x "$PY" ]] || { echo "FAIL Phase1B/Phase2C Python env missing" >&2; exit 1; }
 "$PY" "$CODE_ROOT/tests/nfl/test_nfl_qb_passing_yards_slate_0242.py"
 exec "$PY" "$CODE_ROOT/scripts/nfl/score_nfl_qb_passing_yards_slate_0242.py" \
-  --code-root "$DATA_ROOT" \
+  --code-root "$CODE_ROOT" \
   --data-root "$DATA_ROOT" \
   --python "$PY" \
   "$@"
