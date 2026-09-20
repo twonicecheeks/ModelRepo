@@ -147,8 +147,10 @@ def best_primary_per_player(rows):
 def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--root",default="/Users/abbeyfelix/Developer/MODEL")
+    ap.add_argument("--data-root",default="")
     args=ap.parse_args();root=Path(args.root).expanduser().resolve()
-    cid,cdir,cp,caudit=comparison_bundle(root)
+    data_root=Path(args.data_root).expanduser().resolve() if args.data_root else root
+    cid,cdir,cp,caudit=comparison_bundle(data_root)
     rows=rcsv(cp)
     if not rows:raise SystemExit("FAIL comparison CSV empty")
     classes={str(r.get("market_quote_classification") or "") for r in rows}
@@ -210,7 +212,7 @@ def main()->int:
 
     stamp=nowdt().strftime("%Y%m%dT%H%M%SZ");seed=hashlib.sha256((cid+sha(cp)).encode()).hexdigest()[:8]
     qid=f"{stamp}_{seed}"
-    base=root/"data/prospective/nfl/omega_week2_verification_queue_0351";st=base/("."+qid+".staging");final=base/qid
+    base=data_root/"data/prospective/nfl/omega_week2_verification_queue_0351";st=base/("."+qid+".staging");final=base/qid
     if final.exists():raise SystemExit(f"FAIL immutable queue exists: {final}")
     st.mkdir(parents=True,exist_ok=False)
     try:
@@ -238,6 +240,7 @@ def main()->int:
         audit={
           "schemaVersion":SCHEMA,"queueId":qid,"createdAt":now(),
           "comparisonId":cid,"comparisonSha256":sha(cp),"comparisonRows":len(rows),"queueRows":len(enriched),
+          "codeRoot":str(root),"dataRoot":str(data_root),
           "classCounts":counts,"quoteClassCounts":quote_counts,"venueClassCounts":venue_counts,
           "primaryBestPerPlayerRows":len(primary),"unmatchedRowsCarriedForward":len(unmatched),
           "mixedExecutableReferenceInputSupported":True,
@@ -254,8 +257,8 @@ def main()->int:
         (st/"OMEGA_0.35.1_WEEK2_VERIFICATION_QUEUE_AUDIT.json").write_text(json.dumps(audit,indent=2)+"\n")
         (st/"OMEGA_OUTPUT_HASHES.json").write_text(json.dumps({p.name:sha(p) for p in st.iterdir() if p.is_file()},indent=2)+"\n")
         os.replace(st,final)
-        atomic_text(root/"data/prospective/nfl/omega/CURRENT_OMEGA_WEEK2_VERIFICATION_QUEUE",qid+"\n")
-        atomic_text(root/"data/prospective/nfl/omega/CURRENT_OMEGA_WEEK2_VERIFICATION_QUEUE_0351",qid+"\n")
+        atomic_text(data_root/"data/prospective/nfl/omega/CURRENT_OMEGA_WEEK2_VERIFICATION_QUEUE",qid+"\n")
+        atomic_text(data_root/"data/prospective/nfl/omega/CURRENT_OMEGA_WEEK2_VERIFICATION_QUEUE_0351",qid+"\n")
     except BaseException:
         shutil.rmtree(st,ignore_errors=True);raise
 
