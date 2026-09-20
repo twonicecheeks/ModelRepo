@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from collections import defaultdict
 import csv, json, re, unicodedata
 
-ROOT=Path("/Users/abbeyfelix/Developer/MODEL")
+ROOT=Path(os.environ.get("MODEL_DATA_ROOT_OVERRIDE","/Users/abbeyfelix/Developer/MODEL")).expanduser().resolve()
 SCHEMA="NFL_QB_PASSING_YARDS_DIRECT_CAPTURE_0.2.4.3"
 TRAD_BOOKS={"DraftKings","FanDuel","Caesars","BetMGM","Hard Rock","Hard Rock Bet","Fanatics","bet365","Pinnacle","Circa Sports"}
 
@@ -71,13 +71,47 @@ def roster_name(r):
     first=str(r.get("first_name") or "").strip(); last=str(r.get("last_name") or "").strip()
     return (first+" "+last).strip()
 
-def find_roster_file(root):
+def phase1_dir(root):
     ptr=root/"data/normalized/nfl/CURRENT_PHASE1_SNAPSHOT"
     if not ptr.exists(): raise FileNotFoundError("CURRENT_PHASE1_SNAPSHOT missing")
     sid=ptr.read_text().strip()
-    p=root/"data/normalized/nfl/phase1"/sid/"qb_roster_weekly.csv"
+    p=root/"data/normalized/nfl/phase1"/sid
     if not p.exists(): raise FileNotFoundError(p)
     return p
+
+def load_identity_indexes(root):
+    """Build exact canonical identity indexes without pretending historical rosters are 2026 rosters.
+
+    player_identity.csv is a canonical crosswalk with display_name/latest_team.
+    qb_roster_weekly.csv is historical only and is used strictly as a fallback
+    identity crosswalk, never as evidence that the player is on a 2026 roster.
+    """
+    p1=phase1_dir(root)
+    player_path=p1/"player_identity.csv"
+    roster_path=p1/"qb_roster_weekly.csv"
+    if not player_path.exists(): raise FileNotFoundError(player_path)
+    if not roster_path.exists(): raise FileNotFoundError(roster_path)
+
+    current=defaultdict(set)
+    name_only=defaultdict(set)
+    with player_path.open(newline="",encoding="utf-8-sig") as f:
+        for r in csv.DictReader(f):
+            gid=str(r.get("gsis_id") or "").strip()
+            name=str(r.get("display_name") or "").strip()
+            team=cteam(r.get("latest_team"))
+            if not gid or not name: continue
+            norm=cname(name)
+            name_only[norm].add(gid)
+            if team: current[(team,norm)].add(gid)
+
+    historical_name=defaultdict(set)
+    with roster_path.open(newline="",encoding="utf-8-sig") as f:
+        for r in csv.DictReader(f):
+            gid=str(r.get("gsis_id") or "").strip()
+            name=roster_name(r)
+            if gid and name:
+                historical_name[cname(name)].add(gid)
+    return player_path,roster_path,current,name_only,historical_name
 
 def main():
     caps=sorted((Path.home()/"Downloads").glob("NFL_QB_PASSING_YARDS_DIRECT_CAPTURE_*.json"),key=lambda p:p.stat().st_mtime,reverse=True)
@@ -113,35 +147,38 @@ def main():
         key=(team,cname(name))
         candidates[key]["books"].add(book); candidates[key]["matches"].add(mid); candidates[key]["names"].add(name)
 
-    # Resolve against local nflverse QB roster solely to obtain exact GSIS ID.
-    roster_path=find_roster_file(ROOT)
-    roster=[]
-    with roster_path.open(newline="",encoding="utf-8-sig") as f:
-        for r in csv.DictReader(f):
-            if int(r.get("season") or 0)!=2026: continue
-            gid=str(r.get("gsis_id") or "").strip()
-            team=cteam(r.get("team"))
-            name=roster_name(r)
-            if gid and team and name:
-                roster.append((team,cname(name),gid,name))
-
-    by_key=defaultdict(set)
-    display={}
-    for team,norm,gid,name in roster:
-        by_key[(team,norm)].add(gid); display[(team,norm,gid)]=name
+    # Resolve direct-market identity to canonical GSIS ID.
+    # IMPORTANT: the Phase1 weekly roster snapshot intentionally ends before
+    # prospective 2026, so it must never be filtered as though it were a 2026 roster.
+    player_path,roster_path,current_by_team,name_only,historical_name=load_identity_indexes(ROOT)
 
     resolved=[]; unresolved=[]
     team_players=defaultdict(list)
     for (team,norm),meta in candidates.items():
-        ids=sorted(by_key.get((team,norm),set()))
         name=sorted(meta["names"])[0]
         mids=sorted(meta["matches"])
+        # Strongest identity route: exact canonical name + current latest_team.
+        ids=sorted(current_by_team.get((team,norm),set()))
+        method="PLAYER_IDENTITY_NAME_TEAM"
+        # If latest_team is unavailable/stale, allow exact-name-only only when
+        # it uniquely identifies one canonical GSIS ID across the player table.
+        if len(ids)!=1:
+            ids2=sorted(name_only.get(norm,set()))
+            if len(ids2)==1:
+                ids=ids2; method="PLAYER_IDENTITY_UNIQUE_NAME"
+        # Final identity-only fallback: exact historical QB name with one GSIS ID.
+        # This does NOT assert current roster membership; the direct sportsbook
+        # market is the 2026 starter/team evidence.
+        if len(ids)!=1:
+            ids3=sorted(historical_name.get(norm,set()))
+            if len(ids3)==1:
+                ids=ids3; method="HISTORICAL_QB_IDENTITY_UNIQUE_NAME"
         if len(ids)!=1 or len(mids)!=1:
-            unresolved.append({"team":team,"qb_name":name,"gsis_ids":"|".join(ids),"match_ids":"|".join(mids),"reason":"ROSTER_OR_MATCH_AMBIGUOUS"})
+            unresolved.append({"team":team,"qb_name":name,"gsis_ids":"|".join(ids),"match_ids":"|".join(mids),"reason":"CANONICAL_ID_OR_MATCH_AMBIGUOUS"})
             continue
         mid=mids[0]; mm=matches[mid]
         game_id=f"2026_02_{mm['away']}_{mm['home']}"
-        rec={"game_id":game_id,"team":team,"qb_gsis_id":ids[0],"qb_name":name,"identity_source":"DIRECT_SPORTSBOOK_MARKET","books":"|".join(sorted(meta["books"]))}
+        rec={"game_id":game_id,"team":team,"qb_gsis_id":ids[0],"qb_name":name,"identity_source":"DIRECT_SPORTSBOOK_MARKET","books":"|".join(sorted(meta["books"])),"identity_method":method}
         team_players[team].append(rec)
 
     for team,rows in sorted(team_players.items()):
@@ -169,7 +206,8 @@ def main():
       "version":"0.2.4.3","createdAt":datetime.now(timezone.utc).isoformat(),
       "capture":str(src),"marketSlug":slug,"directMarketIdentitySource":"DIRECT_SPORTSBOOK_MARKET",
       "traditionalSportsbookCandidates":len(candidates),"resolvedStarterRows":len(resolved),"unresolvedRows":len(unresolved),
-      "rosterFile":str(roster_path),"identityMatching":"EXACT_CANONICAL_NAME_PLUS_TEAM_NO_FUZZY",
+      "playerIdentityFile":str(player_path),"historicalQbRosterFile":str(roster_path),
+      "identityMatching":"EXACT_CANONICAL_NAME_TEAM_THEN_UNIQUE_EXACT_NAME_NO_FUZZY",
       "modelFitPerformed":False,"marketUsedAsModelFeature":False
     }
     (outdir/"qb_week2_verified_starters_audit.json").write_text(json.dumps(audit,indent=2)+"\n")
@@ -177,9 +215,10 @@ def main():
     print("\nNFL QB 0.2.4.3 — DIRECT-MARKET STARTER MANIFEST")
     print(f"PASS passing-yards market slug {slug} · direct sportsbook QB identities {len(candidates)}")
     print(f"PASS resolved manifest rows {len(resolved)} · unresolved {len(unresolved)}")
-    print("PASS exact canonical name+team only · fuzzy matching NO · market is identity evidence only")
+    print("PASS canonical player identity first · historical QB identity fallback only · fuzzy matching NO")
+    print("PASS direct sportsbook market is current 2026 team/starter evidence; historical roster is NOT treated as current")
     for r in sorted(resolved,key=lambda x:(x["game_id"],x["team"])):
-        print(f"  {r['game_id']} · {r['team']} · {r['qb_name']} · {r['qb_gsis_id']} · {r['books']}")
+        print(f"  {r['game_id']} · {r['team']} · {r['qb_name']} · {r['qb_gsis_id']} · {r['identity_method']} · {r['books']}")
     print(f"MANIFEST: {manifest}")
     print(f"UNRESOLVED: {qpath}")
     if not resolved: raise SystemExit("FAIL no QB starter identities resolved")
