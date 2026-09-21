@@ -80,6 +80,7 @@ def main() -> int:
     ap.add_argument("--team", required=True, help="target QB team abbreviation")
     ap.add_argument("--qb-gsis-id", required=True, help="verified target QB GSIS ID")
     ap.add_argument("--qb-name", default="", help="display label only; never an identity key")
+    ap.add_argument("--source-manifest", default="", help="optional pre-acquired immutable 0.2.4 prospective source manifest; avoids redundant downloads in batch mode")
     ap.add_argument(
         "--identity-source", required=True,
         choices=["DIRECT_SPORTSBOOK_MARKET", "OFFICIAL_STARTER_ANNOUNCEMENT", "USER_VERIFIED_EXTERNAL"],
@@ -156,8 +157,20 @@ def main() -> int:
     if len(holdout_rows) != int(holdout.get("targetRows") or 0) or {int(r.get("season") or 0) for r in holdout_rows} != {2025}:
         raise ValueError("2025 lagged-history source drift")
 
-    source_manifest_path = source024.acquire(root, target_week=target.week)
-    source_manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
+    if str(args.source_manifest or "").strip():
+        source_manifest_path = Path(args.source_manifest).expanduser().resolve()
+        if not source_manifest_path.exists():
+            raise FileNotFoundError(f"provided prospective source manifest missing: {source_manifest_path}")
+        source_manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
+        if str(source_manifest.get("version")) != "0.2.4":
+            raise ValueError("provided prospective source manifest version drift")
+        if int(source_manifest.get("prospectiveSeason") or 0) != 2026:
+            raise ValueError("provided prospective source manifest season drift")
+        if int(source_manifest.get("targetWeek") or 0) != int(target.week):
+            raise ValueError("provided prospective source manifest target-week mismatch")
+    else:
+        source_manifest_path = source024.acquire(root, target_week=target.week)
+        source_manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
     schedule_asset = source024.asset_by_source(source_manifest, "schedules")
     pbp_asset = source024.asset_by_source(source_manifest, "play_by_play")
     stats_asset = source024.asset_by_source(source_manifest, "player_stats_weekly")
