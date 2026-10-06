@@ -1,0 +1,3593 @@
+[
+  {
+    "season": 2015,
+    "pitcher_id": "285079",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 19.11111111111111,
+    "post_mean_outs": 9.5,
+    "outs_ratio": 0.49709302325581395
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "407793",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 19.444444444444443,
+    "post_mean_outs": 15.5,
+    "outs_ratio": 0.7971428571428572
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "425844",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 21.5,
+    "post_mean_outs": 20.5,
+    "outs_ratio": 0.9534883720930233
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "430935",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 21.0,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 0.9523809523809523
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "431148",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 15.777777777777779,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 1.0140845070422535
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "434628",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 14.333333333333334,
+    "post_mean_outs": 6.5,
+    "outs_ratio": 0.45348837209302323
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "448802",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 18.444444444444443,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.32530120481927716
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "450172",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 17.444444444444443,
+    "post_mean_outs": 17.2,
+    "outs_ratio": 0.9859872611464968
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "451596",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.375,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.975609756097561
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "452657",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 19.77777777777778,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.0617977528089888
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "453562",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 22.333333333333332,
+    "post_mean_outs": 19.666666666666668,
+    "outs_ratio": 0.8805970149253732
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "456034",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 19.77777777777778,
+    "post_mean_outs": 20.333333333333332,
+    "outs_ratio": 1.0280898876404494
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "456501",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 17.11111111111111,
+    "post_mean_outs": 18.75,
+    "outs_ratio": 1.0957792207792207
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "462136",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 19.11111111111111,
+    "post_mean_outs": 19.333333333333332,
+    "outs_ratio": 1.0116279069767442
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "474463",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5255474452554745
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "477132",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 21.22222222222222,
+    "post_mean_outs": 20.5,
+    "outs_ratio": 0.9659685863874345
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "502706",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.22222222222222,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.31213872832369943
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "518774",
+    "reg_games": 6,
+    "post_games": 4,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 1.1320754716981132
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "527048",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.375,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8633093525179856
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "543037",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.77777777777778,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7584269662921348
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "543294",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 16.22222222222222,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8013698630136987
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "543521",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 19.375,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7741935483870968
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "547888",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 19.428571428571427,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7720588235294118
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "570649",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 18.333333333333332,
+    "post_mean_outs": 12.6,
+    "outs_ratio": 0.6872727272727273
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "571927",
+    "reg_games": 4,
+    "post_games": 3,
+    "reg_mean_outs": 16.5,
+    "post_mean_outs": 14.666666666666666,
+    "outs_ratio": 0.8888888888888888
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "572971",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 20.11111111111111,
+    "post_mean_outs": 19.5,
+    "outs_ratio": 0.9696132596685083
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "573186",
+    "reg_games": 4,
+    "post_games": 3,
+    "reg_mean_outs": 20.25,
+    "post_mean_outs": 19.333333333333332,
+    "outs_ratio": 0.9547325102880658
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "592789",
+    "reg_games": 6,
+    "post_games": 3,
+    "reg_mean_outs": 19.666666666666668,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 0.9152542372881355
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "594798",
+    "reg_games": 7,
+    "post_games": 4,
+    "reg_mean_outs": 15.714285714285714,
+    "post_mean_outs": 18.75,
+    "outs_ratio": 1.1931818181818183
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "608379",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.125,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8062015503875969
+  },
+  {
+    "season": 2015,
+    "pitcher_id": "621121",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.375,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.034013605442177
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "407793",
+    "reg_games": 6,
+    "post_games": 3,
+    "reg_mean_outs": 18.333333333333332,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.7090909090909091
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "407890",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 13.75,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.43636363636363634
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "430935",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.5633802816901409
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "446372",
+    "reg_games": 9,
+    "post_games": 6,
+    "reg_mean_outs": 19.333333333333332,
+    "post_mean_outs": 17.166666666666668,
+    "outs_ratio": 0.8879310344827588
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "448179",
+    "reg_games": 6,
+    "post_games": 3,
+    "reg_mean_outs": 17.166666666666668,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.7572815533980582
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "452657",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 20.5,
+    "post_mean_outs": 19.6,
+    "outs_ratio": 0.9560975609756098
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "453286",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 20.22222222222222,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 0.8901098901098902
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "453329",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 17.571428571428573,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6829268292682926
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "453562",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 18.5,
+    "post_mean_outs": 16.75,
+    "outs_ratio": 0.9054054054054054
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "456034",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 20.11111111111111,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.4972375690607735
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "456501",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 19.875,
+    "post_mean_outs": 24.0,
+    "outs_ratio": 1.2075471698113207
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "457918",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8955223880597015
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "458708",
+    "reg_games": 7,
+    "post_games": 4,
+    "reg_mean_outs": 15.428571428571429,
+    "post_mean_outs": 13.25,
+    "outs_ratio": 0.8587962962962963
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "461829",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 14.555555555555555,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8931297709923665
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "462136",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 22.333333333333332,
+    "outs_ratio": 1.3638676844783715
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "477132",
+    "reg_games": 5,
+    "post_games": 4,
+    "reg_mean_outs": 16.8,
+    "post_mean_outs": 17.75,
+    "outs_ratio": 1.056547619047619
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "501957",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 12.6,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 1.0317460317460319
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "502188",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 18.88888888888889,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3176470588235294
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "506433",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.125,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8275862068965517
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "518516",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 18.666666666666668,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.125
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "519043",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.77777777777778,
+    "post_mean_outs": 24.0,
+    "outs_ratio": 1.4304635761589404
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "519144",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 21.666666666666668,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.6
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "543294",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 18.75,
+    "post_mean_outs": 15.2,
+    "outs_ratio": 0.8106666666666666
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "543699",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.7358490566037735
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "545333",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 19.555555555555557,
+    "post_mean_outs": 9.75,
+    "outs_ratio": 0.4985795454545454
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "573186",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 18.875,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.9006622516556292
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "592717",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 17.0,
+    "post_mean_outs": 17.5,
+    "outs_ratio": 1.0294117647058822
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "592789",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.5,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.135135135135135
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "605452",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 9.666666666666666,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.8275862068965518
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "628317",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.625,
+    "post_mean_outs": 10.666666666666666,
+    "outs_ratio": 0.7293447293447293
+  },
+  {
+    "season": 2016,
+    "pitcher_id": "628711",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 14.4,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.7638888888888888
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "282332",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 17.375,
+    "post_mean_outs": 14.25,
+    "outs_ratio": 0.8201438848920863
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "425844",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.7428571428571429
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "429722",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 18.333333333333332,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.32727272727272727
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "434378",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 20.333333333333332,
+    "post_mean_outs": 20.4,
+    "outs_ratio": 1.0032786885245901
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "446372",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 21.333333333333332,
+    "post_mean_outs": 9.5,
+    "outs_ratio": 0.4453125
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "448179",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 13.25,
+    "outs_ratio": 0.7571428571428571
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "450203",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 14.5,
+    "outs_ratio": 0.8467153284671532
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "450729",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 4.0,
+    "outs_ratio": 0.22857142857142856
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "452657",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 14.571428571428571,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 1.0980392156862746
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "453286",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 17.285714285714285,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.0991735537190084
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "453562",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 14.714285714285714,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 1.087378640776699
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "461829",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.7007299270072993
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "471911",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 20.444444444444443,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.8315217391304348
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "477132",
+    "reg_games": 6,
+    "post_games": 5,
+    "reg_mean_outs": 16.833333333333332,
+    "post_mean_outs": 17.4,
+    "outs_ratio": 1.0336633663366337
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "500779",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.5,
+    "post_mean_outs": 12.666666666666666,
+    "outs_ratio": 0.6846846846846847
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "502748",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.5,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.48484848484848486
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "506433",
+    "reg_games": 7,
+    "post_games": 4,
+    "reg_mean_outs": 16.142857142857142,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6814159292035399
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "519141",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 15.444444444444445,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3884892086330935
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "519144",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.22222222222222,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5225806451612903
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "519242",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8490566037735848
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "543243",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 17.77777777777778,
+    "post_mean_outs": 12.5,
+    "outs_ratio": 0.703125
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "543294",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 19.0,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.8421052631578947
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "544931",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 20.125,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.0434782608695652
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "545333",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 18.25,
+    "post_mean_outs": 12.5,
+    "outs_ratio": 0.684931506849315
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "547888",
+    "reg_games": 7,
+    "post_games": 3,
+    "reg_mean_outs": 19.142857142857142,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 1.0447761194029852
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "572971",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 19.333333333333332,
+    "post_mean_outs": 16.6,
+    "outs_ratio": 0.8586206896551726
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "592351",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.88888888888889,
+    "post_mean_outs": 4.0,
+    "outs_ratio": 0.2236024844720497
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "592662",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.25,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "592836",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.875,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.1889763779527559
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "621121",
+    "reg_games": 3,
+    "post_games": 3,
+    "reg_mean_outs": 13.0,
+    "post_mean_outs": 13.666666666666666,
+    "outs_ratio": 1.0512820512820513
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "622072",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 18.0,
+    "post_mean_outs": 15.5,
+    "outs_ratio": 0.8611111111111112
+  },
+  {
+    "season": 2017,
+    "pitcher_id": "622663",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 18.625,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6442953020134228
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "282332",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 14.428571428571429,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.6237623762376238
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "434378",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.625,
+    "post_mean_outs": 17.333333333333332,
+    "outs_ratio": 0.930648769574944
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "434671",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.8175182481751825
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "446372",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7943262411347518
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "448179",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 15.666666666666666,
+    "outs_ratio": 0.8888888888888888
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "450203",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 12.714285714285714,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.550561797752809
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "452657",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.0140845070422535
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "456034",
+    "reg_games": 7,
+    "post_games": 5,
+    "reg_mean_outs": 17.857142857142858,
+    "post_mean_outs": 15.2,
+    "outs_ratio": 0.8512
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "457918",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3582089552238806
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "461829",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 15.75,
+    "post_mean_outs": 4.5,
+    "outs_ratio": 0.2857142857142857
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "468504",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 15.88888888888889,
+    "post_mean_outs": 12.333333333333334,
+    "outs_ratio": 0.7762237762237763
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "471911",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 19.25,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.8311688311688312
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "477132",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 19.5,
+    "post_mean_outs": 17.4,
+    "outs_ratio": 0.8923076923076922
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "489119",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 15.125,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.7272727272727273
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "519144",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.875,
+    "post_mean_outs": 13.666666666666666,
+    "outs_ratio": 0.9187675070028011
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "519242",
+    "reg_games": 4,
+    "post_games": 3,
+    "reg_mean_outs": 9.0,
+    "post_mean_outs": 13.333333333333334,
+    "outs_ratio": 1.4814814814814816
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "521230",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 3.25,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.9230769230769231
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "542881",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 14.857142857142858,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.2115384615384615
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "543037",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 19.5,
+    "outs_ratio": 1.1142857142857143
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "543135",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 11.857142857142858,
+    "post_mean_outs": 19.5,
+    "outs_ratio": 1.644578313253012
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "547888",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.0,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8333333333333334
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "547943",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 17.555555555555557,
+    "post_mean_outs": 14.25,
+    "outs_ratio": 0.8117088607594936
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "572971",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 16.555555555555557,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9060402684563758
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "592314",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 19.125,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.47058823529411764
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "593958",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 14.0,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 1.2142857142857142
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "605182",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.125,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8275862068965517
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "605540",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 12.0,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.75
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "607536",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 18.77777777777778,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 1.0650887573964496
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "608566",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 20.11111111111111,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7458563535911602
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "621111",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 18.75,
+    "post_mean_outs": 17.75,
+    "outs_ratio": 0.9466666666666667
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "622608",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.125,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9302325581395349
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "622663",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 15.375,
+    "post_mean_outs": 10.5,
+    "outs_ratio": 0.6829268292682927
+  },
+  {
+    "season": 2018,
+    "pitcher_id": "656794",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 14.428571428571429,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.5544554455445544
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "425794",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 17.22222222222222,
+    "post_mean_outs": 22.5,
+    "outs_ratio": 1.3064516129032258
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "425844",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 18.88888888888889,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7941176470588235
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "434378",
+    "reg_games": 9,
+    "post_games": 6,
+    "reg_mean_outs": 20.11111111111111,
+    "post_mean_outs": 17.666666666666668,
+    "outs_ratio": 0.8784530386740332
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "434671",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.125,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 0.993103448275862
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "448179",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 5.666666666666667,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 1.4117647058823528
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "450203",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8759124087591241
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "453286",
+    "reg_games": 7,
+    "post_games": 5,
+    "reg_mean_outs": 16.285714285714285,
+    "post_mean_outs": 17.4,
+    "outs_ratio": 1.068421052631579
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "477132",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.0140845070422535
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "502748",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.875,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.31496062992125984
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "543037",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 20.875,
+    "post_mean_outs": 22.0,
+    "outs_ratio": 1.0538922155688624
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "543606",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 16.571428571428573,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9051724137931033
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "544931",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 18.88888888888889,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 1.0588235294117647
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "547888",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.5,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.8648648648648649
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "547943",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 17.142857142857142,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.875
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "571578",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 18.11111111111111,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.9386503067484663
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "571945",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 17.22222222222222,
+    "post_mean_outs": 16.5,
+    "outs_ratio": 0.9580645161290323
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "572020",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 15.875,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8188976377952756
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "572971",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6792452830188679
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "592314",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.375,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6330935251798561
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "605452",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 12.8,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 1.171875
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "605483",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 6.0,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 1.6666666666666667
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "607192",
+    "reg_games": 4,
+    "post_games": 2,
+    "reg_mean_outs": 9.25,
+    "post_mean_outs": 10.5,
+    "outs_ratio": 1.135135135135135
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "621111",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.875,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.125925925925926
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "621244",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6808510638297872
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "622663",
+    "reg_games": 3,
+    "post_games": 2,
+    "reg_mean_outs": 12.0,
+    "post_mean_outs": 12.5,
+    "outs_ratio": 1.0416666666666667
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "640455",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 17.8,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.33707865168539325
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "641712",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 17.77777777777778,
+    "post_mean_outs": 7.5,
+    "outs_ratio": 0.421875
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "643338",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 4.0,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.75
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "647336",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.2
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "650895",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 3.6666666666666665,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 1.3636363636363638
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "656427",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 20.333333333333332,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.8360655737704918
+  },
+  {
+    "season": 2019,
+    "pitcher_id": "677976",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 11.6,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.5172413793103449
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "425794",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.88888888888889,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.5027932960893855
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "425844",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 17.333333333333332,
+    "post_mean_outs": 14.666666666666666,
+    "outs_ratio": 0.8461538461538461
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "450203",
+    "reg_games": 5,
+    "post_games": 4,
+    "reg_mean_outs": 12.8,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 1.171875
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "471911",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.666666666666668,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5399999999999999
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "477132",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 18.125,
+    "post_mean_outs": 18.4,
+    "outs_ratio": 1.0151724137931033
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "506433",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.666666666666668,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 1.0169491525423728
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "533167",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 13.5,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.6666666666666666
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "543037",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 19.0,
+    "post_mean_outs": 18.333333333333332,
+    "outs_ratio": 0.9649122807017543
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "543294",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 20.333333333333332,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 0.9344262295081968
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "545333",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 20.125,
+    "post_mean_outs": 23.0,
+    "outs_ratio": 1.1428571428571428
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "547888",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 15.125,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.7933884297520661
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "547942",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 16.285714285714285,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6754385964912281
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "547943",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.2830188679245283
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "571666",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.125,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.31007751937984496
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "572971",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 17.0,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.5882352941176471
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "593423",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 12.857142857142858,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.8555555555555555
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "595928",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 3.3333333333333335,
+    "post_mean_outs": 4.0,
+    "outs_ratio": 1.2
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "605135",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.375,
+    "post_mean_outs": 16.5,
+    "outs_ratio": 0.9496402877697842
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "605182",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.2
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "605200",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 10.5,
+    "outs_ratio": 0.6
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "605483",
+    "reg_games": 8,
+    "post_games": 6,
+    "reg_mean_outs": 15.75,
+    "post_mean_outs": 14.833333333333334,
+    "outs_ratio": 0.9417989417989419
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "605540",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.444444444444443,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.802547770700637
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "607192",
+    "reg_games": 8,
+    "post_games": 6,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 14.333333333333334,
+    "outs_ratio": 0.8309178743961353
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "608331",
+    "reg_games": 7,
+    "post_games": 4,
+    "reg_mean_outs": 14.285714285714286,
+    "post_mean_outs": 17.75,
+    "outs_ratio": 1.2425
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "608337",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.625,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.1275167785234899
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "608718",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 9.75,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.5128205128205128
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "621111",
+    "reg_games": 5,
+    "post_games": 5,
+    "reg_mean_outs": 13.4,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 1.1194029850746268
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "621121",
+    "reg_games": 7,
+    "post_games": 3,
+    "reg_mean_outs": 14.714285714285714,
+    "post_mean_outs": 14.666666666666666,
+    "outs_ratio": 0.9967637540453075
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "621244",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9375
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "622491",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.9078014184397163
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "628317",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.625,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8053691275167785
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "628711",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 14.25,
+    "post_mean_outs": 14.5,
+    "outs_ratio": 1.0175438596491229
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "640455",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.625,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.832
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "641154",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 15.777777777777779,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9507042253521126
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "641540",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 14.571428571428571,
+    "post_mean_outs": 2.0,
+    "outs_ratio": 0.13725490196078433
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "642232",
+    "reg_games": 6,
+    "post_games": 2,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 12.5,
+    "outs_ratio": 0.8333333333333334
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "645261",
+    "reg_games": 6,
+    "post_games": 2,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.0754716981132075
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "656427",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 12.5,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.44
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "656756",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 12.875,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.9320388349514563
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "657140",
+    "reg_games": 5,
+    "post_games": 2,
+    "reg_mean_outs": 15.6,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.6410256410256411
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "663978",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 13.625,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.5137614678899083
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "664062",
+    "reg_games": 6,
+    "post_games": 3,
+    "reg_mean_outs": 16.5,
+    "post_mean_outs": 7.333333333333333,
+    "outs_ratio": 0.4444444444444444
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "664285",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 19.875,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 0.9559748427672956
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "664350",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 16.714285714285715,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.717948717948718
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "664353",
+    "reg_games": 5,
+    "post_games": 3,
+    "reg_mean_outs": 17.8,
+    "post_mean_outs": 13.666666666666666,
+    "outs_ratio": 0.7677902621722846
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "665620",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 17.166666666666668,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.17475728155339804
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "666120",
+    "reg_games": 6,
+    "post_games": 4,
+    "reg_mean_outs": 16.166666666666668,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.8659793814432989
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "666200",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.625,
+    "post_mean_outs": 11.5,
+    "outs_ratio": 0.6917293233082706
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "669160",
+    "reg_games": 7,
+    "post_games": 3,
+    "reg_mean_outs": 14.142857142857142,
+    "post_mean_outs": 4.0,
+    "outs_ratio": 0.2828282828282828
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "669456",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.625,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7516778523489933
+  },
+  {
+    "season": 2020,
+    "pitcher_id": "670970",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 7.0,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.8571428571428571
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "425794",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.22222222222222,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.8323699421965318
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "425844",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 16.285714285714285,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.4912280701754386
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "445926",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 4.666666666666667,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.6428571428571428
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "450203",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 12.5,
+    "outs_ratio": 0.7299270072992701
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "453286",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 19.5,
+    "post_mean_outs": 15.666666666666666,
+    "outs_ratio": 0.8034188034188033
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "458681",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6875
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "519242",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.125,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.6371681415929203
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "543037",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.0,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.35294117647058826
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "543101",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 13.625,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.3669724770642202
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "543135",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 16.444444444444443,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9121621621621623
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "592332",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.555555555555557,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.9664429530201342
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "593958",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 15.25,
+    "post_mean_outs": 12.666666666666666,
+    "outs_ratio": 0.8306010928961748
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "601713",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 12.714285714285714,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 1.1797752808988764
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "605540",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 16.714285714285715,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.0769230769230769
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "607074",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 13.8,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.5797101449275363
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "608331",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 21.0,
+    "post_mean_outs": 16.6,
+    "outs_ratio": 0.7904761904761906
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "608337",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 16.142857142857142,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8053097345132744
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "608349",
+    "reg_games": 4,
+    "post_games": 2,
+    "reg_mean_outs": 4.25,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.7058823529411765
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "621111",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 17.666666666666668,
+    "post_mean_outs": 13.75,
+    "outs_ratio": 0.7783018867924528
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "621121",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.875,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.8951048951048951
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "622072",
+    "reg_games": 5,
+    "post_games": 1,
+    "reg_mean_outs": 14.0,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 1.0
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "628711",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8695652173913043
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "641778",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.0,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6470588235294118
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "642547",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 12.5,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.96
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "656302",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.3333333333333333
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "656353",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.4
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "656876",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 14.142857142857142,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.42424242424242425
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "657277",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 18.666666666666668,
+    "post_mean_outs": 22.0,
+    "outs_ratio": 1.1785714285714286
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "663556",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 14.571428571428571,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 1.0294117647058825
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "664285",
+    "reg_games": 7,
+    "post_games": 5,
+    "reg_mean_outs": 18.714285714285715,
+    "post_mean_outs": 11.8,
+    "outs_ratio": 0.6305343511450382
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "664353",
+    "reg_games": 6,
+    "post_games": 2,
+    "reg_mean_outs": 14.833333333333334,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.6741573033707865
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "666120",
+    "reg_games": 6,
+    "post_games": 4,
+    "reg_mean_outs": 16.166666666666668,
+    "post_mean_outs": 12.75,
+    "outs_ratio": 0.788659793814433
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "669203",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 17.142857142857142,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.05
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "669358",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 13.333333333333334,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.525
+  },
+  {
+    "season": 2021,
+    "pitcher_id": "677651",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 9.4,
+    "outs_ratio": 0.5740458015267176
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "434378",
+    "reg_games": 6,
+    "post_games": 4,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9375
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "450203",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.375
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "453286",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 18.166666666666668,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7706422018348623
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "477132",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 17.571428571428573,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8536585365853658
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "500779",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 15.222222222222221,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 1.051094890510949
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "506433",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 20.375,
+    "post_mean_outs": 18.75,
+    "outs_ratio": 0.9202453987730062
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "542881",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.875,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7947019867549668
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "543037",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.875,
+    "post_mean_outs": 18.333333333333332,
+    "outs_ratio": 0.9713024282560706
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "554430",
+    "reg_games": 4,
+    "post_games": 6,
+    "reg_mean_outs": 15.25,
+    "post_mean_outs": 17.833333333333332,
+    "outs_ratio": 1.169398907103825
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "571945",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.333333333333332,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.6724137931034483
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "592332",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.444444444444443,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.9745222929936307
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "592662",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5106382978723404
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "592789",
+    "reg_games": 6,
+    "post_games": 2,
+    "reg_mean_outs": 17.333333333333332,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5192307692307693
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "592791",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.7761194029850746
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "594798",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.875,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.006993006993007
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "605135",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6857142857142857
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "605182",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 4.0,
+    "outs_ratio": 0.26666666666666666
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "605397",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 18.666666666666668,
+    "outs_ratio": 1.1666666666666667
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "605400",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 15.4,
+    "outs_ratio": 0.867605633802817
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "605483",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 16.444444444444443,
+    "post_mean_outs": 13.666666666666666,
+    "outs_ratio": 0.8310810810810811
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "608331",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.5673758865248227
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "615698",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 16.77777777777778,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8940397350993377
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "621121",
+    "reg_games": 6,
+    "post_games": 3,
+    "reg_mean_outs": 18.333333333333332,
+    "post_mean_outs": 15.333333333333334,
+    "outs_ratio": 0.8363636363636364
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "622491",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 21.5,
+    "outs_ratio": 1.2835820895522387
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "622663",
+    "reg_games": 3,
+    "post_games": 2,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 16.5,
+    "outs_ratio": 1.03125
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "624133",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 15.375,
+    "post_mean_outs": 13.333333333333334,
+    "outs_ratio": 0.8672086720867209
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "628711",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8450704225352113
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "641482",
+    "reg_games": 6,
+    "post_games": 3,
+    "reg_mean_outs": 16.666666666666668,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.72
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "650644",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 16.5,
+    "post_mean_outs": 1.0,
+    "outs_ratio": 0.06060606060606061
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "657140",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.051094890510949
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "663474",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 18.625,
+    "post_mean_outs": 16.5,
+    "outs_ratio": 0.8859060402684564
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "663556",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.3125
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "663559",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 14.625,
+    "post_mean_outs": 2.0,
+    "outs_ratio": 0.13675213675213677
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "664285",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 19.625,
+    "post_mean_outs": 18.75,
+    "outs_ratio": 0.9554140127388535
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "664299",
+    "reg_games": 7,
+    "post_games": 2,
+    "reg_mean_outs": 16.857142857142858,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 1.0084745762711864
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "666201",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 20.25,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.8395061728395061
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "669302",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 16.0,
+    "outs_ratio": 0.9014084507042254
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "669456",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 20.444444444444443,
+    "post_mean_outs": 20.0,
+    "outs_ratio": 0.9782608695652175
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "669923",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 14.75,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.423728813559322
+  },
+  {
+    "season": 2022,
+    "pitcher_id": "675911",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.417910447761194
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "434378",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.75,
+    "post_mean_outs": 18.333333333333332,
+    "outs_ratio": 0.9777777777777777
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "453286",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 16.875,
+    "post_mean_outs": 9.666666666666666,
+    "outs_ratio": 0.5728395061728395
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "458681",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.463768115942029
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "477132",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 13.166666666666666,
+    "post_mean_outs": 1.0,
+    "outs_ratio": 0.0759493670886076
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "518876",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 17.88888888888889,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.0062111801242235
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "543135",
+    "reg_games": 6,
+    "post_games": 6,
+    "reg_mean_outs": 10.166666666666666,
+    "post_mean_outs": 18.333333333333332,
+    "outs_ratio": 1.8032786885245902
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "543243",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.875,
+    "post_mean_outs": 13.5,
+    "outs_ratio": 0.7552447552447552
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "554430",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 18.333333333333332,
+    "post_mean_outs": 19.5,
+    "outs_ratio": 1.0636363636363637
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "571760",
+    "reg_games": 5,
+    "post_games": 3,
+    "reg_mean_outs": 13.4,
+    "post_mean_outs": 9.333333333333334,
+    "outs_ratio": 0.6965174129353234
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "573009",
+    "reg_games": 3,
+    "post_games": 2,
+    "reg_mean_outs": 3.0,
+    "post_mean_outs": 3.5,
+    "outs_ratio": 1.1666666666666667
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "592332",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6956521739130435
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "605400",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 17.0,
+    "post_mean_outs": 17.25,
+    "outs_ratio": 1.0147058823529411
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "607192",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.11111111111111,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8766233766233766
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "608331",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.7007299270072993
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "621107",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.11111111111111,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9310344827586207
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "621244",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.5,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.4864864864864865
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "624133",
+    "reg_games": 5,
+    "post_games": 4,
+    "reg_mean_outs": 16.6,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.8433734939759036
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "641154",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.375,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.0935251798561152
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "641927",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 15.333333333333334,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5869565217391304
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "642547",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.916030534351145
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "650911",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.4057971014492754
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "656756",
+    "reg_games": 9,
+    "post_games": 5,
+    "reg_mean_outs": 18.555555555555557,
+    "post_mean_outs": 17.2,
+    "outs_ratio": 0.926946107784431
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "657746",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 15.285714285714286,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3925233644859813
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "664285",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 18.666666666666668,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6428571428571428
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "664299",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.875,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.7394957983193278
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "665152",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.25,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.32786885245901637
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "666129",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5625
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "666200",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.875,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.7111111111111111
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "668678",
+    "reg_games": 9,
+    "post_games": 6,
+    "reg_mean_outs": 18.11111111111111,
+    "post_mean_outs": 16.833333333333332,
+    "outs_ratio": 0.9294478527607362
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "669203",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.25,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6575342465753424
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "675911",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.75,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.0704225352112675
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "676272",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.375,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.272108843537415
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "680570",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.0,
+    "post_mean_outs": 5.0,
+    "outs_ratio": 0.2777777777777778
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "680694",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7943262411347518
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "693821",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.48854961832061067
+  },
+  {
+    "season": 2023,
+    "pitcher_id": "694297",
+    "reg_games": 7,
+    "post_games": 5,
+    "reg_mean_outs": 15.142857142857142,
+    "post_mean_outs": 13.2,
+    "outs_ratio": 0.8716981132075472
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "500779",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 17.0,
+    "post_mean_outs": 14.333333333333334,
+    "outs_ratio": 0.8431372549019608
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "502171",
+    "reg_games": 3,
+    "post_games": 2,
+    "reg_mean_outs": 16.333333333333332,
+    "post_mean_outs": 8.5,
+    "outs_ratio": 0.5204081632653061
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "506433",
+    "reg_games": 5,
+    "post_games": 2,
+    "reg_mean_outs": 15.2,
+    "post_mean_outs": 20.5,
+    "outs_ratio": 1.348684210526316
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "518489",
+    "reg_games": 3,
+    "post_games": 2,
+    "reg_mean_outs": 3.0,
+    "post_mean_outs": 3.5,
+    "outs_ratio": 1.1666666666666667
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "543037",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 18.375,
+    "post_mean_outs": 17.4,
+    "outs_ratio": 0.946938775510204
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "554430",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.11111111111111,
+    "post_mean_outs": 21.0,
+    "outs_ratio": 1.0988372093023255
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "571510",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.875,
+    "post_mean_outs": 11.666666666666666,
+    "outs_ratio": 0.7843137254901961
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "593423",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.11111111111111,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6827586206896552
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "605397",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.6376811594202898
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "605400",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 17.333333333333332,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8653846153846154
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "607074",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 13.25,
+    "outs_ratio": 0.8091603053435115
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "607625",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7943262411347518
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "608331",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.333333333333332,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3103448275862069
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "608379",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.125,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.7591240875912408
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "621107",
+    "reg_games": 6,
+    "post_games": 1,
+    "reg_mean_outs": 18.0,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6666666666666666
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "621111",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.375,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.9739130434782609
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "622663",
+    "reg_games": 9,
+    "post_games": 3,
+    "reg_mean_outs": 17.77777777777778,
+    "post_mean_outs": 16.666666666666668,
+    "outs_ratio": 0.9375
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "624133",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 13.428571428571429,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.9680851063829787
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "640455",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 19.555555555555557,
+    "post_mean_outs": 14.25,
+    "outs_ratio": 0.7286931818181818
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "642547",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.11111111111111,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.7448275862068966
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "650633",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.625,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.0827067669172932
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "650911",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.875,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.7947019867549668
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "656302",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 7.5,
+    "outs_ratio": 0.42857142857142855
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "656427",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 13.2,
+    "outs_ratio": 0.8061068702290076
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "656849",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.75,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.5866666666666667
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "657376",
+    "reg_games": 5,
+    "post_games": 3,
+    "reg_mean_outs": 14.8,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.8108108108108107
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "661563",
+    "reg_games": 6,
+    "post_games": 2,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.8
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "663947",
+    "reg_games": 4,
+    "post_games": 2,
+    "reg_mean_outs": 4.5,
+    "post_mean_outs": 1.5,
+    "outs_ratio": 0.3333333333333333
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "664285",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 19.25,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.6753246753246753
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "666142",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 17.25,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.8695652173913043
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "668909",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 14.333333333333334,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.4883720930232558
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "668964",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.125,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.9917355371900827
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "669203",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 24.0,
+    "outs_ratio": 1.4328358208955223
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "669373",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.25,
+    "post_mean_outs": 19.0,
+    "outs_ratio": 1.0410958904109588
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "672456",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 15.428571428571429,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.19444444444444445
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "676440",
+    "reg_games": 9,
+    "post_games": 4,
+    "reg_mean_outs": 17.333333333333332,
+    "post_mean_outs": 11.75,
+    "outs_ratio": 0.6778846153846154
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "681857",
+    "reg_games": 3,
+    "post_games": 1,
+    "reg_mean_outs": 9.333333333333334,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 1.2857142857142856
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "686613",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.0,
+    "post_mean_outs": 17.0,
+    "outs_ratio": 0.9444444444444444
+  },
+  {
+    "season": 2024,
+    "pitcher_id": "808967",
+    "reg_games": 4,
+    "post_games": 4,
+    "reg_mean_outs": 12.0,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 1.1666666666666667
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "453286",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 14.25,
+    "post_mean_outs": 14.333333333333334,
+    "outs_ratio": 1.0058479532163742
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "500779",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.444444444444443,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3648648648648649
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "506433",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 14.375,
+    "post_mean_outs": 3.0,
+    "outs_ratio": 0.20869565217391303
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "571510",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 16.5,
+    "post_mean_outs": 9.666666666666666,
+    "outs_ratio": 0.5858585858585859
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "592332",
+    "reg_games": 8,
+    "post_games": 5,
+    "reg_mean_outs": 18.875,
+    "post_mean_outs": 17.8,
+    "outs_ratio": 0.9430463576158941
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "592791",
+    "reg_games": 6,
+    "post_games": 2,
+    "reg_mean_outs": 17.166666666666668,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.6990291262135921
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "601713",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.625,
+    "post_mean_outs": 15.0,
+    "outs_ratio": 0.851063829787234
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "605400",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.75,
+    "post_mean_outs": 6.0,
+    "outs_ratio": 0.3582089552238806
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "605483",
+    "reg_games": 7,
+    "post_games": 5,
+    "reg_mean_outs": 18.142857142857142,
+    "post_mean_outs": 19.6,
+    "outs_ratio": 1.0803149606299214
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "607074",
+    "reg_games": 9,
+    "post_games": 2,
+    "reg_mean_outs": 18.555555555555557,
+    "post_mean_outs": 12.5,
+    "outs_ratio": 0.6736526946107784
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "607192",
+    "reg_games": 7,
+    "post_games": 3,
+    "reg_mean_outs": 16.142857142857142,
+    "post_mean_outs": 16.333333333333332,
+    "outs_ratio": 1.0117994100294985
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "608331",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 19.25,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7272727272727273
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "622491",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 15.875,
+    "post_mean_outs": 10.5,
+    "outs_ratio": 0.6614173228346457
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "641793",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 15.625,
+    "post_mean_outs": 10.0,
+    "outs_ratio": 0.64
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "642547",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 15.0,
+    "post_mean_outs": 15.333333333333334,
+    "outs_ratio": 1.0222222222222224
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "650911",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 19.25,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 0.935064935064935
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "656302",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 14.5,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.7586206896551724
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "656427",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 15.25,
+    "post_mean_outs": 12.0,
+    "outs_ratio": 0.7868852459016393
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "660271",
+    "reg_games": 6,
+    "post_games": 4,
+    "reg_mean_outs": 14.0,
+    "post_mean_outs": 15.25,
+    "outs_ratio": 1.0892857142857142
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "661563",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 16.11111111111111,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.496551724137931
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "663554",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.375,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.549618320610687
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "666200",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 19.0,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 0.9473684210526315
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "668881",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.0,
+    "post_mean_outs": 9.0,
+    "outs_ratio": 0.5
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "668909",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.0,
+    "post_mean_outs": 18.0,
+    "outs_ratio": 1.125
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "669302",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 15.5,
+    "post_mean_outs": 13.0,
+    "outs_ratio": 0.8387096774193549
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "669373",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 18.75,
+    "post_mean_outs": 20.666666666666668,
+    "outs_ratio": 1.1022222222222222
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "669456",
+    "reg_games": 7,
+    "post_games": 4,
+    "reg_mean_outs": 17.285714285714285,
+    "post_mean_outs": 13.25,
+    "outs_ratio": 0.7665289256198348
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "669923",
+    "reg_games": 8,
+    "post_games": 4,
+    "reg_mean_outs": 15.375,
+    "post_mean_outs": 13.5,
+    "outs_ratio": 0.8780487804878049
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "676440",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 19.25,
+    "post_mean_outs": 14.0,
+    "outs_ratio": 0.7272727272727273
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "676979",
+    "reg_games": 9,
+    "post_games": 1,
+    "reg_mean_outs": 19.0,
+    "post_mean_outs": 23.0,
+    "outs_ratio": 1.2105263157894737
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "677944",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 17.5,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.4
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "678394",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 16.875,
+    "post_mean_outs": 7.0,
+    "outs_ratio": 0.4148148148148148
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "682243",
+    "reg_games": 8,
+    "post_games": 3,
+    "reg_mean_outs": 15.625,
+    "post_mean_outs": 14.333333333333334,
+    "outs_ratio": 0.9173333333333333
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "682990",
+    "reg_games": 7,
+    "post_games": 1,
+    "reg_mean_outs": 16.571428571428573,
+    "post_mean_outs": 2.0,
+    "outs_ratio": 0.12068965517241378
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "684007",
+    "reg_games": 8,
+    "post_games": 1,
+    "reg_mean_outs": 18.25,
+    "post_mean_outs": 8.0,
+    "outs_ratio": 0.4383561643835616
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "693645",
+    "reg_games": 8,
+    "post_games": 2,
+    "reg_mean_outs": 16.25,
+    "post_mean_outs": 21.5,
+    "outs_ratio": 1.323076923076923
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "702056",
+    "reg_games": 3,
+    "post_games": 5,
+    "reg_mean_outs": 14.0,
+    "post_mean_outs": 15.6,
+    "outs_ratio": 1.1142857142857143
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "808967",
+    "reg_games": 7,
+    "post_games": 5,
+    "reg_mean_outs": 20.142857142857142,
+    "post_mean_outs": 20.8,
+    "outs_ratio": 1.0326241134751775
+  },
+  {
+    "season": 2025,
+    "pitcher_id": "813349",
+    "reg_games": 4,
+    "post_games": 1,
+    "reg_mean_outs": 14.5,
+    "post_mean_outs": 11.0,
+    "outs_ratio": 0.7586206896551724
+  }
+]

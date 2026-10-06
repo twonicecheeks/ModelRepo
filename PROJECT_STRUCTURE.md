@@ -28,6 +28,7 @@ MODEL/
 │   └── decisions/
 ├── tests/
 ├── scripts/
+├── omega_delta/              # self-contained OMEGA + DELTA 0.1.3 release
 ├── releases/                    # packaged release artifacts only
 ├── logs/                        # ignored runtime logs
 ├── tmp/                         # ignored temporary work
@@ -49,6 +50,7 @@ MODEL/
 
 11. NFL historical training data must be leakage-safe: current/future outcomes and sportsbook fields never enter independent features.
 12. NFL 2025 is the untouched holdout and 2026 is prospective until the NFL model is frozen.
+13. `omega_delta/` is the versioned, runnable MLB postseason release; its frozen audits and source receipts travel with the code.
 
 ## NFL 2.9.0 Phase 1B research data
 
@@ -86,3 +88,19 @@ MODEL/
 - `data/normalized/nfl/phase2c_context/` — generated QB/roster context snapshots
 - `data/models/nfl/phase2c/` — generated Phase 2C bake-off/spec artifacts
 - Phase 2C is **research only**. nflverse week-level roster state is not yet claimed to have an exact archived pre-kickoff timestamp; that provenance is an explicit gate before any feature freeze.
+
+## OMEGA DELTA 0.1.3 release
+
+- `omega_delta/README.md` — Mac launch instructions and model boundaries.
+- `omega_delta/app/` — runnable OMEGA persistence and DELTA integration; `delta_model.py` remains the frozen scored engine.
+- `omega_delta/tools/` — source preparation, chronological replay, platoon/arsenal research, hazard/residual trainers, prospective freeze audit, and market benchmarking.
+- `omega_delta/audit/` — frozen parameters, 775-start development predictions, prospective 2026 freeze, replay reports and verification logs.
+- `omega_delta/seed/` — the complete normalized MLB replay inputs and outcome ledger used by the release.
+- `omega_delta/research_sources/` — public-source research scripts, provider adapters, attribution notes and the bundled offline cache.
+- `omega_delta/DELTA_RESEARCH_0.1.3.md` and `omega_delta/DELTA_MARKET_BACKTEST.md` — research contracts and historical market-line audit instructions.
+
+The DELTA package is deliberately self-contained so a clone can reproduce the
+release without depending on files outside this repository. It contains no
+credentials or authenticated sportsbook data. Advanced research layers remain
+unpromoted until timestamped historical fitting and prospective scoring support
+them.

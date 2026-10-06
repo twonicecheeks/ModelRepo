@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "version": "2.0.0",
+  "existing_forecast_rows_preserved": 749,
+  "pre_v2_backup_created": true,
+  "mlb_edge_status": "EDGE_NOT_VERIFIED",
+  "initial_official_games": 4,
+  "http_status": 200,
+  "paid_market_requests": 0
+}

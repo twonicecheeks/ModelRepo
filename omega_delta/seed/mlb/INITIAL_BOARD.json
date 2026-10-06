@@ -1,0 +1,73 @@
+{
+  "captured_at": "2026-09-30T04:34:39Z",
+  "date": "2026-09-30",
+  "edge_status": "NOT_VERIFIED",
+  "games": [
+    {
+      "away": "PHI",
+      "game_id": "849841",
+      "home": "ATL",
+      "reason": "Waiting for both official batting orders and probable starters",
+      "start_at": "2026-09-30T18:00:00Z",
+      "status": "BLOCKED"
+    },
+    {
+      "away": "CWS",
+      "game_id": "849846",
+      "home": "HOU",
+      "reason": "Waiting for both official batting orders and probable starters",
+      "start_at": "2026-09-30T21:00:00Z",
+      "status": "BLOCKED"
+    },
+    {
+      "away": "BOS",
+      "game_id": "849848",
+      "home": "NYY",
+      "reason": "Waiting for both official batting orders and probable starters",
+      "start_at": "2026-10-01T00:00:00Z",
+      "status": "BLOCKED"
+    },
+    {
+      "away": "CHC",
+      "game_id": "849842",
+      "home": "SD",
+      "reason": "Waiting for both official batting orders and probable starters",
+      "start_at": "2026-10-01T02:00:00Z",
+      "status": "BLOCKED"
+    }
+  ],
+  "market_requests": 0,
+  "receipts": [
+    {
+      "bytes": 12614,
+      "received_at": "2026-09-30T04:34:39Z",
+      "sha256": "64736eb7a8b107eacda0ac4295d9893631eb2ebfe5767f30a0dafad4d449da5b",
+      "url": "https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=2026-09-30&gameTypes=F%2CD%2CL%2CW&hydrate=team%2CprobablePitcher%2Cvenue"
+    },
+    {
+      "bytes": 127400,
+      "received_at": "2026-09-30T04:34:39Z",
+      "sha256": "b4c1277bfe9a5c54999f89c480cce6ba3d5c798706afbddfcb30f180fc200531",
+      "url": "https://statsapi.mlb.com/api/v1/game/849841/boxscore"
+    },
+    {
+      "bytes": 127405,
+      "received_at": "2026-09-30T04:34:39Z",
+      "sha256": "e3be9553413feec0cda781b0581d4245de10ee913885d9a40f24a7f423c441eb",
+      "url": "https://statsapi.mlb.com/api/v1/game/849846/boxscore"
+    },
+    {
+      "bytes": 127432,
+      "received_at": "2026-09-30T04:34:39Z",
+      "sha256": "224bcd9e4e97c1fc7934223a63d229f9037d13bba375c22b473044aeba4f4f23",
+      "url": "https://statsapi.mlb.com/api/v1/game/849848/boxscore"
+    },
+    {
+      "bytes": 127256,
+      "received_at": "2026-09-30T04:34:39Z",
+      "sha256": "ed8f56e4b7557e679a105fd55cb6de165d39d451208bb3bd73f771c2737e0990",
+      "url": "https://statsapi.mlb.com/api/v1/game/849842/boxscore"
+    }
+  ],
+  "status": "RECORDED"
+}

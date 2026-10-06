@@ -1,0 +1,4189 @@
+{
+  "version": "2.0.0",
+  "protocol": {
+    "protocol_id": "OMEGA_V2_POSTSEASON_2026_09_30",
+    "created_before_new_fitting": true,
+    "scope": [
+      "MLB full-game moneyline",
+      "MLB starter strikeouts"
+    ],
+    "historical_seasons": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "historical_evidence_label": "EXPLORATORY_CHRONOLOGICAL_REPLAY_PRIOR_STUDY_CONSUMED",
+    "prospective_start_utc": "2026-09-30T04:00:00Z",
+    "training": "Earlier complete postseason seasons only; outcome labels never enter the current game input.",
+    "challengers": [
+      "PRODUCTION_BASE",
+      "POST_USAGE_OUTS",
+      "POST_EXPOSURE_ML",
+      "POST_RECAL_ML"
+    ],
+    "workload_ratio": "Fit prior-season matched pitcher regular/postseason exposure ratios. Never multiply current-game market-anchored exposure by a history-proxy ratio.",
+    "calibration": "Regularized intercept and slope fitted only to earlier-season ML predictions and outcomes; minimum 60 games.",
+    "selection_policy": {
+      "unit_risk": 1,
+      "minimum_model_ev": 0.02,
+      "max_selections_per_game_market": 1,
+      "price_basis": "one declared book and snapshot; no hindsight best-price shopping"
+    },
+    "verification_requires": [
+      "Authentic pregame entry prices, identified book, market and timestamp",
+      "Correct settlement with integer push and void accounting",
+      "At least 100 selected wagers across at least three postseasons",
+      "Positive 95% series-cluster bootstrap lower bound for realized ROI",
+      "Positive paired probability-score improvement versus market",
+      "No unresolved temporal, identity or settlement violations",
+      "Confirmation on forecasts frozen before future games"
+    ],
+    "historical_close_only": "A closing-only archive permits a labeled hypothetical close-price replay; it cannot verify executable entry ROI or CLV.",
+    "reporting": [
+      "All eligible rows and blocked coverage",
+      "Paired identical-game comparisons",
+      "Per-season results",
+      "2020 separately and excluded sensitivity",
+      "Expanded Wild Card 2022+ separately",
+      "Series-cluster uncertainty",
+      "K MAE, RMSE, bias and distribution scores",
+      "ML Brier, log loss, calibration and market comparison"
+    ],
+    "promotion": "Keep research status whenever any verification requirement is missing or fails. A successful software test is not a betting-edge test.",
+    "fixed_parameters": {
+      "usage_fit": "median matched pitcher-season POST outs / late REG mean outs; last 45 regular-season days; minimum 3 REG starts; equal pitcher-season weighting",
+      "calibration": "ridge logistic intercept+slope prior(0,1), lambda1, min60 earlier-year games",
+      "bootstrap_seed": 300926,
+      "bootstrap_reps": 2000
+    }
+  },
+  "status": "EDGE_NOT_VERIFIED",
+  "evidence_label": "EXPLORATORY_CHRONOLOGICAL_REPLAY",
+  "coverage": {
+    "official_games": 440,
+    "projected_games": 426,
+    "blocked_games": 14,
+    "baseline_k_rows": 852,
+    "paired_k_rows": 775,
+    "paired_calibrated_ml_games": 356,
+    "blocked": [
+      {
+        "game_id": "446275",
+        "game_date": "2015-10-30",
+        "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Yordano Ventura 570649"
+      },
+      {
+        "game_id": "563411",
+        "game_date": "2018-10-28",
+        "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: David Price 456034"
+      },
+      {
+        "game_id": "599374",
+        "game_date": "2019-10-26",
+        "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Jos\u00e9 Urquidy 664353"
+      },
+      {
+        "game_id": "599375",
+        "game_date": "2019-10-27",
+        "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Gerrit Cole 543037"
+      },
+      {
+        "game_id": "635906",
+        "game_date": "2020-09-30",
+        "error": "away opponent Savant hitter unavailable: Alex Kirilloff 666135"
+      },
+      {
+        "game_id": "660905",
+        "game_date": "2021-10-11",
+        "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+      },
+      {
+        "game_id": "660922",
+        "game_date": "2021-10-17",
+        "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+      },
+      {
+        "game_id": "660904",
+        "game_date": "2021-10-20",
+        "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Jesse Chavez 445926"
+      },
+      {
+        "game_id": "660921",
+        "game_date": "2021-10-23",
+        "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+      },
+      {
+        "game_id": "660910",
+        "game_date": "2021-10-29",
+        "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+      },
+      {
+        "game_id": "660902",
+        "game_date": "2021-10-30",
+        "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Dylan Lee 669276"
+      },
+      {
+        "game_id": "660911",
+        "game_date": "2021-10-31",
+        "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Tucker Davidson 656353"
+      },
+      {
+        "game_id": "813071",
+        "game_date": "2025-10-01",
+        "error": "away opponent Savant hitter unavailable: Chase DeLauter 800050"
+      },
+      {
+        "game_id": "813073",
+        "game_date": "2025-10-02",
+        "error": "away opponent Savant hitter unavailable: Chase DeLauter 800050"
+      }
+    ]
+  },
+  "moneyline_exposure": {
+    "baseline": {
+      "n": 426,
+      "brier": 0.24862970427107517,
+      "log_loss": 0.6904677290616705,
+      "bias": -0.001449547630987851,
+      "accuracy": 0.5422535211267606,
+      "calibration_bins": [
+        {
+          "lower": 0.3,
+          "n": 19,
+          "mean_probability": 0.37175920164918147,
+          "win_rate": 0.5263157894736842
+        },
+        {
+          "lower": 0.4,
+          "n": 123,
+          "mean_probability": 0.44930928855510077,
+          "win_rate": 0.4878048780487805
+        },
+        {
+          "lower": 0.5,
+          "n": 180,
+          "mean_probability": 0.5493757544177916,
+          "win_rate": 0.5388888888888889
+        },
+        {
+          "lower": 0.6,
+          "n": 97,
+          "mean_probability": 0.6409410205651495,
+          "win_rate": 0.5979381443298969
+        },
+        {
+          "lower": 0.7,
+          "n": 7,
+          "mean_probability": 0.7135872279379049,
+          "win_rate": 0.5714285714285714
+        }
+      ]
+    },
+    "challenger": {
+      "n": 426,
+      "brier": 0.24950299983865398,
+      "log_loss": 0.6922881951884248,
+      "bias": -0.0007694857034555871,
+      "accuracy": 0.539906103286385,
+      "calibration_bins": [
+        {
+          "lower": 0.3,
+          "n": 16,
+          "mean_probability": 0.3794846035559088,
+          "win_rate": 0.5
+        },
+        {
+          "lower": 0.4,
+          "n": 121,
+          "mean_probability": 0.450306355949242,
+          "win_rate": 0.49586776859504134
+        },
+        {
+          "lower": 0.5,
+          "n": 188,
+          "mean_probability": 0.5488463973443285,
+          "win_rate": 0.5425531914893617
+        },
+        {
+          "lower": 0.6,
+          "n": 97,
+          "mean_probability": 0.6397998155662631,
+          "win_rate": 0.5876288659793815
+        },
+        {
+          "lower": 0.7,
+          "n": 4,
+          "mean_probability": 0.7174178882284501,
+          "win_rate": 0.5
+        }
+      ]
+    },
+    "paired_n": 426,
+    "challenger_minus_baseline": {
+      "brier": {
+        "delta": 0.0008732955675787887,
+        "series_ci95": [
+          -0.0003787178637454563,
+          0.0020869419033695295
+        ],
+        "season_ci95": [
+          -0.00018783345579696933,
+          0.0021655689457544675
+        ]
+      },
+      "log_loss": {
+        "delta": 0.001820466126754214,
+        "series_ci95": [
+          -0.0007841513950627079,
+          0.004332343132582742
+        ],
+        "season_ci95": [
+          -0.00032158726715347216,
+          0.004403762930709292
+        ]
+      }
+    }
+  },
+  "moneyline_calibrated": {
+    "baseline": {
+      "n": 356,
+      "brier": 0.24908715724308775,
+      "log_loss": 0.6913464079261338,
+      "bias": -0.007328321535190295,
+      "accuracy": 0.5365168539325843,
+      "calibration_bins": [
+        {
+          "lower": 0.3,
+          "n": 17,
+          "mean_probability": 0.37085095779558835,
+          "win_rate": 0.47058823529411764
+        },
+        {
+          "lower": 0.4,
+          "n": 100,
+          "mean_probability": 0.44927009536512164,
+          "win_rate": 0.52
+        },
+        {
+          "lower": 0.5,
+          "n": 148,
+          "mean_probability": 0.5501159421466927,
+          "win_rate": 0.5337837837837838
+        },
+        {
+          "lower": 0.6,
+          "n": 84,
+          "mean_probability": 0.6398496628709432,
+          "win_rate": 0.6071428571428571
+        },
+        {
+          "lower": 0.7,
+          "n": 7,
+          "mean_probability": 0.7135872279379049,
+          "win_rate": 0.5714285714285714
+        }
+      ]
+    },
+    "challenger": {
+      "n": 356,
+      "brier": 0.25065604271736747,
+      "log_loss": 0.6945734482951899,
+      "bias": 0.0054956188742107445,
+      "accuracy": 0.5168539325842697,
+      "calibration_bins": [
+        {
+          "lower": 0.3,
+          "n": 5,
+          "mean_probability": 0.38456276058769523,
+          "win_rate": 0.8
+        },
+        {
+          "lower": 0.4,
+          "n": 69,
+          "mean_probability": 0.471038971554931,
+          "win_rate": 0.5507246376811594
+        },
+        {
+          "lower": 0.5,
+          "n": 208,
+          "mean_probability": 0.5513357168761794,
+          "win_rate": 0.5144230769230769
+        },
+        {
+          "lower": 0.6,
+          "n": 74,
+          "mean_probability": 0.6331636266046621,
+          "win_rate": 0.6081081081081081
+        }
+      ]
+    },
+    "paired_n": 356,
+    "challenger_minus_baseline": {
+      "brier": {
+        "delta": 0.0015688854742797551,
+        "series_ci95": [
+          -0.002253024703704354,
+          0.005943813248517428
+        ],
+        "season_ci95": [
+          -0.0017843272137427312,
+          0.004816323718416992
+        ]
+      },
+      "log_loss": {
+        "delta": 0.00322704036905618,
+        "series_ci95": [
+          -0.004753756139565335,
+          0.01220983873603206
+        ],
+        "season_ci95": [
+          -0.0034441578238443675,
+          0.009722665497822667
+        ]
+      }
+    }
+  },
+  "strikeouts": {
+    "baseline": {
+      "n": 775,
+      "mae": 2.110280937347568,
+      "rmse": 2.587178878268397,
+      "bias": 0.8081676052581047,
+      "log_loss": 2.3632353056703934,
+      "ranked_probability_score": 1.4465540593633934
+    },
+    "challenger": {
+      "n": 775,
+      "mae": 2.0048311393624894,
+      "rmse": 2.483865581660119,
+      "bias": 0.3894049844282853,
+      "log_loss": 2.3194851710456015,
+      "ranked_probability_score": 1.3913022486447055
+    },
+    "paired_n": 775,
+    "challenger_minus_baseline": {
+      "mae": {
+        "delta": -0.10544979798507888,
+        "series_ci95": [
+          -0.1400887496565312,
+          -0.07293326306244735
+        ],
+        "season_ci95": [
+          -0.14296115153781688,
+          -0.06982846828641777
+        ]
+      },
+      "log_loss": {
+        "delta": -0.0437501346247917,
+        "series_ci95": [
+          -0.058230432322495876,
+          -0.02970900685403081
+        ],
+        "season_ci95": [
+          -0.06327555479842074,
+          -0.02525857136579145
+        ]
+      },
+      "ranked_probability_score": {
+        "delta": -0.05525181071868787,
+        "series_ci95": [
+          -0.0764382839100698,
+          -0.03443459218524309
+        ],
+        "season_ci95": [
+          -0.08208339341709345,
+          -0.03049357253328154
+        ]
+      }
+    }
+  },
+  "market_archive_audit": {
+    "source_url": "https://raw.githubusercontent.com/flancast90/sportsbookreview-scraper/1a820e50c6fbd0276cde073c22bfffae78930868/data/mlb_archive_10Y.json",
+    "sha256": "ee4904dee0ee1474e7ac75697cea2c28f0084e5fb576553e48627e4cf90dd77d",
+    "records": 25597,
+    "coverage_counts": {
+      "TEAM_IDENTITY_MISMATCH": 260,
+      "MISSING_DATE": 180
+    },
+    "accepted": 0,
+    "status": "REJECTED",
+    "rows": [
+      {
+        "game_id": "446237",
+        "date": "2015-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446238",
+        "date": "2015-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446239",
+        "date": "2015-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446240",
+        "date": "2015-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446241",
+        "date": "2015-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446242",
+        "date": "2015-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446243",
+        "date": "2015-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446244",
+        "date": "2015-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446245",
+        "date": "2015-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446246",
+        "date": "2015-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446247",
+        "date": "2015-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446248",
+        "date": "2015-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446249",
+        "date": "2015-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446250",
+        "date": "2015-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446251",
+        "date": "2015-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446252",
+        "date": "2015-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446253",
+        "date": "2015-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446254",
+        "date": "2015-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446255",
+        "date": "2015-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446256",
+        "date": "2015-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446258",
+        "date": "2015-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446259",
+        "date": "2015-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446260",
+        "date": "2015-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446261",
+        "date": "2015-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446262",
+        "date": "2015-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446263",
+        "date": "2015-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446264",
+        "date": "2015-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446265",
+        "date": "2015-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446266",
+        "date": "2015-10-21",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446267",
+        "date": "2015-10-21",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446269",
+        "date": "2015-10-23",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446273",
+        "date": "2015-10-27",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446274",
+        "date": "2015-10-28",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446275",
+        "date": "2015-10-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446276",
+        "date": "2015-10-31",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "446277",
+        "date": "2015-11-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "487595",
+        "date": "2016-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487596",
+        "date": "2016-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487597",
+        "date": "2016-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487602",
+        "date": "2016-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487598",
+        "date": "2016-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487603",
+        "date": "2016-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487607",
+        "date": "2016-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487612",
+        "date": "2016-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487608",
+        "date": "2016-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487599",
+        "date": "2016-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487613",
+        "date": "2016-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487604",
+        "date": "2016-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487609",
+        "date": "2016-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487614",
+        "date": "2016-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487610",
+        "date": "2016-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487615",
+        "date": "2016-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487616",
+        "date": "2016-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487617",
+        "date": "2016-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487618",
+        "date": "2016-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487624",
+        "date": "2016-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487625",
+        "date": "2016-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487619",
+        "date": "2016-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487620",
+        "date": "2016-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487626",
+        "date": "2016-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487621",
+        "date": "2016-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487627",
+        "date": "2016-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487628",
+        "date": "2016-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487629",
+        "date": "2016-10-22",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487631",
+        "date": "2016-10-25",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487632",
+        "date": "2016-10-26",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487633",
+        "date": "2016-10-28",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487634",
+        "date": "2016-10-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487635",
+        "date": "2016-10-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "487636",
+        "date": "2016-11-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "487637",
+        "date": "2016-11-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "526475",
+        "date": "2017-10-03",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526476",
+        "date": "2017-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526477",
+        "date": "2017-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526482",
+        "date": "2017-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526478",
+        "date": "2017-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526483",
+        "date": "2017-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526487",
+        "date": "2017-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526492",
+        "date": "2017-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526488",
+        "date": "2017-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526493",
+        "date": "2017-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526479",
+        "date": "2017-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526484",
+        "date": "2017-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526480",
+        "date": "2017-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526485",
+        "date": "2017-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526489",
+        "date": "2017-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526494",
+        "date": "2017-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526481",
+        "date": "2017-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526495",
+        "date": "2017-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526496",
+        "date": "2017-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526497",
+        "date": "2017-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526498",
+        "date": "2017-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526504",
+        "date": "2017-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526505",
+        "date": "2017-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526499",
+        "date": "2017-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526500",
+        "date": "2017-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526506",
+        "date": "2017-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526501",
+        "date": "2017-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526507",
+        "date": "2017-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526508",
+        "date": "2017-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526502",
+        "date": "2017-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526503",
+        "date": "2017-10-21",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526511",
+        "date": "2017-10-24",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526512",
+        "date": "2017-10-25",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526513",
+        "date": "2017-10-27",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526514",
+        "date": "2017-10-28",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526515",
+        "date": "2017-10-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "526516",
+        "date": "2017-10-31",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "526517",
+        "date": "2017-11-01",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563347",
+        "date": "2018-10-02",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563346",
+        "date": "2018-10-03",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563383",
+        "date": "2018-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563388",
+        "date": "2018-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563348",
+        "date": "2018-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563378",
+        "date": "2018-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563384",
+        "date": "2018-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563389",
+        "date": "2018-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563374",
+        "date": "2018-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563379",
+        "date": "2018-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563385",
+        "date": "2018-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563390",
+        "date": "2018-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563375",
+        "date": "2018-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563380",
+        "date": "2018-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563391",
+        "date": "2018-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563376",
+        "date": "2018-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563400",
+        "date": "2018-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563393",
+        "date": "2018-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563401",
+        "date": "2018-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563394",
+        "date": "2018-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563402",
+        "date": "2018-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563395",
+        "date": "2018-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563403",
+        "date": "2018-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563396",
+        "date": "2018-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563404",
+        "date": "2018-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563397",
+        "date": "2018-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563405",
+        "date": "2018-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563406",
+        "date": "2018-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563407",
+        "date": "2018-10-23",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563408",
+        "date": "2018-10-24",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563409",
+        "date": "2018-10-26",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563410",
+        "date": "2018-10-27",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "563411",
+        "date": "2018-10-28",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "599336",
+        "date": "2019-10-01",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599335",
+        "date": "2019-10-02",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599347",
+        "date": "2019-10-03",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599352",
+        "date": "2019-10-03",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599337",
+        "date": "2019-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599342",
+        "date": "2019-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599348",
+        "date": "2019-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599353",
+        "date": "2019-10-04",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599338",
+        "date": "2019-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599343",
+        "date": "2019-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599349",
+        "date": "2019-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599354",
+        "date": "2019-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599339",
+        "date": "2019-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599344",
+        "date": "2019-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599350",
+        "date": "2019-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599355",
+        "date": "2019-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599340",
+        "date": "2019-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599351",
+        "date": "2019-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599356",
+        "date": "2019-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599341",
+        "date": "2019-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599364",
+        "date": "2019-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599357",
+        "date": "2019-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599365",
+        "date": "2019-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599358",
+        "date": "2019-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599366",
+        "date": "2019-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599359",
+        "date": "2019-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599367",
+        "date": "2019-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599360",
+        "date": "2019-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599361",
+        "date": "2019-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599362",
+        "date": "2019-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599371",
+        "date": "2019-10-22",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599372",
+        "date": "2019-10-23",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599373",
+        "date": "2019-10-25",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599374",
+        "date": "2019-10-26",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599375",
+        "date": "2019-10-27",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599376",
+        "date": "2019-10-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "599377",
+        "date": "2019-10-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "635904",
+        "date": "2020-09-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635907",
+        "date": "2020-09-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635910",
+        "date": "2020-09-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635913",
+        "date": "2020-09-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635884",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635889",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635893",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635903",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635906",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635909",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635912",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635914",
+        "date": "2020-09-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635876",
+        "date": "2020-10-01",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635894",
+        "date": "2020-10-01",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635908",
+        "date": "2020-10-01",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635918",
+        "date": "2020-10-01",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635932",
+        "date": "2020-10-02",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635935",
+        "date": "2020-10-02",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635901",
+        "date": "2020-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635916",
+        "date": "2020-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635885",
+        "date": "2020-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635892",
+        "date": "2020-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635900",
+        "date": "2020-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635940",
+        "date": "2020-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635883",
+        "date": "2020-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635899",
+        "date": "2020-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635927",
+        "date": "2020-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635933",
+        "date": "2020-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635898",
+        "date": "2020-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635921",
+        "date": "2020-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635936",
+        "date": "2020-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635938",
+        "date": "2020-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635920",
+        "date": "2020-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635917",
+        "date": "2020-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635881",
+        "date": "2020-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635937",
+        "date": "2020-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635915",
+        "date": "2020-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635931",
+        "date": "2020-10-13",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635880",
+        "date": "2020-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635939",
+        "date": "2020-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635928",
+        "date": "2020-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635930",
+        "date": "2020-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635879",
+        "date": "2020-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635929",
+        "date": "2020-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635895",
+        "date": "2020-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635924",
+        "date": "2020-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635888",
+        "date": "2020-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635925",
+        "date": "2020-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635896",
+        "date": "2020-10-21",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635923",
+        "date": "2020-10-23",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635897",
+        "date": "2020-10-24",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "635887",
+        "date": "2020-10-25",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "635886",
+        "date": "2020-10-27",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "660938",
+        "date": "2021-10-05",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660937",
+        "date": "2021-10-06",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660929",
+        "date": "2021-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660936",
+        "date": "2021-10-07",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660917",
+        "date": "2021-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660932",
+        "date": "2021-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660933",
+        "date": "2021-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660934",
+        "date": "2021-10-08",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660907",
+        "date": "2021-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660925",
+        "date": "2021-10-09",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660928",
+        "date": "2021-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660931",
+        "date": "2021-10-10",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660905",
+        "date": "2021-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660919",
+        "date": "2021-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660927",
+        "date": "2021-10-11",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660914",
+        "date": "2021-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660918",
+        "date": "2021-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660926",
+        "date": "2021-10-12",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660920",
+        "date": "2021-10-14",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660896",
+        "date": "2021-10-15",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660913",
+        "date": "2021-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660924",
+        "date": "2021-10-16",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660922",
+        "date": "2021-10-17",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660898",
+        "date": "2021-10-18",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660916",
+        "date": "2021-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660923",
+        "date": "2021-10-19",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660900",
+        "date": "2021-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660904",
+        "date": "2021-10-20",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660903",
+        "date": "2021-10-21",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660899",
+        "date": "2021-10-22",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660921",
+        "date": "2021-10-23",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660897",
+        "date": "2021-10-26",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660908",
+        "date": "2021-10-27",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660910",
+        "date": "2021-10-29",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660902",
+        "date": "2021-10-30",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660911",
+        "date": "2021-10-31",
+        "status": "TEAM_IDENTITY_MISMATCH"
+      },
+      {
+        "game_id": "660906",
+        "date": "2021-11-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715761",
+        "date": "2022-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715764",
+        "date": "2022-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715767",
+        "date": "2022-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715770",
+        "date": "2022-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715760",
+        "date": "2022-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715763",
+        "date": "2022-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715766",
+        "date": "2022-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715769",
+        "date": "2022-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715759",
+        "date": "2022-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715743",
+        "date": "2022-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715748",
+        "date": "2022-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715753",
+        "date": "2022-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715758",
+        "date": "2022-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715742",
+        "date": "2022-10-12",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715747",
+        "date": "2022-10-12",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715757",
+        "date": "2022-10-13",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715741",
+        "date": "2022-10-14",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715746",
+        "date": "2022-10-14",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715752",
+        "date": "2022-10-14",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715740",
+        "date": "2022-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715745",
+        "date": "2022-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715751",
+        "date": "2022-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715756",
+        "date": "2022-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715750",
+        "date": "2022-10-16",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715731",
+        "date": "2022-10-18",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715749",
+        "date": "2022-10-18",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715730",
+        "date": "2022-10-19",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715738",
+        "date": "2022-10-19",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715737",
+        "date": "2022-10-20",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715729",
+        "date": "2022-10-21",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715728",
+        "date": "2022-10-22",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715736",
+        "date": "2022-10-22",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715727",
+        "date": "2022-10-23",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715735",
+        "date": "2022-10-23",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715724",
+        "date": "2022-10-28",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715723",
+        "date": "2022-10-29",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715722",
+        "date": "2022-11-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715721",
+        "date": "2022-11-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715720",
+        "date": "2022-11-03",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "715719",
+        "date": "2022-11-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748577",
+        "date": "2023-10-03",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748581",
+        "date": "2023-10-03",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748582",
+        "date": "2023-10-03",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748585",
+        "date": "2023-10-03",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748575",
+        "date": "2023-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748578",
+        "date": "2023-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748580",
+        "date": "2023-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748583",
+        "date": "2023-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748555",
+        "date": "2023-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748562",
+        "date": "2023-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748568",
+        "date": "2023-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748573",
+        "date": "2023-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748565",
+        "date": "2023-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748569",
+        "date": "2023-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748556",
+        "date": "2023-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748563",
+        "date": "2023-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748567",
+        "date": "2023-10-10",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748572",
+        "date": "2023-10-10",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748557",
+        "date": "2023-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748564",
+        "date": "2023-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748566",
+        "date": "2023-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748561",
+        "date": "2023-10-12",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748553",
+        "date": "2023-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748543",
+        "date": "2023-10-16",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748548",
+        "date": "2023-10-16",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748546",
+        "date": "2023-10-17",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748552",
+        "date": "2023-10-18",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748545",
+        "date": "2023-10-19",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748551",
+        "date": "2023-10-19",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748544",
+        "date": "2023-10-20",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748550",
+        "date": "2023-10-20",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748538",
+        "date": "2023-10-21",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748549",
+        "date": "2023-10-22",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748539",
+        "date": "2023-10-23",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748547",
+        "date": "2023-10-23",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748537",
+        "date": "2023-10-24",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748542",
+        "date": "2023-10-27",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748541",
+        "date": "2023-10-28",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748540",
+        "date": "2023-10-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748535",
+        "date": "2023-10-31",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "748534",
+        "date": "2023-11-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775333",
+        "date": "2024-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775340",
+        "date": "2024-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775343",
+        "date": "2024-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775345",
+        "date": "2024-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775336",
+        "date": "2024-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775339",
+        "date": "2024-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775341",
+        "date": "2024-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775344",
+        "date": "2024-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775337",
+        "date": "2024-10-03",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775318",
+        "date": "2024-10-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775323",
+        "date": "2024-10-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775324",
+        "date": "2024-10-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775334",
+        "date": "2024-10-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775319",
+        "date": "2024-10-06",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775322",
+        "date": "2024-10-06",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775325",
+        "date": "2024-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775332",
+        "date": "2024-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775316",
+        "date": "2024-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775321",
+        "date": "2024-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775313",
+        "date": "2024-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775320",
+        "date": "2024-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775328",
+        "date": "2024-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775329",
+        "date": "2024-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775327",
+        "date": "2024-10-10",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775331",
+        "date": "2024-10-10",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775317",
+        "date": "2024-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775326",
+        "date": "2024-10-12",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775307",
+        "date": "2024-10-13",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775306",
+        "date": "2024-10-14",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775314",
+        "date": "2024-10-14",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775312",
+        "date": "2024-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775305",
+        "date": "2024-10-16",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775303",
+        "date": "2024-10-17",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775310",
+        "date": "2024-10-17",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775299",
+        "date": "2024-10-18",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775311",
+        "date": "2024-10-18",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775309",
+        "date": "2024-10-19",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775302",
+        "date": "2024-10-20",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775300",
+        "date": "2024-10-25",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775294",
+        "date": "2024-10-26",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775298",
+        "date": "2024-10-28",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775297",
+        "date": "2024-10-29",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "775296",
+        "date": "2024-10-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813066",
+        "date": "2025-09-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813069",
+        "date": "2025-09-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813072",
+        "date": "2025-09-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813074",
+        "date": "2025-09-30",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813064",
+        "date": "2025-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813068",
+        "date": "2025-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813070",
+        "date": "2025-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813071",
+        "date": "2025-10-01",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813059",
+        "date": "2025-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813065",
+        "date": "2025-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813073",
+        "date": "2025-10-02",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813047",
+        "date": "2025-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813051",
+        "date": "2025-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813058",
+        "date": "2025-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813063",
+        "date": "2025-10-04",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813057",
+        "date": "2025-10-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813062",
+        "date": "2025-10-05",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813048",
+        "date": "2025-10-06",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813052",
+        "date": "2025-10-06",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813056",
+        "date": "2025-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813061",
+        "date": "2025-10-07",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813041",
+        "date": "2025-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813049",
+        "date": "2025-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813055",
+        "date": "2025-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813060",
+        "date": "2025-10-08",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813042",
+        "date": "2025-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813050",
+        "date": "2025-10-09",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813054",
+        "date": "2025-10-10",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813046",
+        "date": "2025-10-11",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813040",
+        "date": "2025-10-12",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813036",
+        "date": "2025-10-13",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813044",
+        "date": "2025-10-13",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813034",
+        "date": "2025-10-14",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813043",
+        "date": "2025-10-15",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813033",
+        "date": "2025-10-16",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813035",
+        "date": "2025-10-16",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813031",
+        "date": "2025-10-17",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813039",
+        "date": "2025-10-17",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813038",
+        "date": "2025-10-19",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813037",
+        "date": "2025-10-20",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813027",
+        "date": "2025-10-24",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813026",
+        "date": "2025-10-25",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813032",
+        "date": "2025-10-27",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813023",
+        "date": "2025-10-28",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813022",
+        "date": "2025-10-29",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813025",
+        "date": "2025-10-31",
+        "status": "MISSING_DATE"
+      },
+      {
+        "game_id": "813024",
+        "date": "2025-11-01",
+        "status": "MISSING_DATE"
+      }
+    ],
+    "identity_repaired_by_outcomes": false
+  },
+  "market_evidence": {
+    "accepted_pregame_moneyline_prices": 0,
+    "accepted_pregame_k_prices": 0,
+    "roi": null,
+    "clv": null,
+    "model_vs_market": null
+  },
+  "verification_gates": {
+    "historical_replay_reproduced": true,
+    "no_same_season_parameter_fit": true,
+    "authentic_timestamped_entry_prices": false,
+    "at_least_100_wagers_3_seasons": false,
+    "positive_series_cluster_roi_lower_bound": false,
+    "beats_market_probability_scores": false,
+    "independent_confirmation_after_model_selection": false
+  },
+  "limitations": [
+    "2015\u20132025 was already consumed in prior mechanism research; this is development evidence.",
+    "Historical workload is reconstructed from regular-season logs, rather than captured current-game supporting markets.",
+    "Historical starting lineups come from completed boxscore identities, rather than timestamped pregame captures.",
+    "Season-end public skill and park data is reconstructed; release has no original timestamped feature receipts.",
+    "No accepted historical K line/price pairs or executable moneyline entry snapshots; profitability and CLV remain unmeasured.",
+    "No multiple-comparison promotion: all fixed challengers and cohorts are reported."
+  ],
+  "cohorts": {
+    "all": {
+      "strikeouts": {
+        "baseline": {
+          "n": 775,
+          "mae": 2.110280937347568,
+          "rmse": 2.587178878268397,
+          "bias": 0.8081676052581047,
+          "log_loss": 2.3632353056703934,
+          "ranked_probability_score": 1.4465540593633934
+        },
+        "challenger": {
+          "n": 775,
+          "mae": 2.0048311393624894,
+          "rmse": 2.483865581660119,
+          "bias": 0.3894049844282853,
+          "log_loss": 2.3194851710456015,
+          "ranked_probability_score": 1.3913022486447055
+        },
+        "paired_n": 775,
+        "challenger_minus_baseline": {
+          "mae": {
+            "delta": -0.10544979798507888,
+            "series_ci95": [
+              -0.1400887496565312,
+              -0.07293326306244735
+            ],
+            "season_ci95": [
+              -0.14296115153781688,
+              -0.06982846828641777
+            ]
+          },
+          "log_loss": {
+            "delta": -0.0437501346247917,
+            "series_ci95": [
+              -0.058230432322495876,
+              -0.02970900685403081
+            ],
+            "season_ci95": [
+              -0.06327555479842074,
+              -0.02525857136579145
+            ]
+          },
+          "ranked_probability_score": {
+            "delta": -0.05525181071868787,
+            "series_ci95": [
+              -0.0764382839100698,
+              -0.03443459218524309
+            ],
+            "season_ci95": [
+              -0.08208339341709345,
+              -0.03049357253328154
+            ]
+          }
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 356,
+          "brier": 0.24908715724308775,
+          "log_loss": 0.6913464079261338,
+          "bias": -0.007328321535190295,
+          "accuracy": 0.5365168539325843,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 17,
+              "mean_probability": 0.37085095779558835,
+              "win_rate": 0.47058823529411764
+            },
+            {
+              "lower": 0.4,
+              "n": 100,
+              "mean_probability": 0.44927009536512164,
+              "win_rate": 0.52
+            },
+            {
+              "lower": 0.5,
+              "n": 148,
+              "mean_probability": 0.5501159421466927,
+              "win_rate": 0.5337837837837838
+            },
+            {
+              "lower": 0.6,
+              "n": 84,
+              "mean_probability": 0.6398496628709432,
+              "win_rate": 0.6071428571428571
+            },
+            {
+              "lower": 0.7,
+              "n": 7,
+              "mean_probability": 0.7135872279379049,
+              "win_rate": 0.5714285714285714
+            }
+          ]
+        },
+        "challenger": {
+          "n": 356,
+          "brier": 0.25065604271736747,
+          "log_loss": 0.6945734482951899,
+          "bias": 0.0054956188742107445,
+          "accuracy": 0.5168539325842697,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 5,
+              "mean_probability": 0.38456276058769523,
+              "win_rate": 0.8
+            },
+            {
+              "lower": 0.4,
+              "n": 69,
+              "mean_probability": 0.471038971554931,
+              "win_rate": 0.5507246376811594
+            },
+            {
+              "lower": 0.5,
+              "n": 208,
+              "mean_probability": 0.5513357168761794,
+              "win_rate": 0.5144230769230769
+            },
+            {
+              "lower": 0.6,
+              "n": 74,
+              "mean_probability": 0.6331636266046621,
+              "win_rate": 0.6081081081081081
+            }
+          ]
+        },
+        "paired_n": 356,
+        "challenger_minus_baseline": {
+          "brier": {
+            "delta": 0.0015688854742797551,
+            "series_ci95": [
+              -0.002253024703704354,
+              0.005943813248517428
+            ],
+            "season_ci95": [
+              -0.0017843272137427312,
+              0.004816323718416992
+            ]
+          },
+          "log_loss": {
+            "delta": 0.00322704036905618,
+            "series_ci95": [
+              -0.004753756139565335,
+              0.01220983873603206
+            ],
+            "season_ci95": [
+              -0.0034441578238443675,
+              0.009722665497822667
+            ]
+          }
+        }
+      }
+    },
+    "exclude_2020": {
+      "strikeouts": {
+        "baseline": {
+          "n": 673,
+          "mae": 2.1068888046456924,
+          "rmse": 2.5875710696681637,
+          "bias": 0.8366126431201476,
+          "log_loss": 2.3608195743548412,
+          "ranked_probability_score": 1.444554250371199
+        },
+        "challenger": {
+          "n": 673,
+          "mae": 1.9973476216551787,
+          "rmse": 2.4788677593175614,
+          "bias": 0.41926667587540706,
+          "log_loss": 2.314820159314628,
+          "ranked_probability_score": 1.3858612958260814
+        },
+        "paired_n": 673,
+        "challenger_minus_baseline": {
+          "mae": {
+            "delta": -0.10954118299051388,
+            "series_ci95": [
+              -0.1429099179455279,
+              -0.07524427860994266
+            ],
+            "season_ci95": [
+              -0.151251989607102,
+              -0.06769218156837642
+            ]
+          },
+          "log_loss": {
+            "delta": -0.04599941504021376,
+            "series_ci95": [
+              -0.06171965318985309,
+              -0.030608073494625094
+            ],
+            "season_ci95": [
+              -0.06762460098604325,
+              -0.025366884936040827
+            ]
+          },
+          "ranked_probability_score": {
+            "delta": -0.05869295454511762,
+            "series_ci95": [
+              -0.08105554086842628,
+              -0.03647332894932158
+            ],
+            "season_ci95": [
+              -0.08731161160324076,
+              -0.030212209503348908
+            ]
+          }
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 304,
+          "brier": 0.25072300341676595,
+          "log_loss": 0.6947249822768061,
+          "bias": -0.006572146072948257,
+          "accuracy": 0.5296052631578947,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 15,
+              "mean_probability": 0.36960534089059205,
+              "win_rate": 0.4666666666666667
+            },
+            {
+              "lower": 0.4,
+              "n": 83,
+              "mean_probability": 0.44736255150040116,
+              "win_rate": 0.5301204819277109
+            },
+            {
+              "lower": 0.5,
+              "n": 130,
+              "mean_probability": 0.5485216808505804,
+              "win_rate": 0.5307692307692308
+            },
+            {
+              "lower": 0.6,
+              "n": 71,
+              "mean_probability": 0.6401806471579918,
+              "win_rate": 0.5915492957746479
+            },
+            {
+              "lower": 0.7,
+              "n": 5,
+              "mean_probability": 0.713250249427736,
+              "win_rate": 0.6
+            }
+          ]
+        },
+        "challenger": {
+          "n": 304,
+          "brier": 0.25235194101927716,
+          "log_loss": 0.698067367367317,
+          "bias": 0.006232920399170713,
+          "accuracy": 0.5164473684210527,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 5,
+              "mean_probability": 0.38456276058769523,
+              "win_rate": 0.8
+            },
+            {
+              "lower": 0.4,
+              "n": 59,
+              "mean_probability": 0.47180531072739257,
+              "win_rate": 0.5423728813559322
+            },
+            {
+              "lower": 0.5,
+              "n": 179,
+              "mean_probability": 0.5506569508613727,
+              "win_rate": 0.5251396648044693
+            },
+            {
+              "lower": 0.6,
+              "n": 61,
+              "mean_probability": 0.6322604337919271,
+              "win_rate": 0.5737704918032787
+            }
+          ]
+        },
+        "paired_n": 304,
+        "challenger_minus_baseline": {
+          "brier": {
+            "delta": 0.001628937602511209,
+            "series_ci95": [
+              -0.00313264283419648,
+              0.0067157672443472986
+            ],
+            "season_ci95": [
+              -0.0022073049579025617,
+              0.005327827974216953
+            ]
+          },
+          "log_loss": {
+            "delta": 0.0033423850905108243,
+            "series_ci95": [
+              -0.006382870294409003,
+              0.013714821862555272
+            ],
+            "season_ci95": [
+              -0.004375218831444677,
+              0.01073699659989604
+            ]
+          }
+        }
+      }
+    },
+    "2020_only": {
+      "strikeouts": {
+        "baseline": {
+          "n": 102,
+          "mae": 2.132662361939356,
+          "rmse": 2.5845896923006118,
+          "bias": 0.6204861299526646,
+          "log_loss": 2.379174395624966,
+          "ranked_probability_score": 1.4597488775177747
+        },
+        "challenger": {
+          "n": 102,
+          "mae": 2.0542076826666085,
+          "rmse": 2.5165926304968314,
+          "bias": 0.19237637321345233,
+          "log_loss": 2.3502651013882043,
+          "ranked_probability_score": 1.427201868712687
+        },
+        "paired_n": 102,
+        "challenger_minus_baseline": {
+          "mae": {
+            "delta": -0.07845467927274788,
+            "series_ci95": [
+              -0.1916490977038266,
+              0.0182879333511649
+            ],
+            "season_ci95": null
+          },
+          "log_loss": {
+            "delta": -0.028909294236761897,
+            "series_ci95": [
+              -0.06738902207752213,
+              0.004518607754139149
+            ],
+            "season_ci95": null
+          },
+          "ranked_probability_score": {
+            "delta": -0.03254700880508766,
+            "series_ci95": [
+              -0.09080217687454727,
+              0.020735213447799435
+            ],
+            "season_ci95": null
+          }
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 52,
+          "brier": 0.23952374884312277,
+          "log_loss": 0.6715947424914331,
+          "bias": -0.01174903962214375,
+          "accuracy": 0.5769230769230769,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 2,
+              "mean_probability": 0.3801930845830605,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.4,
+              "n": 17,
+              "mean_probability": 0.4585833977634628,
+              "win_rate": 0.47058823529411764
+            },
+            {
+              "lower": 0.5,
+              "n": 18,
+              "mean_probability": 0.561630051507504,
+              "win_rate": 0.5555555555555556
+            },
+            {
+              "lower": 0.6,
+              "n": 13,
+              "mean_probability": 0.6380419794570623,
+              "win_rate": 0.6923076923076923
+            },
+            {
+              "lower": 0.7,
+              "n": 2,
+              "mean_probability": 0.7144296742133271,
+              "win_rate": 0.5
+            }
+          ]
+        },
+        "challenger": {
+          "n": 52,
+          "brier": 0.2407415603369725,
+          "log_loss": 0.6741474598735236,
+          "bias": 0.0011852407282909262,
+          "accuracy": 0.5192307692307693,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 10,
+              "mean_probability": 0.4665175704374077,
+              "win_rate": 0.6
+            },
+            {
+              "lower": 0.5,
+              "n": 29,
+              "mean_probability": 0.5555253415882623,
+              "win_rate": 0.4482758620689655
+            },
+            {
+              "lower": 0.6,
+              "n": 13,
+              "mean_probability": 0.6374016851874956,
+              "win_rate": 0.7692307692307693
+            }
+          ]
+        },
+        "paired_n": 52,
+        "challenger_minus_baseline": {
+          "brier": {
+            "delta": 0.0012178114938497162,
+            "series_ci95": [
+              -0.004619043770176337,
+              0.007146844970449373
+            ],
+            "season_ci95": null
+          },
+          "log_loss": {
+            "delta": 0.002552717382090568,
+            "series_ci95": [
+              -0.009770386482898135,
+              0.015070677081156558
+            ],
+            "season_ci95": null
+          }
+        }
+      }
+    },
+    "2022_plus": {
+      "strikeouts": {
+        "baseline": {
+          "n": 334,
+          "mae": 2.039657030963176,
+          "rmse": 2.5163785130673246,
+          "bias": 0.8691485222392992,
+          "log_loss": 2.3156853243091415,
+          "ranked_probability_score": 1.3926798036364612
+        },
+        "challenger": {
+          "n": 334,
+          "mae": 1.9204630077416653,
+          "rmse": 2.398965027237209,
+          "bias": 0.40693250936878067,
+          "log_loss": 2.264345360076139,
+          "ranked_probability_score": 1.3289972310412954
+        },
+        "paired_n": 334,
+        "challenger_minus_baseline": {
+          "mae": {
+            "delta": -0.11919402322151082,
+            "series_ci95": [
+              -0.17665284176168708,
+              -0.06452560588805116
+            ],
+            "season_ci95": [
+              -0.18351009143824795,
+              -0.04334501188410811
+            ]
+          },
+          "log_loss": {
+            "delta": -0.05133996423300202,
+            "series_ci95": [
+              -0.07531973049578489,
+              -0.028987443022438168
+            ],
+            "season_ci95": [
+              -0.08306432201575317,
+              -0.015912547503767877
+            ]
+          },
+          "ranked_probability_score": {
+            "delta": -0.06368257259516574,
+            "series_ci95": [
+              -0.09820347679466224,
+              -0.031510959136347
+            ],
+            "season_ci95": [
+              -0.10712427829106284,
+              -0.012939987708871201
+            ]
+          }
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 169,
+          "brier": 0.2543011186906468,
+          "log_loss": 0.7020615639346428,
+          "bias": 0.034439899940317285,
+          "accuracy": 0.5088757396449705,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 7,
+              "mean_probability": 0.3630083976463379,
+              "win_rate": 0.42857142857142855
+            },
+            {
+              "lower": 0.4,
+              "n": 44,
+              "mean_probability": 0.44935131976262316,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.5,
+              "n": 79,
+              "mean_probability": 0.5487850636051519,
+              "win_rate": 0.4936708860759494
+            },
+            {
+              "lower": 0.6,
+              "n": 34,
+              "mean_probability": 0.634928087202593,
+              "win_rate": 0.5294117647058824
+            },
+            {
+              "lower": 0.7,
+              "n": 5,
+              "mean_probability": 0.713250249427736,
+              "win_rate": 0.6
+            }
+          ]
+        },
+        "challenger": {
+          "n": 169,
+          "brier": 0.25439326801745044,
+          "log_loss": 0.7022006567743065,
+          "bias": 0.04659763357500138,
+          "accuracy": 0.5088757396449705,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 29,
+              "mean_probability": 0.48108844403302115,
+              "win_rate": 0.4827586206896552
+            },
+            {
+              "lower": 0.5,
+              "n": 115,
+              "mean_probability": 0.5499153920953272,
+              "win_rate": 0.5130434782608696
+            },
+            {
+              "lower": 0.6,
+              "n": 25,
+              "mean_probability": 0.6273266042501997,
+              "win_rate": 0.48
+            }
+          ]
+        },
+        "paired_n": 169,
+        "challenger_minus_baseline": {
+          "brier": {
+            "delta": 9.214932680366126e-05,
+            "series_ci95": [
+              -0.007396702447527076,
+              0.006981601216823691
+            ],
+            "season_ci95": [
+              -0.003248971020403983,
+              0.0034730449162399682
+            ]
+          },
+          "log_loss": {
+            "delta": 0.0001390928396637216,
+            "series_ci95": [
+              -0.015268636274790439,
+              0.014509419504222543
+            ],
+            "season_ci95": [
+              -0.006230676749970969,
+              0.006584693019651205
+            ]
+          }
+        }
+      }
+    }
+  },
+  "per_season": {
+    "2015": {
+      "usage_training": {
+        "factor": 1.0,
+        "training_seasons": [],
+        "training_pitcher_seasons": 0,
+        "status": "WARMUP"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 0
+        },
+        "challenger": {
+          "n": 0
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 0
+        },
+        "challenger": {
+          "n": 0
+        }
+      }
+    },
+    "2016": {
+      "usage_training": {
+        "factor": 0.9152542372881355,
+        "training_seasons": [
+          2015
+        ],
+        "training_pitcher_seasons": 31,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 70,
+          "mae": 1.832678804598208,
+          "rmse": 2.378017592700138,
+          "bias": 0.4950844460382803,
+          "log_loss": 2.2983937895836384,
+          "ranked_probability_score": 1.314416488897265
+        },
+        "challenger": {
+          "n": 70,
+          "mae": 1.7889631061145972,
+          "rmse": 2.328951046858162,
+          "bias": 0.2676239295528711,
+          "log_loss": 2.282078407342473,
+          "ranked_probability_score": 1.2955620192336477
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 0
+        },
+        "challenger": {
+          "n": 0
+        }
+      }
+    },
+    "2017": {
+      "usage_training": {
+        "factor": 0.8884099616858239,
+        "training_seasons": [
+          2015,
+          2016
+        ],
+        "training_pitcher_seasons": 62,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 76,
+          "mae": 2.4977691551594625,
+          "rmse": 2.98106300064822,
+          "bias": 0.8039014062478479,
+          "log_loss": 2.591096783482673,
+          "ranked_probability_score": 1.7141907075912943
+        },
+        "challenger": {
+          "n": 76,
+          "mae": 2.4207139884147124,
+          "rmse": 2.9044933079259705,
+          "bias": 0.4880657494507477,
+          "log_loss": 2.557391537100618,
+          "ranked_probability_score": 1.6711347104630243
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 38,
+          "brier": 0.23747364067254634,
+          "log_loss": 0.6674976215612901,
+          "bias": -0.17565776268814484,
+          "accuracy": 0.631578947368421,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 2,
+              "mean_probability": 0.3801011501822701,
+              "win_rate": 1.0
+            },
+            {
+              "lower": 0.4,
+              "n": 13,
+              "mean_probability": 0.443027916384993,
+              "win_rate": 0.5384615384615384
+            },
+            {
+              "lower": 0.5,
+              "n": 11,
+              "mean_probability": 0.5438563592508472,
+              "win_rate": 0.8181818181818182
+            },
+            {
+              "lower": 0.6,
+              "n": 12,
+              "mean_probability": 0.6519183210601439,
+              "win_rate": 0.75
+            }
+          ]
+        },
+        "challenger": {
+          "n": 38,
+          "brier": 0.24645042869372005,
+          "log_loss": 0.6860251043825804,
+          "bias": -0.2023664285505166,
+          "accuracy": 0.5789473684210527,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 5,
+              "mean_probability": 0.38456276058769523,
+              "win_rate": 0.8
+            },
+            {
+              "lower": 0.4,
+              "n": 12,
+              "mean_probability": 0.4471628035078617,
+              "win_rate": 0.5833333333333334
+            },
+            {
+              "lower": 0.5,
+              "n": 13,
+              "mean_probability": 0.5411421980471105,
+              "win_rate": 0.7692307692307693
+            },
+            {
+              "lower": 0.6,
+              "n": 8,
+              "mean_probability": 0.6233074619293895,
+              "win_rate": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "2018": {
+      "usage_training": {
+        "factor": 0.8444102958125239,
+        "training_seasons": [
+          2015,
+          2016,
+          2017
+        ],
+        "training_pitcher_seasons": 94,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 64,
+          "mae": 2.1125622890116396,
+          "rmse": 2.579831316881105,
+          "bias": 1.0585709818083415,
+          "log_loss": 2.3773644638100775,
+          "ranked_probability_score": 1.4528969671733605
+        },
+        "challenger": {
+          "n": 64,
+          "mae": 1.9700919489164728,
+          "rmse": 2.438006923483912,
+          "bias": 0.6432711685788792,
+          "log_loss": 2.3135613954650953,
+          "ranked_probability_score": 1.374672840585409
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 32,
+          "brier": 0.25083992533626537,
+          "log_loss": 0.6949239709718844,
+          "bias": 0.013839905894213208,
+          "accuracy": 0.53125,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 2,
+              "mean_probability": 0.3965747595860062,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.4,
+              "n": 8,
+              "mean_probability": 0.4465428064368334,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.5,
+              "n": 13,
+              "mean_probability": 0.5570699889490887,
+              "win_rate": 0.46153846153846156
+            },
+            {
+              "lower": 0.6,
+              "n": 9,
+              "mean_probability": 0.6483861290677767,
+              "win_rate": 0.6666666666666666
+            }
+          ]
+        },
+        "challenger": {
+          "n": 32,
+          "brier": 0.2531102862356317,
+          "log_loss": 0.6994380019217656,
+          "bias": 0.051268657230588086,
+          "accuracy": 0.4375,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 5,
+              "mean_probability": 0.4779211303604008,
+              "win_rate": 0.8
+            },
+            {
+              "lower": 0.5,
+              "n": 14,
+              "mean_probability": 0.5594824367579037,
+              "win_rate": 0.2857142857142857
+            },
+            {
+              "lower": 0.6,
+              "n": 13,
+              "mean_probability": 0.6475567126897049,
+              "win_rate": 0.6923076923076923
+            }
+          ]
+        }
+      }
+    },
+    "2019": {
+      "usage_training": {
+        "factor": 0.8421052631578947,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018
+        ],
+        "training_pitcher_seasons": 127,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 70,
+          "mae": 2.164516633946575,
+          "rmse": 2.660757189561251,
+          "bias": 0.3932113720474522,
+          "log_loss": 2.415104075915383,
+          "ranked_probability_score": 1.5048893093261428
+        },
+        "challenger": {
+          "n": 70,
+          "mae": 2.078455240183302,
+          "rmse": 2.606960854321163,
+          "bias": -0.10237548411213489,
+          "log_loss": 2.402314202616006,
+          "ranked_probability_score": 1.4808318630461141
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 35,
+          "brier": 0.24062064338507733,
+          "log_loss": 0.6744750508701393,
+          "bias": 0.03583055950755692,
+          "accuracy": 0.5714285714285714,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 4,
+              "mean_probability": 0.3624173775744907,
+              "win_rate": 0.25
+            },
+            {
+              "lower": 0.4,
+              "n": 9,
+              "mean_probability": 0.43310249333949075,
+              "win_rate": 0.4444444444444444
+            },
+            {
+              "lower": 0.5,
+              "n": 12,
+              "mean_probability": 0.5403254460216709,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.6,
+              "n": 10,
+              "mean_probability": 0.6422572280151061,
+              "win_rate": 0.6
+            }
+          ]
+        },
+        "challenger": {
+          "n": 35,
+          "brier": 0.2500543302739509,
+          "log_loss": 0.6938160085985078,
+          "bias": 0.07086842337347178,
+          "accuracy": 0.5428571428571428,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 8,
+              "mean_probability": 0.46423587813913825,
+              "win_rate": 0.375
+            },
+            {
+              "lower": 0.5,
+              "n": 17,
+              "mean_probability": 0.5522894674636444,
+              "win_rate": 0.47058823529411764
+            },
+            {
+              "lower": 0.6,
+              "n": 10,
+              "mean_probability": 0.6377586846076451,
+              "win_rate": 0.6
+            }
+          ]
+        }
+      }
+    },
+    "2020": {
+      "usage_training": {
+        "factor": 0.8587962962962963,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "training_pitcher_seasons": 159,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 102,
+          "mae": 2.132662361939356,
+          "rmse": 2.5845896923006118,
+          "bias": 0.6204861299526646,
+          "log_loss": 2.379174395624966,
+          "ranked_probability_score": 1.4597488775177747
+        },
+        "challenger": {
+          "n": 102,
+          "mae": 2.0542076826666085,
+          "rmse": 2.5165926304968314,
+          "bias": 0.19237637321345233,
+          "log_loss": 2.3502651013882043,
+          "ranked_probability_score": 1.427201868712687
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 52,
+          "brier": 0.23952374884312277,
+          "log_loss": 0.6715947424914331,
+          "bias": -0.01174903962214375,
+          "accuracy": 0.5769230769230769,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 2,
+              "mean_probability": 0.3801930845830605,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.4,
+              "n": 17,
+              "mean_probability": 0.4585833977634628,
+              "win_rate": 0.47058823529411764
+            },
+            {
+              "lower": 0.5,
+              "n": 18,
+              "mean_probability": 0.561630051507504,
+              "win_rate": 0.5555555555555556
+            },
+            {
+              "lower": 0.6,
+              "n": 13,
+              "mean_probability": 0.6380419794570623,
+              "win_rate": 0.6923076923076923
+            },
+            {
+              "lower": 0.7,
+              "n": 2,
+              "mean_probability": 0.7144296742133271,
+              "win_rate": 0.5
+            }
+          ]
+        },
+        "challenger": {
+          "n": 52,
+          "brier": 0.2407415603369725,
+          "log_loss": 0.6741474598735236,
+          "bias": 0.0011852407282909262,
+          "accuracy": 0.5192307692307693,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 10,
+              "mean_probability": 0.4665175704374077,
+              "win_rate": 0.6
+            },
+            {
+              "lower": 0.5,
+              "n": 29,
+              "mean_probability": 0.5555253415882623,
+              "win_rate": 0.4482758620689655
+            },
+            {
+              "lower": 0.6,
+              "n": 13,
+              "mean_probability": 0.6374016851874956,
+              "win_rate": 0.7692307692307693
+            }
+          ]
+        }
+      }
+    },
+    "2021": {
+      "usage_training": {
+        "factor": 0.8533777777777778,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "training_pitcher_seasons": 210,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 59,
+          "mae": 2.234789732166971,
+          "rmse": 2.5984947794830435,
+          "bias": 1.3850668714468117,
+          "log_loss": 2.3114092103067034,
+          "ranked_probability_score": 1.4646550937892693
+        },
+        "challenger": {
+          "n": 59,
+          "mae": 2.0678114016473494,
+          "rmse": 2.387435511576283,
+          "bias": 0.9562927424884676,
+          "log_loss": 2.224499120793344,
+          "ranked_probability_score": 1.3468933113715384
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 30,
+          "brier": 0.25901018350608596,
+          "log_loss": 0.7112962278770085,
+          "bias": -0.0946742361773234,
+          "accuracy": 0.4666666666666667,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 9,
+              "mean_probability": 0.4588895444914317,
+              "win_rate": 0.7777777777777778
+            },
+            {
+              "lower": 0.5,
+              "n": 15,
+              "mean_probability": 0.549704221694062,
+              "win_rate": 0.6
+            },
+            {
+              "lower": 0.6,
+              "n": 6,
+              "mean_probability": 0.6307006148077473,
+              "win_rate": 0.5
+            }
+          ]
+        },
+        "challenger": {
+          "n": 30,
+          "brier": 0.2501993588473756,
+          "log_loss": 0.6935346118608082,
+          "bias": -0.08037532791193455,
+          "accuracy": 0.5333333333333333,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 5,
+              "mean_probability": 0.4831004273898194,
+              "win_rate": 0.8
+            },
+            {
+              "lower": 0.5,
+              "n": 20,
+              "mean_probability": 0.5535400238559018,
+              "win_rate": 0.65
+            },
+            {
+              "lower": 0.6,
+              "n": 5,
+              "mean_probability": 0.6204875097149658,
+              "win_rate": 0.4
+            }
+          ]
+        }
+      }
+    },
+    "2022": {
+      "usage_training": {
+        "factor": 0.8333333333333334,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021
+        ],
+        "training_pitcher_seasons": 245,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 80,
+          "mae": 1.670654605062079,
+          "rmse": 2.0628522327706205,
+          "bias": 0.7915517028743736,
+          "log_loss": 2.165787179418106,
+          "ranked_probability_score": 1.151968569666606
+        },
+        "challenger": {
+          "n": 80,
+          "mae": 1.5542998477097303,
+          "rmse": 1.921301762466238,
+          "bias": 0.2853534425892744,
+          "log_loss": 2.119343939274605,
+          "ranked_probability_score": 1.0895206347737882
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 40,
+          "brier": 0.2467286747617062,
+          "log_loss": 0.6860083624078821,
+          "bias": -0.04573803676066076,
+          "accuracy": 0.525,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 1,
+              "mean_probability": 0.31121536203996103,
+              "win_rate": 0.0
+            },
+            {
+              "lower": 0.4,
+              "n": 17,
+              "mean_probability": 0.45160218369215843,
+              "win_rate": 0.5882352941176471
+            },
+            {
+              "lower": 0.5,
+              "n": 13,
+              "mean_probability": 0.5541741043091261,
+              "win_rate": 0.5384615384615384
+            },
+            {
+              "lower": 0.6,
+              "n": 7,
+              "mean_probability": 0.6478025451102365,
+              "win_rate": 0.7142857142857143
+            },
+            {
+              "lower": 0.7,
+              "n": 2,
+              "mean_probability": 0.7215724364883105,
+              "win_rate": 0.5
+            }
+          ]
+        },
+        "challenger": {
+          "n": 40,
+          "brier": 0.24212023218976234,
+          "log_loss": 0.6772086295399644,
+          "bias": -0.01834928111804237,
+          "accuracy": 0.55,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 9,
+              "mean_probability": 0.4811984820735946,
+              "win_rate": 0.5555555555555556
+            },
+            {
+              "lower": 0.5,
+              "n": 23,
+              "mean_probability": 0.5567239002739166,
+              "win_rate": 0.5652173913043478
+            },
+            {
+              "lower": 0.6,
+              "n": 8,
+              "mean_probability": 0.6413240887894841,
+              "win_rate": 0.625
+            }
+          ]
+        }
+      }
+    },
+    "2023": {
+      "usage_training": {
+        "factor": 0.8450704225352113,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022
+        ],
+        "training_pitcher_seasons": 285,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 82,
+          "mae": 2.327039540149021,
+          "rmse": 2.7861034493289027,
+          "bias": 1.0933267613506004,
+          "log_loss": 2.494692018346385,
+          "ranked_probability_score": 1.5954242327320163
+        },
+        "challenger": {
+          "n": 82,
+          "mae": 2.1752534083064705,
+          "rmse": 2.6264479073336577,
+          "bias": 0.6518263549177037,
+          "log_loss": 2.428054034242884,
+          "ranked_probability_score": 1.5114256228685836
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 41,
+          "brier": 0.2784981617174363,
+          "log_loss": 0.7521505548909365,
+          "bias": 0.19281257406450097,
+          "accuracy": 0.3902439024390244,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 1,
+              "mean_probability": 0.3613522436880891,
+              "win_rate": 1.0
+            },
+            {
+              "lower": 0.4,
+              "n": 6,
+              "mean_probability": 0.4451251595788044,
+              "win_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.5,
+              "n": 20,
+              "mean_probability": 0.5490275889547045,
+              "win_rate": 0.35
+            },
+            {
+              "lower": 0.6,
+              "n": 14,
+              "mean_probability": 0.6351900397421097,
+              "win_rate": 0.35714285714285715
+            }
+          ]
+        },
+        "challenger": {
+          "n": 41,
+          "brier": 0.2820623887697108,
+          "log_loss": 0.7585523378695086,
+          "bias": 0.21189613688120748,
+          "accuracy": 0.3902439024390244,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 3,
+              "mean_probability": 0.49147781536434304,
+              "win_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.5,
+              "n": 24,
+              "mean_probability": 0.5618917195035019,
+              "win_rate": 0.375
+            },
+            {
+              "lower": 0.6,
+              "n": 14,
+              "mean_probability": 0.6234219212823165,
+              "win_rate": 0.35714285714285715
+            }
+          ]
+        }
+      }
+    },
+    "2024": {
+      "usage_training": {
+        "factor": 0.8363636363636364,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ],
+        "training_pitcher_seasons": 321,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 84,
+          "mae": 2.1353925347947005,
+          "rmse": 2.606564080007674,
+          "bias": 1.3790875624163899,
+          "log_loss": 2.3225196186046313,
+          "ranked_probability_score": 1.4179479772607586
+        },
+        "challenger": {
+          "n": 84,
+          "mae": 1.9305632896783897,
+          "rmse": 2.3888058811467574,
+          "bias": 0.9324163423766534,
+          "log_loss": 2.2278295563119728,
+          "ranked_probability_score": 1.2966407328115228
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 43,
+          "brier": 0.24335915660920576,
+          "log_loss": 0.679866703916212,
+          "bias": 0.022090488809736453,
+          "accuracy": 0.5581395348837209,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 1,
+              "mean_probability": 0.3730188720173499,
+              "win_rate": 1.0
+            },
+            {
+              "lower": 0.4,
+              "n": 9,
+              "mean_probability": 0.4550374090981444,
+              "win_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.5,
+              "n": 26,
+              "mean_probability": 0.5451504610689599,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.6,
+              "n": 7,
+              "mean_probability": 0.6153747824464373,
+              "win_rate": 0.7142857142857143
+            }
+          ]
+        },
+        "challenger": {
+          "n": 43,
+          "brier": 0.2467452604189942,
+          "log_loss": 0.6866257995331713,
+          "bias": 0.02486778551812696,
+          "accuracy": 0.5348837209302325,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 5,
+              "mean_probability": 0.4863692967621255,
+              "win_rate": 0.4
+            },
+            {
+              "lower": 0.5,
+              "n": 38,
+              "mean_probability": 0.5430912708807587,
+              "win_rate": 0.5263157894736842
+            }
+          ]
+        }
+      }
+    },
+    "2025": {
+      "usage_training": {
+        "factor": 0.8333333333333334,
+        "training_seasons": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "training_pitcher_seasons": 360,
+        "status": "READY"
+      },
+      "strikeouts": {
+        "baseline": {
+          "n": 88,
+          "mae": 2.0159416445654537,
+          "rmse": 2.538986059984222,
+          "bias": 0.2440377332301141,
+          "log_loss": 2.2786310283933195,
+          "ranked_probability_score": 1.3984676325831875
+        },
+        "challenger": {
+          "n": 88,
+          "mae": 2.0062791017593464,
+          "rmse": 2.5714279046386217,
+          "bias": -0.2123358084188614,
+          "log_loss": 2.2784741089243172,
+          "ranked_probability_score": 1.407598883573839
+        }
+      },
+      "moneyline": {
+        "baseline": {
+          "n": 45,
+          "brier": 0.2494416378586739,
+          "log_loss": 0.6919028619936408,
+          "bias": -0.02678537766940346,
+          "accuracy": 0.5555555555555556,
+          "calibration_bins": [
+            {
+              "lower": 0.3,
+              "n": 4,
+              "mean_probability": 0.3738680764447414,
+              "win_rate": 0.25
+            },
+            {
+              "lower": 0.4,
+              "n": 12,
+              "mean_probability": 0.4440111089527165,
+              "win_rate": 0.5833333333333334
+            },
+            {
+              "lower": 0.5,
+              "n": 20,
+              "mean_probability": 0.5497646450950657,
+              "win_rate": 0.6
+            },
+            {
+              "lower": 0.6,
+              "n": 6,
+              "mean_probability": 0.642108852600318,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.7,
+              "n": 3,
+              "mean_probability": 0.7077021247206864,
+              "win_rate": 0.6666666666666666
+            }
+          ]
+        },
+        "challenger": {
+          "n": 45,
+          "brier": 0.24740108599519428,
+          "log_loss": 0.6879557906818448,
+          "bias": -0.025513001566934194,
+          "accuracy": 0.5555555555555556,
+          "calibration_bins": [
+            {
+              "lower": 0.4,
+              "n": 12,
+              "mean_probability": 0.47620821736596713,
+              "win_rate": 0.5
+            },
+            {
+              "lower": 0.5,
+              "n": 30,
+              "mean_probability": 0.5437583607703224,
+              "win_rate": 0.5666666666666667
+            },
+            {
+              "lower": 0.6,
+              "n": 3,
+              "mean_probability": 0.6082218326622288,
+              "win_rate": 0.6666666666666666
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bootstrap": {
+    "seed": 300926,
+    "reps": 2000,
+    "clusters": [
+      "playoff series",
+      "season"
+    ]
+  },
+  "input_hashes": {
+    "INITIAL_BOARD.json": "f75628f2400abfd6697a4a5936f79c2fe1ef084d19e907b3aaa6ff739743b802",
+    "SOURCE_MANIFEST.json": "d51e94346e3cde82c572932759d066a18b4a9da3f493ab18af43bf8d01e2b6d2",
+    "REPLAY_MANIFEST.json": "e68d1e04662cac66d0341a2637056cf350a63d0a7f1b4b92e16977ec13e18f62",
+    "USAGE_OBSERVATIONS.jsonl": "36da66a68cfeaf349ca9f727936ec5847928afcf61b2fa4381a34cc7742f141f",
+    "MARKET_ARCHIVE_AUDIT.json": "bdde1421fb720aa7cff10d2b82f142e9b7abd516434fac0a3463b215f8f32d89",
+    "BASELINE_LEDGER.jsonl": "07be95fd7d6c2f033a4ee4736e91620757b3f265e64a94be2c90ea4c277b70c7",
+    "USAGE_PAIRS.json": "8c4e3145463b9b84529b77fe9c0d84d95de14991008d3e91836e597368be4978",
+    "OUTCOMES.jsonl": "d60a208ae53782ba193a98d2e26c4e48bf34d5d5e78e02178c57981eca039d8d",
+    "REPRODUCTION_INPUTS.jsonl": "30df04734c9048731f7c33abf8ebd999f8aae38bf581ed1d422f39c04151f1a8"
+  }
+}

@@ -1,0 +1,15 @@
+test_conflicting_duplicate_is_rejected_atomically (test_delta_sources.DeltaSourcesTests.test_conflicting_duplicate_is_rejected_atomically) ... ok
+test_export_uses_three_day_sequential_windows_and_manifest (test_delta_sources.DeltaSourcesTests.test_export_uses_three_day_sequential_windows_and_manifest) ... ok
+test_foul_tip_is_not_two_strike_foul_self_loop (test_delta_sources.DeltaSourcesTests.test_foul_tip_is_not_two_strike_foul_self_loop) ... ok
+test_future_and_same_day_data_cannot_create_profile (test_delta_sources.DeltaSourcesTests.test_future_and_same_day_data_cannot_create_profile) ... ok
+test_identical_overlapping_export_is_deduplicated (test_delta_sources.DeltaSourcesTests.test_identical_overlapping_export_is_deduplicated) ... ok
+test_official_order_and_timestamp_required (test_delta_sources.DeltaSourcesTests.test_official_order_and_timestamp_required) ... ok
+test_optional_priors_create_labeled_research_without_fitted_effect (test_delta_sources.DeltaSourcesTests.test_optional_priors_create_labeled_research_without_fitted_effect) ... ok
+test_previous_utc_day_is_excluded_at_midnight_boundary (test_delta_sources.DeltaSourcesTests.test_previous_utc_day_is_excluded_at_midnight_boundary) ... ok
+test_profile_has_exact_splits_units_cutoff_and_provenance (test_delta_sources.DeltaSourcesTests.test_profile_has_exact_splits_units_cutoff_and_provenance) ... ok
+test_targeted_regular_season_export_and_manifest_verified_import (test_delta_sources.DeltaSourcesTests.test_targeted_regular_season_export_and_manifest_verified_import) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.111s
+
+OK

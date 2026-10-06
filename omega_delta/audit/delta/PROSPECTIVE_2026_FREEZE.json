@@ -1,0 +1,33 @@
+{
+  "status": "FUTURE_ONLY_UNSCORED",
+  "frozen_at": "2026-10-06T20:24:08.084915+00:00",
+  "eligible_after": "2026-10-06T20:24:08.084915+00:00",
+  "model_version": "delta-0.1.0",
+  "app_version": "2.1.3-delta.0.1.0",
+  "season": 2026,
+  "training_seasons": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "parameter_sha256": "e98074f328a5588016a15fc50805bda59f7ae494dc383e15668804ee55f21b6a",
+  "file_sha256": {
+    "audit/delta/FROZEN_MODEL.json": "dc82a98aa5c238ce29a07bb0588b6523a2cfa74271e35f62cbdb1bc2eca90d2b",
+    "app/delta_model.py": "acc081bc9f2f555d061a75971e249fd440da6e1b94ade69a05754ca7361240bd",
+    "audit/mlb/FROZEN_MODEL.json": "4cb12deb3ae8abaffebff6c9a9798c431d30ae63358f5306446cab501e2b68a5",
+    "app/mlb_model.py": "2ea928bbb2848de9f8ae30f57e68e504bec8bf877884e17e49cd4d718cee2c09"
+  },
+  "selection_rule": "Latest locally received complete forecast after freeze and before first pitch, once per game and actual starter; no postgame feature updates.",
+  "prediction_gate": "game start, captured timestamp and local receipt all after freeze/before first pitch; 2026 fold and frozen parameters match.",
+  "markets": "No historical authenticated K entry/closing prices. ROI and CLV remain unmeasured.",
+  "excluded": "All 2026 games with first pitch at or before the freeze; replay and previously inspected 2016\u20132025 games.",
+  "model_promotion": false
+}

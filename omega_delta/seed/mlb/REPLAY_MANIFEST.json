@@ -1,0 +1,147 @@
+{
+  "version": "0.5.4",
+  "lineage": "mlb-postseason-history-proxy-replay-v0.5.4-ruleset-diagnostics-2026-09-19",
+  "created_at": "2026-09-30T04:07:59.316Z",
+  "run_id": "20260930T040759234Z_63719751",
+  "outcomes_path": "/workspace/scratch/870125a4e11f/mlb-research/data/normalized/mlb/historical_outcomes_030/20260930T035622Z_5a52802f/MLB_HISTORICAL_OUTCOMES.jsonl",
+  "outcomes_sha256": "d60a208ae53782ba193a98d2e26c4e48bf34d5d5e78e02178c57981eca039d8d",
+  "priors_manifest": "/workspace/scratch/870125a4e11f/mlb-research/data/normalized/mlb/postseason_priors_040/20260930T035830Z_73307511/POSTSEASON_PRIORS_MANIFEST.json",
+  "priors_manifest_sha256": "d51e94346e3cde82c572932759d066a18b4a9da3f493ab18af43bf8d01e2b6d2",
+  "seasons": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "postseason_games": 440,
+  "successful_games": 426,
+  "ml_rows": 426,
+  "k_xk_rows": 852,
+  "blocked_games": 14,
+  "blocked": [
+    {
+      "game_id": "446275",
+      "game_date": "2015-10-30",
+      "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Yordano Ventura 570649"
+    },
+    {
+      "game_id": "563411",
+      "game_date": "2018-10-28",
+      "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: David Price 456034"
+    },
+    {
+      "game_id": "599374",
+      "game_date": "2019-10-26",
+      "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: José Urquidy 664353"
+    },
+    {
+      "game_id": "599375",
+      "game_date": "2019-10-27",
+      "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Gerrit Cole 543037"
+    },
+    {
+      "game_id": "635906",
+      "game_date": "2020-09-30",
+      "error": "away opponent Savant hitter unavailable: Alex Kirilloff 666135"
+    },
+    {
+      "game_id": "660905",
+      "game_date": "2021-10-11",
+      "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+    },
+    {
+      "game_id": "660922",
+      "game_date": "2021-10-17",
+      "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+    },
+    {
+      "game_id": "660904",
+      "game_date": "2021-10-20",
+      "error": "home historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Jesse Chavez 445926"
+    },
+    {
+      "game_id": "660921",
+      "game_date": "2021-10-23",
+      "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+    },
+    {
+      "game_id": "660910",
+      "game_date": "2021-10-29",
+      "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Ian Anderson 666120"
+    },
+    {
+      "game_id": "660902",
+      "game_date": "2021-10-30",
+      "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Dylan Lee 669276"
+    },
+    {
+      "game_id": "660911",
+      "game_date": "2021-10-31",
+      "error": "away historical ruleset mismatch: pitcher batting slot has no production-compatible Savant hitter row: Tucker Davidson 656353"
+    },
+    {
+      "game_id": "813071",
+      "game_date": "2025-10-01",
+      "error": "away opponent Savant hitter unavailable: Chase DeLauter 800050"
+    },
+    {
+      "game_id": "813073",
+      "game_date": "2025-10-02",
+      "error": "away opponent Savant hitter unavailable: Chase DeLauter 800050"
+    }
+  ],
+  "asset_warnings": [],
+  "replay_input_mode": "POST_HISTORY_PROXY",
+  "exact_production_replay": false,
+  "exact_components": [
+    "production ML probability formula",
+    "production K distribution formula",
+    "regular-season-complete Savant skill",
+    "regular-season-complete FanGraphs wRC+",
+    "season-end park factors",
+    "postseason official starting lineup identities",
+    "historical active roster",
+    "prior-day bullpen usage when resolvable"
+  ],
+  "proxy_components": [
+    "starter workload from regular-season game logs",
+    "K ER/H/BB/K histories from regular-season game logs"
+  ],
+  "unavailable_components": [
+    "historical PropsMadness Pitcher Outs/ER/H/BB current-game lines",
+    "historical actionable K line/price",
+    "historical K closing price"
+  ],
+  "coverage_status": "PARTIAL_FAIL_CLOSED",
+  "strict_coverage_mode": false,
+  "production_model_mutation": false,
+  "model_refit_performed": false,
+  "market_requests": 0,
+  "oddsPapi_requests": 0,
+  "core_identity": {
+    "replayAdapterVersion": "0.2.1",
+    "replayAdapterLineage": "mlb-production-replay-adapter-v0.2.1-xk-only-2026-09-19",
+    "ml": {
+      "engineVersion": "1.3",
+      "modelVersion": "mlb-moneyline-v0.8.0-offense-strength-2026-09-06",
+      "calibrationStatus": "PRODUCTION_INPUT_MIGRATION"
+    },
+    "k": {
+      "engineVersion": "1.4",
+      "modelVersion": "mlb-k-v0.8.3-sample-shrinkage-workload-2026-09-07",
+      "calibrationStatus": "PROSPECTIVE_INPUT_MIGRATION",
+      "targetKMarketWeight": 0
+    }
+  },
+  "ledger_path": "/workspace/scratch/870125a4e11f/mlb-research/data/models/mlb/postseason_replay_050/20260930T040759234Z_63719751/MLB_POSTSEASON_HISTORY_PROXY_LEDGER.jsonl",
+  "ledger_sha256": "07be95fd7d6c2f033a4ee4736e91620757b3f265e64a94be2c90ea4c277b70c7",
+  "snapshots_path": "/workspace/scratch/870125a4e11f/mlb-research/data/models/mlb/postseason_replay_050/20260930T040759234Z_63719751/MLB_POSTSEASON_HISTORY_PROXY_SNAPSHOTS.jsonl",
+  "snapshots_sha256": "b5d510d3ea124556ee07c6cc54c53a6552994e323393470a3919fb6f57432022"
+}

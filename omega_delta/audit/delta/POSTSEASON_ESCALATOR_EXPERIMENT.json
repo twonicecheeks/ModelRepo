@@ -1,0 +1,69 @@
+{
+  "status": "DEVELOPMENT_COUNTERFACTUAL_DO_NOT_PROMOTE",
+  "model_version": "delta-0.1.0",
+  "n": 775,
+  "hypotheses": {
+    "boost": "Multiply each individual PA probability by 1.04, then cap at 0.95.",
+    "cap": "For each workload atom, replace BF with min(BF,19)."
+  },
+  "actual_bf": {
+    "over_18": 512,
+    "over_19": 455,
+    "over_27": 37,
+    "maximum": 32
+  },
+  "reference_v2": {
+    "n": 775,
+    "mae": 2.0048311393624894,
+    "rmse": 2.483865581660119,
+    "bias": 0.3894049844282855,
+    "log_loss": 2.3194851710456015,
+    "ranked_probability_score": 1.3913022486447055
+  },
+  "models": {
+    "delta_unchanged": {
+      "n": 775,
+      "mae": 2.0560226732681275,
+      "rmse": 2.550970816584129,
+      "bias": 0.46329838692294656,
+      "log_loss": 2.3428685812634966,
+      "ranked_probability_score": 1.4313388728495107
+    },
+    "boost_1_04": {
+      "n": 775,
+      "mae": 2.1032978217657465,
+      "rmse": 2.5965960479862438,
+      "bias": 0.6762045159482519,
+      "log_loss": 2.3622995608383937,
+      "ranked_probability_score": 1.4581862846570466
+    },
+    "bf_cap_19": {
+      "n": 775,
+      "mae": 2.0453830745365313,
+      "rmse": 2.5777083238897345,
+      "bias": -0.42761902473234337,
+      "log_loss": 2.4166371351106175,
+      "ranked_probability_score": 1.460639260361574
+    },
+    "boost_and_cap": {
+      "n": 775,
+      "mae": 2.029873125964592,
+      "rmse": 2.548946070436715,
+      "bias": -0.25034959217324976,
+      "log_loss": 2.396182556771441,
+      "ranked_probability_score": 1.4431721342241337
+    }
+  },
+  "source_sha256": {
+    "seed/mlb/REPRODUCTION_INPUTS.jsonl": "30df04734c9048731f7c33abf8ebd999f8aae38bf581ed1d422f39c04151f1a8",
+    "seed/mlb/BASELINE_LEDGER.jsonl": "07be95fd7d6c2f033a4ee4736e91620757b3f265e64a94be2c90ea4c277b70c7",
+    "seed/mlb/USAGE_PAIRS.json": "8c4e3145463b9b84529b77fe9c0d84d95de14991008d3e91836e597368be4978",
+    "audit/delta/FROZEN_MODEL.json": "dc82a98aa5c238ce29a07bb0588b6523a2cfa74271e35f62cbdb1bc2eca90d2b",
+    "audit/delta/PREDICTIONS.jsonl": "815bf14cb106c2b55b65c2147b493dbf813262980801ab6e1edbaa1cc171e0de"
+  },
+  "limitations": [
+    "Previously inspected postseason replay, not a prospective test.",
+    "No pregame quote, manager plan, umpire assignment or weather observation used.",
+    "A hard BF cap cannot represent official workloads above 19."
+  ]
+}

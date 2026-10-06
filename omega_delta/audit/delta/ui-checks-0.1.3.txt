@@ -1,0 +1,14 @@
+PASS view template: delta
+PASS view template: deltatest
+PASS view template: mlb
+PASS view template: mlbtest
+PASS view template: forecasts
+PASS view template: lab
+PASS view template: review
+PASS view template: markets
+PASS view template: bets
+PASS view template: poly
+PASS view template: validation
+PASS view template: system
+PASS search, cohorts, player detail, ticket form, missing displays, future weeks, jobs, and text escaping.
+UI templates verified; full visual browser execution is a separate gate.

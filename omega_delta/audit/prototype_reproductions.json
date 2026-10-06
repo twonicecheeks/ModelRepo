@@ -1,0 +1,18 @@
+{
+  "blank_forecast_accepted": true,
+  "increasing_survival_accepted": true,
+  "blank_actual_counted_as_zero": {
+    "n": 1,
+    "mae": 4.772660564829302,
+    "rmse": 4.772660564829302,
+    "bias": 4.772660564829302,
+    "above": 1,
+    "below": 0,
+    "equal": 0,
+    "predicted_mean": 4.772660564829302,
+    "actual_mean": 0.0,
+    "games": 1
+  },
+  "open_ticket_payout_cents": 1000,
+  "mismatched_book_accepted": true
+}

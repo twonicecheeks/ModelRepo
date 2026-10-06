@@ -1,0 +1,16 @@
+week,game_id,team,player_id,player_name,position_group,omega_actual_xtc,sportsbook_like_actual,sportsbook_like_minus_omega
+1,2026_01_ARI_LAC,ARI,00-0035378,Andrew Wingard,DB,3,4,1.0
+1,2026_01_DAL_NYG,DAL,00-0035718,Quinnen Williams,DL,1,2,1.0
+1,2026_01_MIA_LV,LV,00-0036293,Jeremy Chinn,DB,4,5,1.0
+2,2026_02_GB_NYJ,NYJ,00-0029607,Demario Davis,LB,3,4,1.0
+2,2026_02_SEA_ARI,ARI,00-0035144,Mack Wilson,LB,8,9,1.0
+2,2026_02_SEA_ARI,ARI,00-0036933,Zaven Collins,LB,3,4,1.0
+2,2026_02_NYG_LA,NYG,00-0036998,Jevon Holland,DB,7,8,1.0
+2,2026_02_GB_NYJ,NYJ,00-0037083,Kingsley Enagbare,EDGE,2,3,1.0
+2,2026_02_LV_LAC,LV,00-0037615,Nakobe Dean,LB,9,10,1.0
+2,2026_02_PIT_NE,PIT,00-0038577,Nick Herbig,LB,6,7,1.0
+2,2026_02_MIN_CHI,MIN,00-0038778,Jalen Redmond,EDGE,3,4,1.0
+2,2026_02_MIN_CHI,MIN,00-0038807,Ivan Pace Jr.,LB,2,3,1.0
+2,2026_02_WAS_DAL,DAL,00-0040872,Jaishawn Barham,LB,6,7,1.0
+2,2026_02_CAR_ATL,CAR,00-0041076,Zakee Wheatley,DB,3,4,1.0
+2,2026_02_NYG_LA,NYG,00-0041509,Arvell Reese,LB,6,7,1.0

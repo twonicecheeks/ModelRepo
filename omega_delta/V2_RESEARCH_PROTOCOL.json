@@ -1,0 +1,65 @@
+{
+  "protocol_id": "OMEGA_V2_POSTSEASON_2026_09_30",
+  "created_before_new_fitting": true,
+  "scope": [
+    "MLB full-game moneyline",
+    "MLB starter strikeouts"
+  ],
+  "historical_seasons": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "historical_evidence_label": "EXPLORATORY_CHRONOLOGICAL_REPLAY_PRIOR_STUDY_CONSUMED",
+  "prospective_start_utc": "2026-09-30T04:00:00Z",
+  "training": "Earlier complete postseason seasons only; outcome labels never enter the current game input.",
+  "challengers": [
+    "PRODUCTION_BASE",
+    "POST_USAGE_OUTS",
+    "POST_EXPOSURE_ML",
+    "POST_RECAL_ML"
+  ],
+  "workload_ratio": "Fit prior-season matched pitcher regular/postseason exposure ratios. Never multiply current-game market-anchored exposure by a history-proxy ratio.",
+  "calibration": "Regularized intercept and slope fitted only to earlier-season ML predictions and outcomes; minimum 60 games.",
+  "selection_policy": {
+    "unit_risk": 1,
+    "minimum_model_ev": 0.02,
+    "max_selections_per_game_market": 1,
+    "price_basis": "one declared book and snapshot; no hindsight best-price shopping"
+  },
+  "verification_requires": [
+    "Authentic pregame entry prices, identified book, market and timestamp",
+    "Correct settlement with integer push and void accounting",
+    "At least 100 selected wagers across at least three postseasons",
+    "Positive 95% series-cluster bootstrap lower bound for realized ROI",
+    "Positive paired probability-score improvement versus market",
+    "No unresolved temporal, identity or settlement violations",
+    "Confirmation on forecasts frozen before future games"
+  ],
+  "historical_close_only": "A closing-only archive permits a labeled hypothetical close-price replay; it cannot verify executable entry ROI or CLV.",
+  "reporting": [
+    "All eligible rows and blocked coverage",
+    "Paired identical-game comparisons",
+    "Per-season results",
+    "2020 separately and excluded sensitivity",
+    "Expanded Wild Card 2022+ separately",
+    "Series-cluster uncertainty",
+    "K MAE, RMSE, bias and distribution scores",
+    "ML Brier, log loss, calibration and market comparison"
+  ],
+  "promotion": "Keep research status whenever any verification requirement is missing or fails. A successful software test is not a betting-edge test.",
+  "fixed_parameters": {
+    "usage_fit": "median matched pitcher-season POST outs / late REG mean outs; last 45 regular-season days; minimum 3 REG starts; equal pitcher-season weighting",
+    "calibration": "ridge logistic intercept+slope prior(0,1), lambda1, min60 earlier-year games",
+    "bootstrap_seed": 300926,
+    "bootstrap_reps": 2000
+  }
+}

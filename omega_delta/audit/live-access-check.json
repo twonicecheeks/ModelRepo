@@ -1,0 +1,29 @@
+{
+  "scope": "Single read-only public API smoke check, not continuous monitoring or execution validation.",
+  "search": {
+    "status": "SUCCESS",
+    "returned_outcomes": 120,
+    "captured_at": "2026-09-28T22:14:06Z",
+    "truncated": true
+  },
+  "book_check": {
+    "question": "Will the Arizona Cardinals win the 2027 NFL league championship?",
+    "outcome": "Yes",
+    "token_id": "6807083143822791639785484162000434089482535992404945766593723006919421743513",
+    "condition_id": "0x966db8fe4ecd031b6e83a02e681a86f7f235eab8e66c0dbbeb35e8c3518e168f",
+    "status": "SUCCESS",
+    "bids": 4,
+    "asks": 69,
+    "captured_at": "2026-09-28T22:14:13Z",
+    "wallet_error": null,
+    "trade_sample_rows": 600
+  },
+  "wallet_check": {
+    "status": "SUCCESS",
+    "position_rows": 29,
+    "activity_rows": 600,
+    "captured_at": "2026-09-28T22:14:45Z",
+    "position_truncated": false,
+    "activity_truncated": true
+  }
+}

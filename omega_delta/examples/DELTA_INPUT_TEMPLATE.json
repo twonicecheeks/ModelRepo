@@ -1,0 +1,27 @@
+{
+  "schema_version": "delta-0.1",
+  "instructions": "Replace IDs, timestamps, source, hands and measured values. Remove unused null fields and optional model blocks. This is a blank template, not captured data.",
+  "profiles": [
+    {
+      "game_id": null,
+      "player_id": null,
+      "source": "REPLACE_WITH_SOURCE_URL_OR_ARTIFACT",
+      "observed_at": null,
+      "start_at": null,
+      "pitcher": {
+        "hand": null,
+        "stuff_plus": null,
+        "location_plus": null,
+        "csw_pct": null,
+        "whiff_pct": null,
+        "chase_pct": null,
+        "splits": {},
+        "arsenal": []
+      },
+      "hitters": {},
+      "context": {},
+      "feature_model": null,
+      "hook_model": null
+    }
+  ]
+}

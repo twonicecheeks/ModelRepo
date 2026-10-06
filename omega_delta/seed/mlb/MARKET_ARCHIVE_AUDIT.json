@@ -1,0 +1,2214 @@
+{
+  "source_url": "https://raw.githubusercontent.com/flancast90/sportsbookreview-scraper/1a820e50c6fbd0276cde073c22bfffae78930868/data/mlb_archive_10Y.json",
+  "sha256": "ee4904dee0ee1474e7ac75697cea2c28f0084e5fb576553e48627e4cf90dd77d",
+  "records": 25597,
+  "coverage_counts": {
+    "TEAM_IDENTITY_MISMATCH": 260,
+    "MISSING_DATE": 180
+  },
+  "accepted": 0,
+  "status": "REJECTED",
+  "rows": [
+    {
+      "game_id": "446237",
+      "date": "2015-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446238",
+      "date": "2015-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446239",
+      "date": "2015-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446240",
+      "date": "2015-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446241",
+      "date": "2015-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446242",
+      "date": "2015-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446243",
+      "date": "2015-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446244",
+      "date": "2015-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446245",
+      "date": "2015-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446246",
+      "date": "2015-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446247",
+      "date": "2015-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446248",
+      "date": "2015-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446249",
+      "date": "2015-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446250",
+      "date": "2015-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446251",
+      "date": "2015-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446252",
+      "date": "2015-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446253",
+      "date": "2015-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446254",
+      "date": "2015-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446255",
+      "date": "2015-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446256",
+      "date": "2015-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446258",
+      "date": "2015-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446259",
+      "date": "2015-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446260",
+      "date": "2015-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446261",
+      "date": "2015-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446262",
+      "date": "2015-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446263",
+      "date": "2015-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446264",
+      "date": "2015-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446265",
+      "date": "2015-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446266",
+      "date": "2015-10-21",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446267",
+      "date": "2015-10-21",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446269",
+      "date": "2015-10-23",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446273",
+      "date": "2015-10-27",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446274",
+      "date": "2015-10-28",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446275",
+      "date": "2015-10-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446276",
+      "date": "2015-10-31",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "446277",
+      "date": "2015-11-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "487595",
+      "date": "2016-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487596",
+      "date": "2016-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487597",
+      "date": "2016-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487602",
+      "date": "2016-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487598",
+      "date": "2016-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487603",
+      "date": "2016-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487607",
+      "date": "2016-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487612",
+      "date": "2016-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487608",
+      "date": "2016-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487599",
+      "date": "2016-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487613",
+      "date": "2016-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487604",
+      "date": "2016-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487609",
+      "date": "2016-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487614",
+      "date": "2016-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487610",
+      "date": "2016-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487615",
+      "date": "2016-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487616",
+      "date": "2016-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487617",
+      "date": "2016-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487618",
+      "date": "2016-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487624",
+      "date": "2016-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487625",
+      "date": "2016-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487619",
+      "date": "2016-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487620",
+      "date": "2016-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487626",
+      "date": "2016-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487621",
+      "date": "2016-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487627",
+      "date": "2016-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487628",
+      "date": "2016-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487629",
+      "date": "2016-10-22",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487631",
+      "date": "2016-10-25",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487632",
+      "date": "2016-10-26",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487633",
+      "date": "2016-10-28",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487634",
+      "date": "2016-10-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487635",
+      "date": "2016-10-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "487636",
+      "date": "2016-11-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "487637",
+      "date": "2016-11-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "526475",
+      "date": "2017-10-03",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526476",
+      "date": "2017-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526477",
+      "date": "2017-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526482",
+      "date": "2017-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526478",
+      "date": "2017-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526483",
+      "date": "2017-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526487",
+      "date": "2017-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526492",
+      "date": "2017-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526488",
+      "date": "2017-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526493",
+      "date": "2017-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526479",
+      "date": "2017-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526484",
+      "date": "2017-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526480",
+      "date": "2017-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526485",
+      "date": "2017-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526489",
+      "date": "2017-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526494",
+      "date": "2017-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526481",
+      "date": "2017-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526495",
+      "date": "2017-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526496",
+      "date": "2017-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526497",
+      "date": "2017-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526498",
+      "date": "2017-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526504",
+      "date": "2017-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526505",
+      "date": "2017-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526499",
+      "date": "2017-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526500",
+      "date": "2017-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526506",
+      "date": "2017-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526501",
+      "date": "2017-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526507",
+      "date": "2017-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526508",
+      "date": "2017-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526502",
+      "date": "2017-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526503",
+      "date": "2017-10-21",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526511",
+      "date": "2017-10-24",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526512",
+      "date": "2017-10-25",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526513",
+      "date": "2017-10-27",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526514",
+      "date": "2017-10-28",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526515",
+      "date": "2017-10-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "526516",
+      "date": "2017-10-31",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "526517",
+      "date": "2017-11-01",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563347",
+      "date": "2018-10-02",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563346",
+      "date": "2018-10-03",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563383",
+      "date": "2018-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563388",
+      "date": "2018-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563348",
+      "date": "2018-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563378",
+      "date": "2018-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563384",
+      "date": "2018-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563389",
+      "date": "2018-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563374",
+      "date": "2018-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563379",
+      "date": "2018-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563385",
+      "date": "2018-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563390",
+      "date": "2018-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563375",
+      "date": "2018-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563380",
+      "date": "2018-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563391",
+      "date": "2018-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563376",
+      "date": "2018-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563400",
+      "date": "2018-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563393",
+      "date": "2018-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563401",
+      "date": "2018-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563394",
+      "date": "2018-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563402",
+      "date": "2018-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563395",
+      "date": "2018-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563403",
+      "date": "2018-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563396",
+      "date": "2018-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563404",
+      "date": "2018-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563397",
+      "date": "2018-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563405",
+      "date": "2018-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563406",
+      "date": "2018-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563407",
+      "date": "2018-10-23",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563408",
+      "date": "2018-10-24",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563409",
+      "date": "2018-10-26",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563410",
+      "date": "2018-10-27",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "563411",
+      "date": "2018-10-28",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "599336",
+      "date": "2019-10-01",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599335",
+      "date": "2019-10-02",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599347",
+      "date": "2019-10-03",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599352",
+      "date": "2019-10-03",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599337",
+      "date": "2019-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599342",
+      "date": "2019-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599348",
+      "date": "2019-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599353",
+      "date": "2019-10-04",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599338",
+      "date": "2019-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599343",
+      "date": "2019-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599349",
+      "date": "2019-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599354",
+      "date": "2019-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599339",
+      "date": "2019-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599344",
+      "date": "2019-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599350",
+      "date": "2019-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599355",
+      "date": "2019-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599340",
+      "date": "2019-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599351",
+      "date": "2019-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599356",
+      "date": "2019-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599341",
+      "date": "2019-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599364",
+      "date": "2019-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599357",
+      "date": "2019-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599365",
+      "date": "2019-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599358",
+      "date": "2019-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599366",
+      "date": "2019-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599359",
+      "date": "2019-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599367",
+      "date": "2019-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599360",
+      "date": "2019-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599361",
+      "date": "2019-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599362",
+      "date": "2019-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599371",
+      "date": "2019-10-22",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599372",
+      "date": "2019-10-23",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599373",
+      "date": "2019-10-25",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599374",
+      "date": "2019-10-26",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599375",
+      "date": "2019-10-27",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599376",
+      "date": "2019-10-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "599377",
+      "date": "2019-10-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "635904",
+      "date": "2020-09-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635907",
+      "date": "2020-09-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635910",
+      "date": "2020-09-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635913",
+      "date": "2020-09-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635884",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635889",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635893",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635903",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635906",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635909",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635912",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635914",
+      "date": "2020-09-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635876",
+      "date": "2020-10-01",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635894",
+      "date": "2020-10-01",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635908",
+      "date": "2020-10-01",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635918",
+      "date": "2020-10-01",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635932",
+      "date": "2020-10-02",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635935",
+      "date": "2020-10-02",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635901",
+      "date": "2020-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635916",
+      "date": "2020-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635885",
+      "date": "2020-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635892",
+      "date": "2020-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635900",
+      "date": "2020-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635940",
+      "date": "2020-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635883",
+      "date": "2020-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635899",
+      "date": "2020-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635927",
+      "date": "2020-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635933",
+      "date": "2020-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635898",
+      "date": "2020-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635921",
+      "date": "2020-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635936",
+      "date": "2020-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635938",
+      "date": "2020-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635920",
+      "date": "2020-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635917",
+      "date": "2020-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635881",
+      "date": "2020-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635937",
+      "date": "2020-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635915",
+      "date": "2020-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635931",
+      "date": "2020-10-13",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635880",
+      "date": "2020-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635939",
+      "date": "2020-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635928",
+      "date": "2020-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635930",
+      "date": "2020-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635879",
+      "date": "2020-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635929",
+      "date": "2020-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635895",
+      "date": "2020-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635924",
+      "date": "2020-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635888",
+      "date": "2020-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635925",
+      "date": "2020-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635896",
+      "date": "2020-10-21",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635923",
+      "date": "2020-10-23",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635897",
+      "date": "2020-10-24",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "635887",
+      "date": "2020-10-25",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "635886",
+      "date": "2020-10-27",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "660938",
+      "date": "2021-10-05",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660937",
+      "date": "2021-10-06",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660929",
+      "date": "2021-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660936",
+      "date": "2021-10-07",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660917",
+      "date": "2021-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660932",
+      "date": "2021-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660933",
+      "date": "2021-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660934",
+      "date": "2021-10-08",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660907",
+      "date": "2021-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660925",
+      "date": "2021-10-09",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660928",
+      "date": "2021-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660931",
+      "date": "2021-10-10",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660905",
+      "date": "2021-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660919",
+      "date": "2021-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660927",
+      "date": "2021-10-11",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660914",
+      "date": "2021-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660918",
+      "date": "2021-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660926",
+      "date": "2021-10-12",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660920",
+      "date": "2021-10-14",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660896",
+      "date": "2021-10-15",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660913",
+      "date": "2021-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660924",
+      "date": "2021-10-16",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660922",
+      "date": "2021-10-17",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660898",
+      "date": "2021-10-18",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660916",
+      "date": "2021-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660923",
+      "date": "2021-10-19",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660900",
+      "date": "2021-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660904",
+      "date": "2021-10-20",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660903",
+      "date": "2021-10-21",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660899",
+      "date": "2021-10-22",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660921",
+      "date": "2021-10-23",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660897",
+      "date": "2021-10-26",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660908",
+      "date": "2021-10-27",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660910",
+      "date": "2021-10-29",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660902",
+      "date": "2021-10-30",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660911",
+      "date": "2021-10-31",
+      "status": "TEAM_IDENTITY_MISMATCH"
+    },
+    {
+      "game_id": "660906",
+      "date": "2021-11-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715761",
+      "date": "2022-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715764",
+      "date": "2022-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715767",
+      "date": "2022-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715770",
+      "date": "2022-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715760",
+      "date": "2022-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715763",
+      "date": "2022-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715766",
+      "date": "2022-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715769",
+      "date": "2022-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715759",
+      "date": "2022-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715743",
+      "date": "2022-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715748",
+      "date": "2022-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715753",
+      "date": "2022-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715758",
+      "date": "2022-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715742",
+      "date": "2022-10-12",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715747",
+      "date": "2022-10-12",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715757",
+      "date": "2022-10-13",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715741",
+      "date": "2022-10-14",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715746",
+      "date": "2022-10-14",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715752",
+      "date": "2022-10-14",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715740",
+      "date": "2022-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715745",
+      "date": "2022-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715751",
+      "date": "2022-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715756",
+      "date": "2022-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715750",
+      "date": "2022-10-16",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715731",
+      "date": "2022-10-18",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715749",
+      "date": "2022-10-18",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715730",
+      "date": "2022-10-19",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715738",
+      "date": "2022-10-19",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715737",
+      "date": "2022-10-20",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715729",
+      "date": "2022-10-21",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715728",
+      "date": "2022-10-22",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715736",
+      "date": "2022-10-22",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715727",
+      "date": "2022-10-23",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715735",
+      "date": "2022-10-23",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715724",
+      "date": "2022-10-28",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715723",
+      "date": "2022-10-29",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715722",
+      "date": "2022-11-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715721",
+      "date": "2022-11-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715720",
+      "date": "2022-11-03",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "715719",
+      "date": "2022-11-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748577",
+      "date": "2023-10-03",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748581",
+      "date": "2023-10-03",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748582",
+      "date": "2023-10-03",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748585",
+      "date": "2023-10-03",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748575",
+      "date": "2023-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748578",
+      "date": "2023-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748580",
+      "date": "2023-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748583",
+      "date": "2023-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748555",
+      "date": "2023-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748562",
+      "date": "2023-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748568",
+      "date": "2023-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748573",
+      "date": "2023-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748565",
+      "date": "2023-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748569",
+      "date": "2023-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748556",
+      "date": "2023-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748563",
+      "date": "2023-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748567",
+      "date": "2023-10-10",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748572",
+      "date": "2023-10-10",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748557",
+      "date": "2023-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748564",
+      "date": "2023-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748566",
+      "date": "2023-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748561",
+      "date": "2023-10-12",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748553",
+      "date": "2023-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748543",
+      "date": "2023-10-16",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748548",
+      "date": "2023-10-16",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748546",
+      "date": "2023-10-17",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748552",
+      "date": "2023-10-18",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748545",
+      "date": "2023-10-19",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748551",
+      "date": "2023-10-19",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748544",
+      "date": "2023-10-20",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748550",
+      "date": "2023-10-20",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748538",
+      "date": "2023-10-21",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748549",
+      "date": "2023-10-22",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748539",
+      "date": "2023-10-23",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748547",
+      "date": "2023-10-23",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748537",
+      "date": "2023-10-24",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748542",
+      "date": "2023-10-27",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748541",
+      "date": "2023-10-28",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748540",
+      "date": "2023-10-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748535",
+      "date": "2023-10-31",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "748534",
+      "date": "2023-11-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775333",
+      "date": "2024-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775340",
+      "date": "2024-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775343",
+      "date": "2024-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775345",
+      "date": "2024-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775336",
+      "date": "2024-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775339",
+      "date": "2024-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775341",
+      "date": "2024-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775344",
+      "date": "2024-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775337",
+      "date": "2024-10-03",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775318",
+      "date": "2024-10-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775323",
+      "date": "2024-10-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775324",
+      "date": "2024-10-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775334",
+      "date": "2024-10-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775319",
+      "date": "2024-10-06",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775322",
+      "date": "2024-10-06",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775325",
+      "date": "2024-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775332",
+      "date": "2024-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775316",
+      "date": "2024-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775321",
+      "date": "2024-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775313",
+      "date": "2024-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775320",
+      "date": "2024-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775328",
+      "date": "2024-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775329",
+      "date": "2024-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775327",
+      "date": "2024-10-10",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775331",
+      "date": "2024-10-10",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775317",
+      "date": "2024-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775326",
+      "date": "2024-10-12",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775307",
+      "date": "2024-10-13",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775306",
+      "date": "2024-10-14",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775314",
+      "date": "2024-10-14",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775312",
+      "date": "2024-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775305",
+      "date": "2024-10-16",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775303",
+      "date": "2024-10-17",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775310",
+      "date": "2024-10-17",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775299",
+      "date": "2024-10-18",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775311",
+      "date": "2024-10-18",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775309",
+      "date": "2024-10-19",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775302",
+      "date": "2024-10-20",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775300",
+      "date": "2024-10-25",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775294",
+      "date": "2024-10-26",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775298",
+      "date": "2024-10-28",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775297",
+      "date": "2024-10-29",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "775296",
+      "date": "2024-10-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813066",
+      "date": "2025-09-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813069",
+      "date": "2025-09-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813072",
+      "date": "2025-09-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813074",
+      "date": "2025-09-30",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813064",
+      "date": "2025-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813068",
+      "date": "2025-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813070",
+      "date": "2025-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813071",
+      "date": "2025-10-01",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813059",
+      "date": "2025-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813065",
+      "date": "2025-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813073",
+      "date": "2025-10-02",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813047",
+      "date": "2025-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813051",
+      "date": "2025-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813058",
+      "date": "2025-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813063",
+      "date": "2025-10-04",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813057",
+      "date": "2025-10-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813062",
+      "date": "2025-10-05",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813048",
+      "date": "2025-10-06",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813052",
+      "date": "2025-10-06",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813056",
+      "date": "2025-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813061",
+      "date": "2025-10-07",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813041",
+      "date": "2025-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813049",
+      "date": "2025-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813055",
+      "date": "2025-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813060",
+      "date": "2025-10-08",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813042",
+      "date": "2025-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813050",
+      "date": "2025-10-09",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813054",
+      "date": "2025-10-10",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813046",
+      "date": "2025-10-11",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813040",
+      "date": "2025-10-12",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813036",
+      "date": "2025-10-13",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813044",
+      "date": "2025-10-13",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813034",
+      "date": "2025-10-14",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813043",
+      "date": "2025-10-15",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813033",
+      "date": "2025-10-16",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813035",
+      "date": "2025-10-16",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813031",
+      "date": "2025-10-17",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813039",
+      "date": "2025-10-17",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813038",
+      "date": "2025-10-19",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813037",
+      "date": "2025-10-20",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813027",
+      "date": "2025-10-24",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813026",
+      "date": "2025-10-25",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813032",
+      "date": "2025-10-27",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813023",
+      "date": "2025-10-28",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813022",
+      "date": "2025-10-29",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813025",
+      "date": "2025-10-31",
+      "status": "MISSING_DATE"
+    },
+    {
+      "game_id": "813024",
+      "date": "2025-11-01",
+      "status": "MISSING_DATE"
+    }
+  ],
+  "identity_repaired_by_outcomes": false
+}

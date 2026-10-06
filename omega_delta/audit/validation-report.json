@@ -1,0 +1,140 @@
+{
+  "engine": "OMEGA_V1_VALIDATION",
+  "created_at": "2026-09-28T22:06:14Z",
+  "target": "combined_standard_def_scrimmage",
+  "rows": 1046,
+  "folds": [
+    {
+      "test_season": 2026,
+      "test_week": 2,
+      "training_periods": [
+        [
+          2026,
+          1
+        ]
+      ],
+      "training_rows": 246,
+      "training_games": 5,
+      "scale": 0.8219607712463515,
+      "baseline": {
+        "n": 800,
+        "excluded": 0,
+        "mae": 1.7531372664915055,
+        "rmse": 2.257553962626586,
+        "bias": 0.5813703006760768,
+        "above": 542,
+        "below": 258,
+        "equal": 0,
+        "predicted_mean": 2.960120300676077,
+        "actual_mean": 2.37875,
+        "games": 16
+      },
+      "challenger": {
+        "n": 800,
+        "excluded": 0,
+        "mae": 1.6600765652003846,
+        "rmse": 2.1908782694894042,
+        "bias": 0.054352765325689854,
+        "above": 480,
+        "below": 320,
+        "equal": 0,
+        "predicted_mean": 2.43310276532569,
+        "actual_mean": 2.37875,
+        "games": 16
+      },
+      "mae_improvement": 0.09306070129112087,
+      "mae_improvement_interval": {
+        "low": 0.052669468958953115,
+        "high": 0.1331202636534753,
+        "games": 16,
+        "draws": 1000,
+        "method": "Percentile game-cluster bootstrap; exploratory, not a profitability interval."
+      },
+      "matched_snap_diagnostic": {
+        "baseline": {
+          "n": 601,
+          "excluded": 0,
+          "mae": 1.6287144647238074,
+          "rmse": 2.1736165366399516,
+          "bias": 0.07746271706311957,
+          "above": 345,
+          "below": 256,
+          "equal": 0,
+          "predicted_mean": 3.237196494101389,
+          "actual_mean": 3.1597337770382694,
+          "games": 16
+        },
+        "challenger": {
+          "n": 601,
+          "excluded": 0,
+          "mae": 1.6291571138913088,
+          "rmse": 2.2346942431317407,
+          "bias": -0.49888525007070667,
+          "above": 283,
+          "below": 318,
+          "equal": 0,
+          "predicted_mean": 2.6608485269675626,
+          "actual_mean": 3.1597337770382694,
+          "games": 16
+        }
+      }
+    }
+  ],
+  "excluded_control_rows": 0,
+  "input_snapshot_ids": [
+    "scores_0531741d5e0252c13ffebc95"
+  ],
+  "input_digest": "6a421bbcd0fef49c6394b99ad167f21572e5466ef69c46af70d09875d581a51a",
+  "cohorts": {
+    "all": {
+      "n": 1046,
+      "excluded": 0,
+      "mae": 1.7881609881757516,
+      "rmse": 2.300378859685302,
+      "bias": 0.5829704523475338,
+      "above": 714,
+      "below": 332,
+      "equal": 0,
+      "predicted_mean": 2.9453031483322376,
+      "actual_mean": 2.3623326959847035,
+      "games": 21
+    },
+    "matched": {
+      "n": 788,
+      "excluded": 0,
+      "mae": 1.6733870205152264,
+      "rmse": 2.2275488511054813,
+      "bias": 0.08073931676799743,
+      "above": 459,
+      "below": 329,
+      "equal": 0,
+      "predicted_mean": 3.2089119056004844,
+      "actual_mean": 3.1281725888324874,
+      "games": 21
+    },
+    "unmatched": {
+      "n": 258,
+      "excluded": 0,
+      "mae": 2.138710935914099,
+      "rmse": 2.5097697868102755,
+      "bias": 2.116916711404412,
+      "above": 255,
+      "below": 3,
+      "equal": 0,
+      "predicted_mean": 2.1401725253579005,
+      "actual_mean": 0.023255813953488372,
+      "games": 21
+    },
+    "nonzero_actual_without_snap_match": 4
+  },
+  "candidate": "GLOBAL_OFFSET_CALIBRATION_GAMMA100",
+  "status": "RESEARCH_ONLY_NO_PROMOTION",
+  "release_decision": "Retain archived OMEGA forecasts. This replay cannot establish a new production champion.",
+  "limits": [
+    "Previously inspected Week 1/2 outcomes make this exploratory chronological replay, not an untouched holdout.",
+    "Week 1 contains only five frozen games. One test week cannot establish stable generalization.",
+    "All evaluable control rows are included. Postgame snap matching is diagnostic only, never a deployment filter.",
+    "This challenger changes means only; it does not claim validated probabilities, participation, or teammate dependence.",
+    "Promotion requires newly frozen future-week tests and probability/settlement validation. No automatic promotion is implemented."
+  ]
+}

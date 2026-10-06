@@ -1,0 +1,211 @@
+{
+  "status": "EDGE_NOT_VERIFIED",
+  "coverage": {
+    "official_games": 440,
+    "projected_games": 426,
+    "blocked_games": 14,
+    "baseline_k_rows": 852,
+    "paired_k_rows": 775,
+    "paired_calibrated_ml_games": 356
+  },
+  "strikeouts": {
+    "baseline": {
+      "n": 775,
+      "mae": 2.110280937347568,
+      "rmse": 2.587178878268397,
+      "bias": 0.8081676052581047,
+      "log_loss": 2.3632353056703934,
+      "ranked_probability_score": 1.4465540593633934
+    },
+    "challenger": {
+      "n": 775,
+      "mae": 2.0048311393624894,
+      "rmse": 2.483865581660119,
+      "bias": 0.3894049844282853,
+      "log_loss": 2.3194851710456015,
+      "ranked_probability_score": 1.3913022486447055
+    },
+    "paired_n": 775,
+    "challenger_minus_baseline": {
+      "mae": {
+        "delta": -0.10544979798507888,
+        "series_ci95": [
+          -0.1400887496565312,
+          -0.07293326306244735
+        ],
+        "season_ci95": [
+          -0.14296115153781688,
+          -0.06982846828641777
+        ]
+      },
+      "log_loss": {
+        "delta": -0.0437501346247917,
+        "series_ci95": [
+          -0.058230432322495876,
+          -0.02970900685403081
+        ],
+        "season_ci95": [
+          -0.06327555479842074,
+          -0.02525857136579145
+        ]
+      },
+      "ranked_probability_score": {
+        "delta": -0.05525181071868787,
+        "series_ci95": [
+          -0.0764382839100698,
+          -0.03443459218524309
+        ],
+        "season_ci95": [
+          -0.08208339341709345,
+          -0.03049357253328154
+        ]
+      }
+    }
+  },
+  "moneyline_calibrated": {
+    "baseline": {
+      "n": 356,
+      "brier": 0.24908715724308775,
+      "log_loss": 0.6913464079261338,
+      "bias": -0.007328321535190295,
+      "accuracy": 0.5365168539325843,
+      "calibration_bins": [
+        {
+          "lower": 0.3,
+          "n": 17,
+          "mean_probability": 0.37085095779558835,
+          "win_rate": 0.47058823529411764
+        },
+        {
+          "lower": 0.4,
+          "n": 100,
+          "mean_probability": 0.44927009536512164,
+          "win_rate": 0.52
+        },
+        {
+          "lower": 0.5,
+          "n": 148,
+          "mean_probability": 0.5501159421466927,
+          "win_rate": 0.5337837837837838
+        },
+        {
+          "lower": 0.6,
+          "n": 84,
+          "mean_probability": 0.6398496628709432,
+          "win_rate": 0.6071428571428571
+        },
+        {
+          "lower": 0.7,
+          "n": 7,
+          "mean_probability": 0.7135872279379049,
+          "win_rate": 0.5714285714285714
+        }
+      ]
+    },
+    "challenger": {
+      "n": 356,
+      "brier": 0.25065604271736747,
+      "log_loss": 0.6945734482951899,
+      "bias": 0.0054956188742107445,
+      "accuracy": 0.5168539325842697,
+      "calibration_bins": [
+        {
+          "lower": 0.3,
+          "n": 5,
+          "mean_probability": 0.38456276058769523,
+          "win_rate": 0.8
+        },
+        {
+          "lower": 0.4,
+          "n": 69,
+          "mean_probability": 0.471038971554931,
+          "win_rate": 0.5507246376811594
+        },
+        {
+          "lower": 0.5,
+          "n": 208,
+          "mean_probability": 0.5513357168761794,
+          "win_rate": 0.5144230769230769
+        },
+        {
+          "lower": 0.6,
+          "n": 74,
+          "mean_probability": 0.6331636266046621,
+          "win_rate": 0.6081081081081081
+        }
+      ]
+    },
+    "paired_n": 356,
+    "challenger_minus_baseline": {
+      "brier": {
+        "delta": 0.0015688854742797551,
+        "series_ci95": [
+          -0.002253024703704354,
+          0.005943813248517428
+        ],
+        "season_ci95": [
+          -0.0017843272137427312,
+          0.004816323718416992
+        ]
+      },
+      "log_loss": {
+        "delta": 0.00322704036905618,
+        "series_ci95": [
+          -0.004753756139565335,
+          0.01220983873603206
+        ],
+        "season_ci95": [
+          -0.0034441578238443675,
+          0.009722665497822667
+        ]
+      }
+    }
+  },
+  "frozen_model": {
+    "model_version": "omega-mlb-playoff-2.0.0",
+    "season": 2026,
+    "status": "RESEARCH_EDGE_UNVERIFIED",
+    "usage": {
+      "factor": 0.8323699421965318,
+      "training_seasons": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "training_pitcher_seasons": 399,
+      "status": "READY"
+    },
+    "calibration": {
+      "intercept": 0.07925100735853284,
+      "slope": 0.4717066522219437,
+      "ridge_lambda": 1.0,
+      "training_games": 426,
+      "training_seasons": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "status": "READY"
+    },
+    "protocol_sha256": "193127cdc1ec24de7efc13477446e8ab27c291d2982062e235cb5b33ace62b4b",
+    "training_targets_through": 2025,
+    "created_at": "2026-09-30T04:44:07Z",
+    "effective_from_utc": "2026-09-30T04:44:07Z"
+  }
+}

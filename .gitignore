@@ -50,6 +50,12 @@ services/market-service/src/config.json
 # MODEL generated release artifacts
 /releases/
 
+# The self-contained DELTA release is intentionally versioned with its
+# reproducible sources, audits, fixtures and public-source archive.
+!omega_delta/
+!omega_delta/**
+!omega_delta/**/*.zip
+
 # MODEL local datasets and generated model ledgers
 # Keep the machinery in Git; keep the large datasets local.
 /data/

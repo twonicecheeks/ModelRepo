@@ -1,0 +1,55 @@
+{
+  "coverage": {
+    "paired_starts": 775,
+    "training_rows": 845,
+    "blocked": [],
+    "test_seasons": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ]
+  },
+  "models": {
+    "baseline": {
+      "n": 775,
+      "mae": 2.1102809373475684,
+      "rmse": 2.5871788782683973,
+      "bias": 0.8081676052581049,
+      "log_loss": 2.3632353056703934,
+      "ranked_probability_score": 1.4465540593633934
+    },
+    "v2": {
+      "n": 775,
+      "mae": 2.0048311393624894,
+      "rmse": 2.483865581660119,
+      "bias": 0.3894049844282855,
+      "log_loss": 2.3194851710456015,
+      "ranked_probability_score": 1.3913022486447055
+    },
+    "delta_pa": {
+      "n": 775,
+      "mae": 2.0560226732681275,
+      "rmse": 2.550970816584129,
+      "bias": 0.46329838692294656,
+      "log_loss": 2.3428685812634966,
+      "ranked_probability_score": 1.4313388728495107
+    },
+    "delta_beta": {
+      "n": 775,
+      "mae": 2.0560226732681115,
+      "rmse": 2.5509708165841087,
+      "bias": 0.46329838692294256,
+      "log_loss": 2.3376197747609946,
+      "ranked_probability_score": 1.4286218641828823
+    }
+  },
+  "status": "DEVELOPMENT_REPLAY_ONLY"
+}
+PASS DELTA chronological replay, model parameters and source hashes; saved freeze unchanged.
