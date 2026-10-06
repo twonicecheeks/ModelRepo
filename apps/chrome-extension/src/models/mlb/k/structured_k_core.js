@@ -2,7 +2,7 @@
   'use strict';
 
   const VERSION='1.4';
-  const MODEL_VERSION='mlb-k-v0.8.3-sample-shrinkage-workload-2026-09-07';
+  const MODEL_VERSION='mlb-k-v0.8.4-projection-integrity-2026-09-13';
   const CALIBRATION_STATUS='PROSPECTIVE_INPUT_MIGRATION';
   const SLUG={K:'player-strikeouts',OUTS:'player-pitcher-outs',ER:'player-earned-runs',HA:'player-hits-allowed',BB:'player-walks'};
   const LABEL={K:'Strikeouts',OUTS:'Pitcher Outs',ER:'Earned Runs',HA:'Hits Allowed',BB:'Pitcher Walks'};
@@ -62,6 +62,44 @@
     let level=(cur>=250&&lowPa<=1)?'High':((cur>=100||prev>=180)&&lowPa<=2?'Medium':'Low');
     if(workload?.limited)level=level==='High'?'Medium':'Low';
     return level;
+  }
+
+  function projectionIntegrity({
+    expectedOuts=null,recentOuts=null,seasonOuts=null,
+    pitcherK=null,opponentK=null,matchupK=null,
+    structuralK=null,recentK=null,seasonK=null,
+    workloadState='UNANCHORED'
+  }={}){
+    const reasons=[],warnings=[];
+    const eo=num(expectedOuts),ro=num(recentOuts),so=num(seasonOuts);
+    const pk=num(pitcherK),ok=num(opponentK),mk=num(matchupK);
+    const sk=num(structuralK),rk=num(recentK),sek=num(seasonK);
+    const hist=[rk,sek].filter(Number.isFinite);
+    const historicalK=hist.length?hist.reduce((a,b)=>a+b,0)/hist.length:null;
+    const expectedIP=eo===null?null:eo/3;
+
+    if(pk!==null&&pk<3) reasons.push(`pitcher K% implausible (${pk.toFixed(2)}%); possible fraction/percent schema error`);
+    if(ok!==null&&ok<8) reasons.push(`opponent K% implausible (${ok.toFixed(2)}%); possible lineup metric schema error`);
+    if(mk!==null&&mk<8) reasons.push(`matchup K% implausible (${mk.toFixed(2)}%); extreme low-K state`);
+
+    if(workloadState==='NORMAL'&&eo!==null&&eo<12)
+      reasons.push(`normal starter expected workload only ${expectedIP.toFixed(1)} IP`);
+    if(workloadState==='NORMAL'&&eo!==null&&ro!==null&&ro>=15&&eo<ro-4.5)
+      reasons.push(`expected outs ${eo.toFixed(1)} conflict with recent starter outs ${ro.toFixed(1)}`);
+    if(workloadState==='NORMAL'&&eo!==null&&so!==null&&so>=15&&eo<so-4.5)
+      reasons.push(`expected outs ${eo.toFixed(1)} conflict with season starter outs ${so.toFixed(1)}`);
+
+    if(workloadState==='NORMAL'&&sk!==null&&historicalK!==null&&historicalK>=3.5&&sk<historicalK*.50)
+      reasons.push(`structural K ${sk.toFixed(2)} is less than 50% of recent/season K baseline ${historicalK.toFixed(2)}`);
+
+    if(workloadState==='NORMAL'&&mk!==null&&pk!==null&&ok!==null){
+      const floor=Math.max(8,Math.min(pk,ok)-10);
+      if(mk<floor) warnings.push(`matchup K% ${mk.toFixed(1)} unusually far below pitcher/opponent K context`);
+    }
+
+    return {ok:reasons.length===0,state:reasons.length?'BLOCKED':'PASS',reasons,warnings,
+      expectedIP,expectedOuts:eo,recentOuts:ro,seasonOuts:so,pitcherK:pk,opponentK:ok,matchupK:mk,
+      structuralK:sk,recentK:rk,seasonK:sek,historicalK,workloadState};
   }
 
   function marketImpliedMean(m,fallbackLineOnly=true){const line=num(m?.representative?.line);if(line===null)return null;const q=noVigOver(m);if(finite(q)){const solved=solvePoissonMeanForOver(line,q);if(finite(solved))return solved;}return fallbackLineOnly?line:null;}
@@ -131,9 +169,12 @@
     matchupK=clamp(matchupK,.06,.46);
     const structuralK=expectedBF*matchupK;
     const recentK=recentMean(marketRecent(k)),seasonK=marketSeasonAverage(k),recentSd=weightedStd(marketRecent(k),recentK);
+    const recentOuts=recentMean(marketRecent(outs));
     const blend=independentBlend(structuralK,recentK,seasonK);
     const physicalCeiling=Math.max(.5,Math.min(18,expectedBF*.75));
     const expectedK=clamp(blend.value,.15,physicalCeiling);
+    const integrity=projectionIntegrity({expectedOuts,recentOuts,seasonOuts:outsSeason,pitcherK,opponentK,
+      matchupK:matchupK*100,structuralK,recentK,seasonK,workloadState:workloadState.state});
 
     const freshnessKeys=['OUTS','ER','HA','BB'];if(k)freshnessKeys.push('K');
     const fresh=marketFreshness(starter,nowMs,freshnessKeys);
@@ -150,8 +191,8 @@
       role:'SP',openerLike,workloadState:workloadState.state,workloadLimited:workloadState.limited,roleWarning:openerLike?'opener/bulk workload detected from structured Outs context':workloadState.limited?'limited current-game workload from Pitcher Outs market':null,
       expectedK,distributionMean:expectedK,targetKMarketExcludedFromExpectedK:true,targetKMarketWeight:TARGET_K_MARKET_WEIGHT,distributionIndependentOfTargetKLine:true,
       localKLine:localLine,localKOverOdds:localOverOdds,localKUnderOdds:localUnderOdds,localKBook:localBook,localKBookSlug:localBookSlug,localKCapturedAt:localCapturedAt,localKMarketState:localMarketState,kMarketOffers:Array.isArray(k?.offers)?k.offers.map(x=>({sportsbook:{name:x?.sportsbook?.name||null,slug:x?.sportsbook?.slug||null},line:num(x?.line),odds:{over:num(x?.odds?.over),under:num(x?.odds?.under)}})):[],
-      confidence,uncertaintyMultiplier,sampleAdjustment:{applied:!!pitcherRow.sampleAdjusted,currentBF:num(pitcherRow.sampleCurrent,pitcherRow.pa)||0,previousBF:num(pitcherRow.samplePrevious,0)||0,currentWeight:num(pitcherRow.sampleAdjustmentWeight,1),rawK:num(pitcherRow.rawK),adjustedK:num(pitcherRow.K)},marketFreshness:fresh.rows,oldestMarketAgeMinutes:fresh.oldest,captureSkewMinutes:fresh.skew,freshnessWarning,sourceFreshLimitMinutes:20,sourceMaxSkewMinutes:2,
-      components:{expectedBF,expectedOuts,expectedHits,expectedWalks,expectedER,workloadState:workloadState.state,workloadLimited:workloadState.limited,uncertaintyMultiplier,pitcherK,opponentK,lineupK,matchupK:matchupK*100,structuralK,recentK,seasonK,recentSd,recentKValues:marketRecent(k).map(Number).filter(Number.isFinite).slice(-10),recentOuts:recentMean(marketRecent(outs)),seasonOuts:outsSeason,recentOutsValues:marketRecent(outs).map(Number).filter(Number.isFinite).slice(-10),pitcherWhiff,oppWhiff,pitcherSwStr,oppSwStr,pitcherContact,oppContact,pitcherGrade:num(k?.statistics?.overall?.pitcherGrade),targetKMarketWeight:TARGET_K_MARKET_WEIGHT,blendWeights:blend.normalizedWeights,physicalCeiling},
+      confidence,uncertaintyMultiplier,projectionIntegrity:integrity,sampleAdjustment:{applied:!!pitcherRow.sampleAdjusted,currentBF:num(pitcherRow.sampleCurrent,pitcherRow.pa)||0,previousBF:num(pitcherRow.samplePrevious,0)||0,currentWeight:num(pitcherRow.sampleAdjustmentWeight,1),rawK:num(pitcherRow.rawK),adjustedK:num(pitcherRow.K)},marketFreshness:fresh.rows,oldestMarketAgeMinutes:fresh.oldest,captureSkewMinutes:fresh.skew,freshnessWarning,sourceFreshLimitMinutes:20,sourceMaxSkewMinutes:2,
+      components:{expectedBF,expectedOuts,expectedHits,expectedWalks,expectedER,workloadState:workloadState.state,workloadLimited:workloadState.limited,uncertaintyMultiplier,pitcherK,opponentK,lineupK,matchupK:matchupK*100,structuralK,recentK,seasonK,recentSd,recentKValues:marketRecent(k).map(Number).filter(Number.isFinite).slice(-10),recentOuts,seasonOuts:outsSeason,projectionIntegrity:integrity,recentOutsValues:marketRecent(outs).map(Number).filter(Number.isFinite).slice(-10),pitcherWhiff,oppWhiff,pitcherSwStr,oppSwStr,pitcherContact,oppContact,pitcherGrade:num(k?.statistics?.overall?.pitcherGrade),targetKMarketWeight:TARGET_K_MARKET_WEIGHT,blendWeights:blend.normalizedWeights,physicalCeiling},
       opponentRankContext:starter.opponentRankContext||null,
       metricValidation:{ok:true,invalid:[],checked:4+lineupRows.length*4,valid:4+lineupRows.length*4,schemaIntegrityFailed:false,pitcherSchemaFailed:false,opponentSchemaFailed:false,pitcher:{ok:true,valid:4,checked:4,invalid:[],schemaFailed:false},opponent:{ok:true,valid:lineupRows.length*4,checked:lineupRows.length*4,invalid:[],schemaFailed:false}},
       sourceProvenance:{pitcherSkill:'Baseball Savant Custom Leaderboard (current season with prior-season fallback)',lineupSkill:'MLB official batting order + Baseball Savant player IDs',workloadMarkets:'PropsMadness table API (Outs + ER + Hits Allowed + Walks current/history)',kHistory:'PropsMadness K recent/season history when available; current K line/price excluded from expected-K mean',opponentRanks:'PropsMadness ordinal team-rank context only',targetMarketTruth:'PropsMadness sportsbook offers in Trust Layer; Pinnacle/Circa sharp reference when same-line two-sided quotes are available; OddsPapi reserved for supported game markets'}
@@ -230,6 +271,8 @@
           if(!proj)hard.push('structured K distribution unavailable');
           else {
             if(proj.freshnessWarning)hard.push(proj.freshnessWarning);
+            if(proj.projectionIntegrity?.ok===false)hard.push(...proj.projectionIntegrity.reasons.map(x=>`K projection integrity: ${x}`));
+            if(proj.projectionIntegrity?.warnings?.length)warnings.push(...proj.projectionIntegrity.warnings.map(x=>`K projection integrity review: ${x}`));
             if(proj.openerLike)warnings.push(proj.roleWarning||'opener/bulk role');
             else if(proj.workloadLimited)warnings.push(proj.roleWarning||'limited current-game workload');
             if(proj.sampleAdjustment?.applied)warnings.push(`pitcher skill small-sample shrinkage applied (${Math.round(proj.sampleAdjustment.currentBF)} current BF, ${(proj.sampleAdjustment.currentWeight*100).toFixed(0)}% current weight)`);
@@ -246,9 +289,9 @@
     return {schemaVersion:3,engineVersion:VERSION,modelVersion:MODEL_VERSION,calibrationStatus:CALIBRATION_STATUS,marketSeparation:'TARGET_K_MARKET_EXCLUDED_FROM_EXPECTED_K',builtAt:new Date(nowMs).toISOString(),pregameGameCount:games.length,starterCount:games.length*2,readyCount:ready,watchCount:watch,blockedCount:blocked,games};
   }
 
-  function audit(board){return{engineVersion:VERSION,modelVersion:board?.modelVersion,calibrationStatus:board?.calibrationStatus,marketSeparation:board?.marketSeparation,builtAt:board?.builtAt,pregameGameCount:board?.pregameGameCount||0,starterCount:board?.starterCount||0,readyCount:board?.readyCount||0,watchCount:board?.watchCount||0,blockedCount:board?.blockedCount||0,games:(board?.games||[]).map(g=>({gamePk:g.gamePk,matchup:g.matchup,startAt:g.startAt,starters:(g.starters||[]).map(s=>({side:s.side,team:s.team,player:s.officialName,mlbId:s.officialMlbId,status:s.status,reasons:s.reasons,lineupState:s.lineupState,lineupSource:s.lineupSource,lineupCount:s.lineupCount,savantLineupCount:s.savantLineupCount,pitcherSavantBF:s.pitcherSavantBF,pitcherSavantSource:s.pitcherSavantSource,opponentRankContext:s.opponentRankContext||null,...(s.projection?{expectedK:s.projection.expectedK,localLine:s.projection.localKLine,localOverOdds:s.projection.localKOverOdds,localUnderOdds:s.projection.localKUnderOdds,localBook:s.projection.localKBook,localMarketState:s.projection.localKMarketState,localOverProb:s.projection.localKLine!==null?s.projection.overProb:null,localUnderProb:s.projection.localKLine!==null?s.projection.underProb:null,targetKMarketExcludedFromExpectedK:s.projection.targetKMarketExcludedFromExpectedK,distributionIndependentOfTargetKLine:s.projection.distributionIndependentOfTargetKLine,confidence:s.projection.confidence,workloadState:s.projection.workloadState,workloadLimited:s.projection.workloadLimited,uncertaintyMultiplier:s.projection.uncertaintyMultiplier,sampleAdjustment:s.projection.sampleAdjustment,components:s.projection.components}: {})}))}))};}
+  function audit(board){return{engineVersion:VERSION,modelVersion:board?.modelVersion,calibrationStatus:board?.calibrationStatus,marketSeparation:board?.marketSeparation,builtAt:board?.builtAt,pregameGameCount:board?.pregameGameCount||0,starterCount:board?.starterCount||0,readyCount:board?.readyCount||0,watchCount:board?.watchCount||0,blockedCount:board?.blockedCount||0,games:(board?.games||[]).map(g=>({gamePk:g.gamePk,matchup:g.matchup,startAt:g.startAt,starters:(g.starters||[]).map(s=>({side:s.side,team:s.team,player:s.officialName,mlbId:s.officialMlbId,status:s.status,reasons:s.reasons,lineupState:s.lineupState,lineupSource:s.lineupSource,lineupCount:s.lineupCount,savantLineupCount:s.savantLineupCount,pitcherSavantBF:s.pitcherSavantBF,pitcherSavantSource:s.pitcherSavantSource,opponentRankContext:s.opponentRankContext||null,...(s.projection?{expectedK:s.projection.expectedK,localLine:s.projection.localKLine,localOverOdds:s.projection.localKOverOdds,localUnderOdds:s.projection.localKUnderOdds,localBook:s.projection.localKBook,localMarketState:s.projection.localKMarketState,localOverProb:s.projection.localKLine!==null?s.projection.overProb:null,localUnderProb:s.projection.localKLine!==null?s.projection.underProb:null,targetKMarketExcludedFromExpectedK:s.projection.targetKMarketExcludedFromExpectedK,distributionIndependentOfTargetKLine:s.projection.distributionIndependentOfTargetKLine,confidence:s.projection.confidence,projectionIntegrity:s.projection.projectionIntegrity,workloadState:s.projection.workloadState,workloadLimited:s.projection.workloadLimited,uncertaintyMultiplier:s.projection.uncertaintyMultiplier,sampleAdjustment:s.projection.sampleAdjustment,components:s.projection.components}: {})}))}))};}
 
-  const api={VERSION,MODEL_VERSION,CALIBRATION_STATUS,TARGET_K_MARKET_WEIGHT,SLUG,LABEL,americanImplied,fairAmerican,noVigOver,poissonOver,overdispersedPoissonOver,solvePoissonMeanForOver,recentMean,weightedStd,marketImpliedMean,marketHasHistory,marketHasAnyData,blendedCountExpectation,teamPrior,lineupWeightedMetric,marketFreshness,independentBlend,shrinkSmallSample,adjustedPitcherSkill,workloadStateFromOuts,confidenceFromSamples,buildDistribution,evaluateAtLine,projection,savantRow,usableMarketLine,buildBoard,audit};
+  const api={VERSION,MODEL_VERSION,CALIBRATION_STATUS,TARGET_K_MARKET_WEIGHT,SLUG,LABEL,americanImplied,fairAmerican,noVigOver,poissonOver,overdispersedPoissonOver,solvePoissonMeanForOver,recentMean,weightedStd,marketImpliedMean,marketHasHistory,marketHasAnyData,blendedCountExpectation,teamPrior,lineupWeightedMetric,marketFreshness,independentBlend,shrinkSmallSample,adjustedPitcherSkill,workloadStateFromOuts,confidenceFromSamples,projectionIntegrity,buildDistribution,evaluateAtLine,projection,savantRow,usableMarketLine,buildBoard,audit};
   if(typeof window!=='undefined')window.MODEL_STRUCTURED_K_CORE=api;
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })();

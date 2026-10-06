@@ -1,0 +1,537 @@
+Yes. Halftime is where this becomes most useful, because we now have enough possessions to stop treating every observation as an isolated anecdote and start identifying repeatable mechanisms.
+
+Unable to display this message due to an error. Reload the page to try again.
+
+The halftime box score is already misleading in interesting ways. KC leads 14–7 and has 182 yards, but Walker has supplied 89 rushing yards on 14 carries (6.36 YPC) while Mahomes is only 8/18 for 62 yards (3.44 YPA). Denver has only six official rushing attempts. The teams are therefore arriving at the score through very different processes.
+
+What the first half has actually taught us
+
+I would compress our M01–M55 discoveries into seven model modules instead of trying to build 55 unrelated features.
+
+Model module	First-half evidence	Importance
+1. Drive-state engine	Early-down outcomes repeatedly determined whether offenses reached favorable or unfavorable third downs	Core
+2. Play-caller decision model	Reid sometimes moved away from Walker despite a major efficiency edge; Webb's situational calls have varied significantly	Core
+3. QB opportunity vs efficiency	Mahomes volume and Mahomes efficiency are clearly different processes; scrambles must be assigned to dropbacks	Core
+4. Personnel / injury state	Delane injury potentially alters KC coverage and safety allocation midgame	Core
+5. Receiver role + leverage	Bryant's 4/42 isn't just raw volume—several opportunities came in chain-moving situations	High
+6. Outcome attribution	Rice TD was a short completion that became six after a missed tackle; official QB/WR stats obscure causality	Core
+7. Live Bayesian updating	Walker's first drive initially looked like 25-carry certainty; later rotations showed why updates need shrinkage	Core
+
+The biggest conceptual shift is this:
+
+We should model football as a sequence of changing game states, not as a set of independent player stat projections.
+
+A quarterback doesn't simply enter a game with a predetermined 245-yard expectation.
+
+The actual chain is closer to:
+
+1st-down outcome → 2nd-down state → play caller decision → defensive response → 3rd-down state → pressure environment → QB decision → completion/scramble/sack → new game state.
+
+That process repeats until the drive ends.
+
+That architecture could eventually improve our QB, RB, receiver and team models simultaneously.
+
+The biggest finding: early-down success changes everything
+
+KC gave us an almost laboratory-quality demonstration.
+
+When Walker produced productive early-down runs, Mahomes rarely had to operate in the environment Denver wanted.
+
+When KC produced an incompletion or short unsuccessful play early:
+
+2nd-and-long → 3rd-and-long → Denver can unleash its pressure/coverage package → drive stalls.
+
+That means opponent pressure rate alone isn't enough.
+
+We need:
+
+Probability of reaching a pressure-friendly situation.
+
+A defense with a 35% pressure rate isn't equally dangerous if an offense spends the night in:
+
+2nd-and-3 / 3rd-and-1
+
+versus:
+
+2nd-and-10 / 3rd-and-8.
+
+That is one of the most substantial model improvements we've uncovered.
+
+The second major finding: play callers determine whether matchup edges actually appear
+
+This may be the most valuable lesson tonight.
+
+Walker:
+
+14 carries
+89 yards
+6.36 YPC
+
+Mahomes:
+
+18 attempts
+62 yards
+3.44 YPA
+
+Yet Kansas City has repeatedly chosen to drop Mahomes back.
+
+That doesn't automatically mean Reid is making bad decisions, because passing has strategic value even when less efficient: it prevents Denver from completely loading against Walker.
+
+But the disparity is large enough that we should evaluate whether KC is optimally exploiting the matchup.
+
+This gives us a future play-caller metric something like:
+
+Situational Decision Value
+
+For every state:
+
+down + distance + field position + score + personnel + defensive shell
+
+estimate:
+
+expected value of selected play type − expected value of plausible alternatives.
+
+Then we can distinguish:
+
+Good call / bad outcome
+
+from
+
+Bad call / lucky outcome.
+
+The Rice TD may be the latter type of example: KC gets six points, but Denver's missed tackle appears to have contributed substantially to producing that result.
+
+That should not automatically validate the play call.
+
+What I specifically want us to watch in the second half
+
+This should now become our live experimental checklist.
+
+Second-half question	What to observe	What it teaches the model
+Does Reid increase Walker usage?	First-down calls, consecutive carries, run rate while score is close	Play-caller adaptation
+Does Denver change its box against Walker?	Safety alignment, LB depth, apparent single-high vs two-high	Defensive adjustment
+Can Mahomes punish that adjustment?	Passing first downs, intermediate/deep success after heavier boxes	Run/pass interaction
+Does KC still reach 3rd-and-long?	Average third-down distance	Pressure opportunity
+What happens on 3rd-and-short?	Concept selected and outcome	Situational caller quality
+Does Delane return?	Availability + which CB takes his assignments	Snap-level personnel strength
+Who Denver attacks if Delane stays out	Waddle/Sutton/Bryant target distribution	Matchup exploitation
+Does Bryant remain a money-down target?	3rd-down/red-zone targets	QB trust hierarchy
+Does Waddle's role expand?	ADOT, motion, target location	Coverage allocation
+Does Denver establish a real run game?	Harvey/Dobbins early-down success	Offensive balance
+Does defensive tackling deteriorate?	Missed tackles/YAC later in drives	Fatigue effects
+How do callers react after failed concepts?	Whether same concept repeats or changes	Adaptation speed
+
+Those twelve questions are more valuable now than simply logging yards.
+
+KC's opening third-quarter possession is especially important
+
+Kansas City gets the chance to show us what the halftime coaching meeting actually changed.
+
+This is one of the few moments where we can observe deliberate coaching adaptation rather than normal drive-to-drive variation.
+
+If Reid opens with something like:
+
+Walker → Walker → quick pass → Walker
+
+that's strong evidence that KC identified the same efficiency imbalance we have.
+
+If he comes out:
+
+dropback → dropback → dropback
+
+despite Walker having 89 first-half yards, that's equally informative about Reid's philosophy.
+
+So I want to create another feature category:
+
+Halftime Adjustment Delta
+
+Compare:
+
+first-half tendencies
+
+against:
+
+first two second-half drives.
+
+For both offense and defense.
+
+Examples:
+
+KC Walker carry rate: H1 → early H2
+KC early-down pass rate: H1 → H2
+Denver box count: H1 → H2
+Denver man/zone behavior: H1 → H2
+KC target distribution: H1 → H2
+
+This could eventually become a coaching adjustment rating.
+
+Some staffs consistently identify what worked and amplify it.
+
+Some continue running their predetermined system.
+
+That difference may be predictable historically.
+
+Another thing I want us to watch: Denver's response to Walker
+
+This is the defensive chess match.
+
+Denver basically has three choices.
+
+Continue current structure. Accept Walker rushing efficiency but prevent Mahomes from generating explosives.
+
+Add another defender to the box. Suppress Walker but expose the secondary.
+
+Change fronts/stunts without sacrificing coverage. Attempt to improve the run fit without drastically changing coverage structure.
+
+If Denver chooses #2, the next question becomes:
+
+Does Worthy/Rice suddenly start getting better coverage situations?
+
+That's exactly the interaction our pregame model currently doesn't fully capture.
+
+Instead of:
+
+Walker projection
+and separately
+Worthy projection
+
+we need:
+
+Walker success changes defensive alignment → defensive alignment changes Worthy/Rice target quality.
+
+Player props are therefore not independent distributions.
+
+They're conditional on one another.
+
+That's potentially very important.
+
+Outcome attribution becomes a major postgame project
+
+The Rice TD taught us something critical.
+
+Official data:
+
+Mahomes +13 passing yards
+Rice +13 receiving yards
+Mahomes passing TD
+Rice receiving TD
+
+But our film description is:
+
+short pass → catch → defender has tackle opportunity → missed tackle → TD.
+
+Our historical model shouldn't assign 100% of those 13 yards and the touchdown probability to Mahomes' passing ability.
+
+Eventually I want:
+
+Air yards
+
+expected YAC
+receiver-created YAC over expected
+defensive-error YAC
+
+That lets us distinguish:
+
+QB-created explosives from receiver-created explosives from defense-created explosives.
+
+This could significantly improve both QB and receiver projections.
+
+Something else the first half showed: Mahomes' box score needs context
+
+Mahomes was extremely inefficient through the air, but his rushing TD and another successful scramble helped rescue KC.
+
+That's why QB rushing must branch from the dropback model:
+
+Called pass
+→ completion
+→ incompletion
+→ interception
+→ sack
+→ scramble
+
+rather than counting scrambles as ordinary rushing plays.
+
+Otherwise mobile quarterbacks make offensive play callers appear artificially run-heavy.
+
+Historical 2025 data also shows Mahomes was materially more efficient in second halves than first halves—7.7 YPA versus 6.5—so we shouldn't assume tonight's first-half passing struggles must persist. That's contextual history, not a prediction by itself.
+
+Our second-half learning objective
+
+I don't think we need another 50 model variables.
+
+Now we should stress-test the ones we've discovered.
+
+From this point forward, every drive should answer three questions:
+
+1. What was the critical game-state transition?
+Example: Walker +8 creates 2nd-and-2.
+
+2. What decision did the coordinator make from that state?
+Example: Reid chooses deep play action instead of another run.
+
+3. Why did the play succeed or fail?
+Coverage, pressure, separation, tackle, receiver YAC, QB creation, penalty, etc.
+
+That's the framework I want to use for every second-half drive.
+
+Instead of:
+
+Walker +8, Mahomes +12, Rice +6...
+
+we'll record:
+
+State → Decision → Mechanism → Outcome.
+
+That is much closer to something we can later turn into an actual predictive model.
+
+And after the game, when we combine the official gamebook, replay/broadcast commentary and our M01+ ledger, we should be able to build a formal NFL Model Nuance Specification: what variables are obtainable historically, how to calculate each one, which require film/charting data, and which should enter our QB model first.
+
+The first KC drive after halftime is probably our best test yet of halftime coaching adaptation, so that's the main thing I want to dissect next.
+
+awesome... i would like you to still keep a complete M01-M(n) checklist as we go
+
+Absolutely. From here on, I’ll maintain the complete cumulative M01–M(n) checklist alongside the drive-by-drive analysis.
+
+I’ll keep every item rather than collapsing or replacing earlier discoveries. When a new drive provides more evidence for an existing item, I’ll upgrade its confidence/status instead of creating a duplicate. When we discover something genuinely new, it gets the next sequential ID.
+
+For each item, I’ll preserve four things: ID, nuance, why it matters, and status — for example CORE / Add / Research / Watch, plus confidence where useful. If an idea gets refined, such as M29 changing from “field position changes pass rate” to the more precise “field position changes passing risk profile,” I’ll retain the original ID and update its definition rather than losing the history.
+
+We are currently through M55. After each upcoming drive, I’ll give you the relevant drive analysis plus only the changed/new M-items, while keeping the complete M01–M(n) master ledger intact in the background. At major checkpoints—end of Q3, end of game, and postgame—we can print the entire current checklist in full and then classify every item into:
+
+Implement now / Backtest first / Needs external data or charting / Probably noise.
+
+That should leave us with a proper feature-development roadmap rather than just a collection of observations.
+
+drive over, kc went quick on 4th and 1 with extra linemen, and ran outside
+
+This was an excellent drive for our experiment because KC’s 4th-and-1 decision, personnel package, tempo, and play direction all interacted on one snap—and Walker turned it into a 60-yard touchdown.
+
+Unable to display this message due to an error. Reload the page to try again.
+
+The sequence appears to have been: Walker stuffed for 0, Mahomes scramble for 3, Rice catch for 6, leaving 4th-and-1 around the KC 40. Kansas City immediately got heavy personnel onto the field, went quickly before Denver could fully reset, and instead of hammering Walker inside where the formation suggested the run might go, sent him left/outside for 60 yards and a touchdown. Walker is suddenly at 16 carries for 149 yards and a TD — 9.3 YPC.
+
+That one snap gives us several genuinely new model nuances.
+
+M56 — Tempo as a matchup weapon ⭐⭐⭐⭐ CORE
+
+Tempo shouldn't only mean “plays per minute.”
+
+On that fourth down, going quickly potentially denied Denver the chance to:
+
+substitute heavier defensive personnel,
+communicate a short-yardage call,
+adjust the front,
+change edge responsibilities,
+react to KC's extra linemen.
+
+So we need a variable more like:
+
+Substitution-denial tempo
+
+rather than simply no-huddle percentage.
+
+The valuable question is:
+
+Did the offense snap quickly because it saw the defense trapped in unfavorable personnel?
+
+That's very different from generally playing fast.
+
+For historical modeling, we should investigate seconds from previous play to snap, substitutions made/not made, and defensive personnel remaining on the field.
+
+M57 — Personnel package as information and deception ⭐⭐⭐⭐ CORE
+
+You noticed KC brought in extra offensive linemen.
+
+That sends a very strong signal:
+
+Power/inside short-yardage run coming.
+
+Denver has to respect that.
+
+But Kansas City then ran outside.
+
+This is critical because personnel packages aren't merely descriptions of who's on the field. They create defensive expectations.
+
+We should eventually model:
+
+Formation/personnel tendency → defensive expectation → tendency breaker probability.
+
+If a team runs inside from heavy personnel 80% of the time, then its occasional outside run or play-action pass can be much more valuable than its raw league-average success rate suggests.
+
+That gives the coordinator an information advantage.
+
+M58 — Short-yardage front compression creates edge vulnerability ⭐⭐⭐⭐
+
+This one may be especially important.
+
+On 4th-and-1, Denver has to compress toward the line of scrimmage and protect the interior gaps.
+
+That can produce a tradeoff:
+
+better interior run defense → greater vulnerability at the edge.
+
+Running outside therefore isn't necessarily “cute” or unnecessarily complicated.
+
+If Denver is heavily condensed inside, the outside concept can actually be the higher-EV call.
+
+And Walker is exactly the runner who can punish that because if he clears the edge, the defense has very little second-level margin for error.
+
+This means short-yardage models should include:
+
+defensive front width,
+box density,
+edge defender alignment,
+extra OL / TE personnel,
+run direction.
+
+Simply categorizing this as:
+
+4th-and-1 rushing attempt
+
+loses almost everything interesting about the play.
+
+M59 — Separate the fourth-down decision from the fourth-down play call ⭐⭐⭐⭐ CORE
+
+There were actually two coaching decisions here:
+
+Decision A: Go for it on 4th-and-1.
+
+Decision B: Which concept to call after deciding to go.
+
+Those should receive separate grades.
+
+A coach could be correct to go for it but choose a terrible play.
+
+Or make a questionable go decision but call an excellent concept.
+
+Our coaching model should therefore produce:
+
+Fourth-Down Aggressiveness Value
+
+and separately:
+
+Fourth-Down Concept Value.
+
+This play probably scores well on both.
+
+And this dramatically validates our halftime experiment
+
+Remember the question we set:
+
+Does Reid look at Walker's 14-for-89 first half and increase his exploitation of the matchup?
+
+First possession after halftime:
+
+Walker gets the ball in a critical 4th-and-1 and takes it 60 yards for a TD.
+
+That's very strong evidence for M45/M53:
+
+Play-caller adaptation rate ↑
+
+Reid appears to have come out of halftime still treating Walker as the primary matchup advantage.
+
+And that's exactly what we wanted to observe.
+
+This means we should create a formal halftime metric eventually:
+
+M60 — Halftime Adjustment Delta ⭐⭐⭐⭐ CORE
+
+Compare each team's first-half strategy to the first two second-half possessions:
+
+run rate,
+early-down run rate,
+target distribution,
+formation/personnel usage,
+pressure rate,
+defensive box structure,
+explosive-concept frequency.
+
+Some coaches may have repeatable positive halftime-adjustment signatures.
+
+That could be another genuine coaching edge.
+
+There is also a fascinating result-vs-process lesson
+
+Walker gained 60 yards.
+
+But we shouldn't train the model to expect a 60-yard gain every time this situation occurs.
+
+What matters is that the combination of:
+
+**4th-and-1
+
+heavy personnel
+quick tempo
+defensive interior compression
+outside run
+elite explosive RB**
+
+created a state where the tail of the outcome distribution became much wider.
+
+Most successful versions of that play might gain 3–8 yards.
+
+This one went 60.
+
+So the call can be excellent without using the 60-yard result as its expected value.
+
+That's another confirmation of M44/M55: process vs outcome.
+
+KC's offensive story has now changed dramatically
+
+Halftime:
+
+Walker — 14 for 89
+
+Now:
+
+Walker — 16 for 149 and TD
+
+Mahomes:
+
+9/19 for 68 yards
+
+This is astonishingly asymmetric.
+
+KC rushing:
+22 attempts
+
+Denver rushing:
+6 attempts
+
+KC now has 251 yards, and Walker alone accounts for 149 rushing yards.
+
+At this point, the empirical evidence that Denver cannot currently solve Walker is very strong.
+
+And the TD occurred precisely because KC used Denver's need to stop Walker against Denver.
+
+That's higher-level than simply “run because the run works.”
+
+It's:
+
+Establish run → defense adapts toward run → exploit nature of defensive adaptation with a different run geometry.
+
+That should absolutely inform how we build the run model.
+
+M01–M60 status
+
+We are now officially through M60 in the complete ledger.
+
+The new entries are:
+
+M56 — Substitution-denial tempo
+M57 — Personnel package as information/deception
+M58 — Short-yardage front compression vs edge vulnerability
+M59 — Fourth-down decision vs fourth-down concept selection
+M60 — Halftime Adjustment Delta
+
+And several existing items just got major confidence upgrades:
+
+M43 Situational play-calling fingerprint ↑↑
+M44 Play quality vs result ↑
+M45 Adaptation speed ↑↑
+M53 Success-weighted play selection ↑↑
+M55 Result luck vs decision quality ↑
+
+This first third-quarter possession may be one of our most useful drives yet because it tied personnel, tempo, down-distance, coordinator strategy, defensive expectation and player explosiveness into a single observable event.
+
+Now the interesting question is Denver's response: down 21–7, does Webb become aggressively pass-heavy, or does he preserve enough run threat to prevent Spagnuolo from attacking Nix every down? That will test our game-script elasticity and play-caller modules immediately.

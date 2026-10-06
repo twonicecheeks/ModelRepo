@@ -1,0 +1,722 @@
+
+Loading older messages…
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+
+Worked for 1m 1s
+These screenshots give us an important result. We can now make a reasonably strong inference about how SmartStake calculates Opportunity Liquidity, although one discrepancy still needs investigating.
+
+1. Experiment results
+Your screenshots show three configurations of the same Pittsburgh +4.5 market.
+
+Liquidity filter
+
+Opportunity liquidity
+
+Liquidity at +127
+
+Polymarket only
+
+$85k
+
+$85k
+
+Novig only
+
+$15k
+
+$13k
+
+Two selected venues
+
+$117k
+
+$115k
+
+The screenshots were captured at different times, so these figures aren't a simultaneous comparison.
+
+New finding
+We may have identified the Opportunity Liquidity calculation.
+Look at your Novig-only screenshot. The displayed liquidity at the three higher price levels is:
+
++133	$16
++130	$1,900
++127	$13,000
+Combined
+
+$14,916
+
+This rounds to your displayed $15k.
+
+The lower-priced +125 liquidity is apparently excluded.
+
+The two-venue screenshot follows the same pattern: $115,000 at +127, $1,900 at +130 and $16 at +133, totaling approximately $117,000.
+
+This suggests Opportunity Liquidity sums qualifying orders at or beyond a price threshold, rather than simply reporting the largest individual order or adding every visible price level.
+
+2. The remaining discrepancy
+Cross-venue comparison
+
+Earlier Polymarket +127
+
+$85k
+
+Earlier Novig +127
+
+$13k
+
+Combined earlier observations
+
+$98k
+Later two-venue observation
+
+$115k
+A $17k difference between observations captured at different times.
+
+Your earlier tooltip also showed approximately $85k from Polymarket, $13k from Novig and $4.8k from 4Caster, reconciling to its $103k total at +127.
+
+That earlier total and the later $115k aren't directly comparable. Exchange orders could have changed, another venue could have been selected, or the dashboard could be using differently refreshed data.
+
+One further UI distinction is now clear: the opportunity figure in the left-hand results changes with your liquidity-bookmaker filter, while the $115k heading on the right persists even when the visible bar drops to $85k or $13k. We should use the filtered result and individual price levels, not assume that the right-hand heading is a filtered total.
+
+3. Just two more screenshots
+We don't need to repeat the whole experiment. The next step is to isolate that $17k difference.
+
+Final verification
+
+Select only Polymarket and Novig in Liquidity Bookmakers. Show me the filter with both checked.
+
+Return to Pittsburgh +4.5 and hover over the +127 liquidity bar. Capture the exchange-by-exchange breakdown.
+
+Refresh the market and immediately capture that same breakdown again.
+
+Keep the market and filters unchanged throughout, and note the capture times.
+The important question is whether the later $115k level really consists of only Polymarket and Novig orders. If it does, we can then examine whether the increase reflects new liquidity or a change in aggregation.
+
+Separately, your line-history screenshot shows FanDuel at -130 around 4:32 p.m. on September 25 and -142 around 8:15 p.m. The later displayed prices are Pinnacle -136, DraftKings -134 and FanDuel -142. That gives us a useful historical price comparison, but we still need synchronized exchange snapshots before evaluating which market moved first.
+
+The main result so far: the qualifying-price interpretation of Opportunity Liquidity is supported by two near-exact numerical reconciliations. The cross-venue aggregation and refresh behavior remain unverified.
+
+User attachment
+User attachment
+User attachment
+Excellent. These screenshots complete our liquidity-filter experiment and explain most of the discrepancy we were investigating.
+
+1. What we confirmed
+Experiment completed
+Your 1:28 a.m. screenshot confirms that only Polymarket and Novig are selected. The 1:29 a.m. screenshot shows their contributions to the same Pittsburgh Steelers +4.5 market.
+
+Liquidity at +127
+Pittsburgh Steelers +4.5 · September 26, approximately 1:29 a.m.
+
+$115k
+Polymarket
+
+~$101k
+
+Novig
+
+~$13k
+
+The displayed bookmaker figures are rounded, so they need not sum exactly to the displayed total.
+The earlier Polymarket-only screenshot showed approximately $85k at +127. The new screenshot shows approximately $101k. This accounts for roughly $16k of the increase between observations, although we cannot yet determine whether it represents new orders, a refresh or another change in displayed liquidity.
+
+2. We have reproduced the Opportunity Liquidity calculation
+Price
+
+Displayed liquidity
+
+Included?
+
++133
+
+$16
+
+Yes
+
++130
+
+$1.9k
+
+Yes
+
++127
+
+$115k
+
+Yes
+
++125
+
+$6k
+
+No
+
+Sum of qualifying levels
+
+$116,916
+Rounds to the displayed $117k Opportunity Liquidity.
+
+This is our strongest evidence yet that SmartStake's Opportunity Liquidity is the sum of displayed liquidity across qualifying price levels, rather than simply the liquidity at the current price.
+
+It also demonstrates that its liquidity-bookmaker filter is working in this example.
+
+3. What this means for our Smart Money research
+There is one extremely important distinction: $115k in displayed liquidity does not mean someone just wagered $115k on Pittsburgh.
+
+These appear to be available orders, not a record of completed transactions. Large orders can be canceled, partially filled or replaced. We should therefore distinguish resting liquidity from actual betting activity.
+
+For the next phase, I'd investigate how liquidity changes relate to sharp-book price movements. In particular, we want to determine whether changes in Polymarket and Novig's order books precede, coincide with or follow movements at Pinnacle and Circa.
+
+Our next experiment should capture synchronized snapshots of the same market over time, recording the exchange liquidity at each price level alongside the sharp-book prices. This will let us begin investigating whether SmartStake's liquidity information offers a genuinely useful early signal, rather than simply reflecting price movements that have already happened elsewhere.
+
+so how does this information get used to create the end mission: actionable edges..
+The ultimate goal is to turn the information we've been collecting into a system that identifies when the market has discovered something that a sportsbook hasn't priced correctly yet—or when our own model has identified something the market is overlooking.
+
+Our SmartStake experiments are helping us investigate the first opportunity. The second comes from our MLB and NFL models. Combining them could be considerably more useful than treating either source independently.
+
+Here's how I'd build toward that.
+
+1. The three sources of an actionable edge
+Our prediction model
+Independent signal
+Our MLB and NFL models estimate probabilities using player performance, matchups, injuries, lineups, game conditions and other relevant variables.
+
+They give us an independent opinion of what should happen, rather than simply adopting a sportsbook's price.
+
+Sharp prices and market movement
+Price discovery
+We track how bookmakers and exchanges adjust their prices, which markets move first and whether other sportsbooks respond.
+
+This can help us identify stale prices and measure how our model's estimates compare with the wider market.
+
+Liquidity and order-book activity
+Smart Money research
+We examine how much money is available at different prices, where liquidity is concentrated and how that liquidity changes before and after market movements.
+
+This is where our latest experiments fit. Order-book information may offer an additional signal about market pressure, while also revealing whether a particular price has enough available liquidity to trade.
+
+Importantly, these three sources don't have to agree. Their disagreements may be just as informative as their agreements.
+
+2. How the Smart Money information becomes useful
+Consider the Pittsburgh +4.5 market we've been examining.
+
+OUR OBSERVED MARKET
+
+Pittsburgh Steelers +4.5
+Displayed opportunity liquidity
+
+$117k
+Largest displayed price level
+
++127
+Your latest filtered screenshot attributed approximately $101k at that price level to Polymarket and $13k to Novig.
+
+This snapshot tells us where substantial displayed liquidity is concentrated. It doesn't tell us that $115,000 has actually been wagered, who placed the orders or whether the orders indicate buying or selling pressure.
+
+We also need to verify which side of the contract the +127 liquidity represents. The sportsbook's displayed -127 price and the exchange's +127 level must not be treated as directly comparable until we've established their exact contract and bid/ask conventions.
+
+Now imagine that we capture this market continuously, every 15–30 seconds, using our local service.
+
+A hypothetical sequence
+12:00 — Market baseline
+
+We record available liquidity on both sides, the quoted spread and current sharp and retail sportsbook prices.
+
+12:03 — Exchange activity
+
+A large amount of liquidity disappears from one side of the exchange order book.
+
+We investigate whether orders were filled, canceled or simply replaced. The disappearance alone is not evidence of a large wager.
+
+12:04 — Sharp-market reaction
+
+Pinnacle and Circa move their prices in the corresponding direction. If the exchange activity consistently preceded these movements across many observations, we may have identified a useful leading indicator.
+
+12:05 — Retail sportsbook lag
+
+Another sportsbook still offers its earlier price on the identical market.
+
+This creates a potential pricing discrepancy. We need to verify that the quote is live and that the market and settlement rules are identical.
+
+12:06 — Execution opportunity
+
+Our system checks the available price against its calibrated probability estimate, transaction costs, uncertainty and minimum EV requirement.
+
+Only if all conditions pass does the opportunity become actionable.
+
+This is an experiment to test, not a pattern we've already established.
+The crucial question is whether the exchange information gives us enough warning to act before the sportsbook updates its price. If it merely moves simultaneously with Pinnacle, it may provide useful confirmation but little additional execution advantage.
+
+3. Turn those signals into an actual EV calculation
+Let's use a hypothetical example based on the -127 Pittsburgh price visible in your screenshots. Assume our independently calibrated model estimates Pittsburgh +4.5 at 59%.
+
+Illustrative numbers — not a verified betting edge
+Pittsburgh +4.5 at -127
+Hypothetical model probability
+
+59.00%
+Break-even probability
+
+55.95%
+Probability difference
+
++3.05 pp
+Expected ROI before costs
+
++5.46%
+At -127, each dollar wagered earns approximately $0.7874 profit if the bet wins.
+
+E
+V
+=
+0.59
+(
+0.7874
+)
+−
+0.41
+≈
+0.0546
+EV=0.59(0.7874)−0.41≈0.0546
+Expected profit: approximately $5.46 for every $100 wagered, conditional on the 59% estimate being accurate.
+
+Notice that the $117k liquidity figure doesn't enter this calculation directly.
+
+Its value is in potentially helping us understand market pressure, identify price discovery and evaluate executable depth. It cannot automatically establish that Pittsburgh has a 59% chance of covering.
+
+4. What the finished MODEL system should do
+MODEL Opportunity Engine
+INPUTS
+
+Model probabilities
+
+Sharp prices
+
+Liquidity and movement
+
+Market validation
+Match market identity, check data freshness, remove vig and assess reference quality.
+
+Opportunity detection
+Calculate probability differences, detect sportsbook lag and measure whether an executable edge survives uncertainty.
+
+Actionable opportunity
+All checks passed
+Only show a verified opportunity when the quoted price is available, the probability estimate is sufficiently reliable and the required EV margin remains after fees and uncertainty.
+
+Prediction and execution ledger
+Record every signal, rejected opportunity, quoted price, attempted execution, closing price and realized outcome.
+
+I would keep the market-based and independent-model probabilities separate. Combining them prematurely could double-count the same information, particularly because bookmakers and exchanges often respond to one another.
+
+5. How we prove that this actually works
+Our next research phase should be designed to answer three questions.
+
+Experiment
+
+What we measure
+
+What it establishes
+
+Exchange lead–lag
+
+Price movements 2, 5 and 15 minutes after liquidity changes
+
+Whether order-book signals anticipate repricing
+
+Model versus market
+
+Calibration and out-of-sample predictive accuracy
+
+Whether our independent projections contain useful information beyond market prices
+
+Executable opportunity
+
+Actual obtainable prices, closing-line value and net realized ROI
+
+Whether detected discrepancies survive execution and produce measurable value
+
+The critical part is testing these on markets we record prospectively, not selecting historical examples where the signal happened to work.
+
+We should also compare Smart Money signals against a baseline that simply follows Pinnacle. If adding liquidity information does not improve out-of-sample performance, it shouldn't influence the model.
+
+6. Where I'd take the project next
+The highest-priority development is a synchronized market recorder, rather than another betting strategy.
+
+It would capture liquidity and both sides of the order book on selected exchanges, alongside Pinnacle, Circa and retail prices on the same market. We could then replay each market second by second, measuring when signals appeared and what prices were genuinely available at that moment.
+
+That would let us answer the question underlying every screenshot you've sent: Could our system have recognized a pricing discrepancy early enough to obtain a profitable price—or are we simply looking at market movements after the opportunity has disappeared?
+
+Once we can answer that reliably across hundreds or thousands of observations, we have a defensible route from Smart Money research to genuinely actionable edges.
+
+User attachment
+User attachment
+User attachment
+These screenshots clarify something important: SmartStake already automates much of the market-discovery process I proposed building. Rather than duplicate it, we should investigate whether its signals contain a measurable advantage that we can incorporate into MODEL.
+
+The explanation on SmartStake's website also gives us a clearer picture of how its Smart Money tool is intended to work.
+
+1. What SmartStake is actually doing
+Identify exchange liquidity
+
+Scan betting exchanges for concentrations of available liquidity that SmartStake interprets as sharp-bettor activity.
+
+Establish a benchmark
+
+Use that exchange activity to establish a reference price for a particular selection.
+
+Find sportsbook discrepancies
+
+Compare the benchmark with available sportsbook prices and surface candidates offering more favorable odds.
+
+Present the opportunity
+
+Display the candidate alongside the available liquidity, contributing exchanges, comparative prices and line history.
+
+This is substantially more than a tool that simply reports where large amounts of money are available.
+
+However, the screenshots don't establish exactly how SmartStake distinguishes sharp liquidity from ordinary liquidity, how it weights exchanges or whether its benchmark consistently predicts a market's eventual fair price.
+
+Those are the questions our experiments should answer.
+
+2. Something interesting about their example
+SMARTSTAKE'S SACRAMENTO EXAMPLE
+
+Sacramento Kings moneyline
+Exchange benchmark
+
++329
+Sportsbook offer
+
++331
+Displayed opportunity liquidity
+
+$12,000
+Theoretical edge if the benchmark is fair
+
++0.47%
+Before transaction costs, execution limitations or uncertainty in the benchmark.
+The example illustrates both the opportunity and the limitation of the strategy.
+
+If +329 genuinely represents fair value, obtaining +331 creates approximately 0.47% expected ROI. But if the benchmark is even slightly inaccurate, that small advantage could disappear.
+
+Likewise, $12,000 in displayed opportunity liquidity is not necessarily $12,000 in executed sharp wagers. Available liquidity, executed volume and a bettor's true conviction are different things.
+
+This is precisely where our independent models could provide additional information.
+
+3. How I'd incorporate this into MODEL
+SmartStake candidate
+Exchange-derived benchmark, available liquidity and sportsbook discrepancy
+
+MODEL independent analysis
+MLB or NFL probability, matchup factors, injuries, lineups and uncertainty
+
+Market verification
+Cross-check benchmark prices, market identity, liquidity freshness and executable sportsbook odds
+
+Verified opportunity
+Positive expected value after accounting for uncertainty, costs and execution constraints
+
+We should initially keep SmartStake's estimate and MODEL's estimate separate. Agreement is worth measuring, but disagreement may reveal flaws in either one.
+
+4. Our next experiment should test SmartStake itself
+Instead of spending weeks reverse-engineering the interface, I propose a prospective validation exercise.
+
+For 20–50 Smart Money candidates, we record the initial benchmark, exchange liquidity, actual sportsbook offer and the prices at Pinnacle and Circa. We then capture the same markets 5, 15 and 60 minutes later, record the closing prices and eventually settle the outcomes.
+
+That allows us to investigate three specific hypotheses:
+
+Whether SmartStake's exchange-derived benchmarks anticipate subsequent sharp-market movements.
+
+Whether its identified sportsbook discrepancies consistently produce positive closing-line value at genuinely obtainable prices.
+
+Whether our independent MLB and NFL projections provide additional predictive information beyond SmartStake's benchmarks.
+
+I'd also compare results with and without liquidity filters to establish whether greater displayed liquidity actually improves signal reliability.
+
+The important distinction
+SmartStake has already built an opportunity-discovery system. Our objective now is to establish when its detected discrepancies represent genuine, executable edges—and whether MODEL can improve that identification process.
+We can begin with screenshots and a controlled observation ledger. If the results justify deeper integration, we can investigate an authorized export or other supported way to ingest SmartStake's data directly.
+
+For a research paper on prediction algorithms, analyzing commercial aggregators like SmartStake requires reversing their engineering through market microstructure principles. While consumer-facing platforms keep their exact proprietary codebases private, their public data studies, documentation, and updates reveal a methodology rooted in order-book depth, asymmetric information processing, and cross-market arbitrage. [1, 2, 3, 4] 
+
+How tools like the SmartStake Smart Money Tracker distinguish, weight, and benchmark liquidity breaks down mathematically into three core mechanisms: [5] 
+
+1. Distinguishing "Sharp" vs. "Ordinary" Liquidity
+To identify "sharp money," an algorithm must filter out retail noise. SmartStake differentiates these layers by tracking order book imbalances and sudden volume ingestion across exchanges like NoVig and ProphetX. [3, 6] 
+
+The Speed-to-Size Ratio: Retail liquidity pools accumulate slowly over time through small, fragmented bids and asks. Sharp liquidity behaves like an institutional flash freeze—large blocks of resting or filled capital that suddenly "stack" the order book. [3, 7] 
+Resting Orders (The Liquidity Wall): The algorithm monitors bids and asks that are posted but not yet filled. If a trader places a $5,000 limit order to back a side at a highly specific price point, it creates a "liquidity wall". [1, 8, 9] 
+Adverse Selection Monitoring: Ordinary liquidity is highly sensitive to price shifts; it pulls back when information changes. Sharp liquidity acts as an aggressive market maker, standing firm or absorbing incoming counter-orders, which signals asymmetric information (an edge unknown to the general public). [7] 
+2. Cross-Exchange Weighting and Line Discrepancies
+SmartStake scans multiple betting exchanges and traditional sharp platforms simultaneously. Instead of treating all liquidity equally, exchanges are weighted by their price discovery efficiency: [2, 3, 7] 
+
+The Hierarchy of Sharpness: According to SmartStake's empirical studies (such as their 2026 MLB data study), prediction and betting marketplaces are tiered. Peer-to-peer prediction platforms with massive volume caps and prediction markets like Kalshi lead the hierarchy, followed by specialized exchanges (ProphetX, Novig), and finally market-setting bookmakers like Pinnacle. [2, 10] 
+Cross-Market Anomalies: When a sharp exchange moves its price and a "soft" retail book fails to adjust, it creates a cross-market arbitrage window. The tool computes a weighted consensus by tracking which venue moves first (the price leader) rather than treating the average of all sportsbooks as fair value. [4, 10] 
+3. Does the Benchmark Consistently Predict Fair Price?
+From a quantitative modeling standpoint, using a sharp liquidity benchmark yields an estimated true probability, but it comes with structural constraints:
+
+Metric / AttributeSharp Liquidity BenchmarkPure "De-Vigged" Consensus		
+Primary Data Input	Live order-book depth, resting limit orders, and wallet volume.	Publicly quoted odds from market-setting sportsbooks.
+Information Signal	Captures real-time, capital-backed intent before a line formally ticks over.	Measures historical sentiment adjusted for the bookmaker’s commission (juice).
+Predictive Power	High predictive power for short-term fair price discovery and detecting early market movement.	High accuracy for liquid, macro-markets but lags behind micro-level liquidity changes.
+Algorithm Limit	Order books can suffer from "spoofing" or fleeting capital spikes.	Completely blind to order flow imbalances or localized volume spikes.
+The "Fair Price" Caveat
+As noted in 's analysis on prediction markets, there is no fixed formula for converting a liquidity imbalance into an absolute fair value. While a $500,000 resting order on an exchange indicates massive conviction and pushes the implied fair value several ticks past the market consensus, the benchmark functions as a predictive directional guide rather than a flawless oracle. [1, 11] 
+
+In academic terms, the algorithm assumes the market adheres to the Efficient Market Hypothesis (EMH), treating sharp liquidity drops as the instantaneous absorption of new public or private information into the price curve. [7, 12] 
+
+To help you frame this for your research paper, could you tell me if you are looking at this from a market microstructure lens (like order flow toxicities) or an econometric perspective (such as backtesting predictive accuracy)? I can provide formal formulas like PIN (Probability of Informed Trading) or Volume-Synchronized Probability of Toxicity (VPIN) if they fit your methodology.
+
+[1] [https://www.smartstake.app](https://www.smartstake.app)
+
+[2] [https://www.smartstake.app](https://www.smartstake.app)
+
+[3] [https://www.smartstake.app](https://www.smartstake.app)
+
+[4] [https://www.youtube.com](https://www.youtube.com)
+
+[5] [https://play.google.com](https://play.google.com)
+
+[6] [https://www.youtube.com](https://www.youtube.com)
+
+[7] [https://www.smartstake.app](https://www.smartstake.app)
+
+[8] [https://www.oddsshopper.com](https://www.oddsshopper.com)
+
+[9] [https://www.youtube.com](https://www.youtube.com)
+
+[10] [https://www.smartstake.app](https://www.smartstake.app)
+
+[11] [https://www.smartstake.app](https://www.smartstake.app)
+
+[12] [https://papers.ssrn.com](https://papers.ssrn.com)
+
+…
+
+Worked for 48s
+This research gives us a useful starting point for developing a market-microstructure component for MODEL. I checked it against SmartStake's published documentation, including its September 23, 2026 article on prediction-market fair value.
+
+There is an important distinction: we have evidence of what SmartStake measures, but not enough evidence to reconstruct its proprietary algorithms. Several mechanisms in the research are plausible hypotheses rather than confirmed descriptions of its software.
+
+More importantly, SmartStake's latest documentation reveals two details that could materially change how we build our own system.
+
+1. What we can verify
+SmartStake explicitly describes its Smart Money tool as tracking exchange liquidity at individual price points, identifying large resting orders and comparing the prices those orders represent with sportsbook offers. Its latest fair-value article additionally explains that Smart Money displays the underlying limit-order prices before exchange fees, whereas its EV and arbitrage tools use fee-adjusted prices. 
+
+SmartStake
++1
+
+That distinction is essential. A price at which someone is willing to provide liquidity is evidence of their willingness to trade, but it is not necessarily their estimate of fair value.
+
+Consider SmartStake's own example: someone offering to accept a wager on San Antonio at -329 is effectively seeking the opposite position on Sacramento at +329. The side advertised to another bettor is not necessarily the side the liquidity provider wants.
+
+We must preserve this distinction when interpreting the liquidity charts you've been capturing.
+
+Assessing the research
+Proposed mechanism
+
+What we can establish
+
+Large resting orders
+
+Confirmed as a central component of Smart Money.
+
+Speed-to-size ratio
+
+Plausible, but I found no published confirmation that SmartStake uses this metric.
+
+Adverse-selection monitoring
+
+Worth investigating, but not confirmed as a SmartStake algorithm.
+
+Exchange-specific weighting
+
+Supported for its fair-odds methodology; the precise Smart Money weighting formula remains unverified.
+
+Price leadership
+
+A measurable research hypothesis, not proof that Smart Money uses a lead-lag algorithm.
+
+Liquidity-adjusted fair value
+
+SmartStake discusses its importance but explicitly acknowledges that there is no fixed conversion formula.
+
+SmartStake's published MLB research also reports differences in pricing accuracy between exchanges and traditional sportsbooks. Those findings concern particular baseball markets; we shouldn't automatically generalize them to NFL spreads or other markets. 
+
+SmartStake
++1
+
+2. The mathematical approach I'd investigate for MODEL
+Proposed research model
+Market Microstructure Signal — MMS-01
+Rather than assigning a probability directly from large liquidity walls, MMS-01 would use several observable features to estimate whether a market is about to reprice.
+
+A. Order-book imbalance
+
+I
+t
+=
+D
+b
+a
+c
+k
+,
+t
+−
+D
+l
+a
+y
+,
+t
+D
+b
+a
+c
+k
+,
+t
++
+D
+l
+a
+y
+,
+t
+I 
+t
+​
+ = 
+D 
+back,t
+​
+ +D 
+lay,t
+​
+ 
+D 
+back,t
+​
+ −D 
+lay,t
+​
+ 
+​
+ 
+This measures relative liquidity on opposing sides after translating displayed exchange orders into the positions their providers actually seek. It is a directional indicator, not a fair probability.
+
+B. Liquidity persistence
+
+Measure how much displayed liquidity survives successive observations, distinguishing persistent orders from orders that appear briefly or disappear before execution.
+
+C. Cross-market price leadership
+
+Measure whether movements at a particular exchange precede corresponding movements at independent reference markets, controlling for update frequency and shared pricing engines.
+
+D. Execution-adjusted expected value
+
+E
+V
+=
+p
+e
+s
+t
+i
+m
+a
+t
+e
+d
+(
+d
+n
+e
+t
+−
+1
+)
+−
+(
+1
+−
+p
+e
+s
+t
+i
+m
+a
+t
+e
+d
+)
+EV=p 
+estimated
+​
+ (d 
+net
+​
+ −1)−(1−p 
+estimated
+​
+ )
+Here, 
+d
+n
+e
+t
+d 
+net
+​
+  is the obtainable decimal price after applicable costs. The probability estimate must be calibrated independently rather than assumed to equal the liquidity provider's limit price.
+
+I would postpone PIN and VPIN until we have actual trade data. These models require information about executed trading and, particularly for VPIN, an estimate of signed order flow. Snapshots of displayed liquidity cannot provide that information reliably.
+
+We should also distinguish positive EV from arbitrage. A favorable sportsbook price relative to an exchange order may indicate a candidate edge, but genuine arbitrage requires compatible, simultaneously executable positions whose combined costs are below their guaranteed payout.
+
+3. The most useful discovery for our current project
+SmartStake's September article offers a particularly relevant warning about MLB player props.
+
+It presents a ProphetX prop with a very wide bid-ask spread where different reasonable fair-value assumptions produce substantially different estimates. The author explains that, for thinly traded player props, traditional two-sided sportsbook prices may be more informative until exchange liquidity improves near game time. 
+
+SmartStake
+
+This suggests that MODEL should not use one universal hierarchy of reference markets.
+
+Proposed market-dependent reference system
+Liquid NFL spreads and moneylines	Investigate exchange prices alongside Pinnacle and Circa, with historical accuracy and execution depth determining their influence.
+MLB pitcher strikeouts	Compare tight, two-sided sportsbook markets with sufficiently liquid exchange markets. Treat missing opposite-side prices as incomplete evidence.
+Illiquid player props	Widen probability uncertainty and reduce reliance on thin or unusually wide exchange quotes.
+Immediately after major news	Test which market incorporates the information first, distinguishing genuine price discovery from delayed data updates.
+The critical experiment is whether order-book information improves prediction after controlling for the information already contained in quoted prices. Otherwise, we risk building an elaborate model that simply reproduces the existing market consensus.
+
+4. How we should validate it
+I would build an observation ledger using our SmartStake screenshots as an initial pilot, then move to timestamped data. Each observation should preserve the complete order-book snapshot where available, the exact market and settlement rules, liquidity on both sides, independent sportsbook prices and the age of every quote.
+
+We can test three competing probability estimators: our existing de-vigged market consensus, an exchange-based estimate, and a combined estimator incorporating liquidity imbalance, persistence and lead-lag features. Compare them on subsequent price movement, closing-line value, probability calibration and realized returns under realistic execution assumptions.
+
+We should evaluate them out of sample, separating MLB strikeout props from NFL mainlines. An apparent improvement in predicting the next price movement does not automatically imply profitable wagers.
+
+One immediately useful external resource is SmartStake's published 2026 MLB lineup study. It reports roughly 85 million odds records covering 73 sportsbooks and six markets and advertises a downloadable research dataset. That could help us study repricing latency and validate our news-response model, although it does not replace the order-book data needed to test liquidity signals. 
+
+SmartStake
+
+My proposed next step is MMS-01 as a read-only research model. We can test whether liquidity concentration and price leadership add predictive information before allowing either to change MODEL's final probabilities or betting recommendations.
+
+
+
+
+-150

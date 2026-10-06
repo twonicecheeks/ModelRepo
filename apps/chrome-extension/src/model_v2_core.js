@@ -175,6 +175,7 @@
     if(market.identityStatus!=='VERIFIED'||market.playerIdentityStatus!=='VERIFIED_OFFICIAL_STARTER') return {state:'BLOCKED',reasons:['official event/player identity not verified']};
     if(Math.abs(Number(projection.line)-Number(market.line))>0.001) return {state:'BLOCKED',reasons:['independent K distribution was not evaluated at the current PropsMadness K line']};
     if(projection.metricValidation?.schemaIntegrityFailed) return {state:'BLOCKED',reasons:['K model schema integrity failed']};
+    if(projection.projectionIntegrity?.ok===false) return {state:'BLOCKED',reasons:projection.projectionIntegrity.reasons.map(x=>`K projection integrity: ${x}`)};
     if(projection.freshnessWarning) return {state:'BLOCKED',reasons:[String(projection.freshnessWarning)]};
     if(projection.openerLike||projection.roleWarning) return {state:'BLOCKED',reasons:['starter workload/role unresolved']};
     const modelAge=num(projection.oldestMarketAgeMinutes);
