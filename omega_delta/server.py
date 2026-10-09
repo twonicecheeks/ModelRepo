@@ -25,6 +25,7 @@ from app.simulator import simulate
 from app.validation import evaluate, grade_observations
 from app.operations import InstanceLock, Jobs, restore_database
 from app.mlb import MLB
+from app.collector import ChromeCollector
 
 ROOT = Path(__file__).resolve().parent
 
@@ -34,6 +35,7 @@ def make_server(store, host="127.0.0.1", port=8741):
     token = secrets.token_urlsafe(32)
     jobs = Jobs(store)
     mlb = MLB(store)
+    chrome_collector = ChromeCollector(store, mlb)
     simulation_lock=threading.Lock()
 
     def run_simulation(body):
@@ -67,6 +69,14 @@ def make_server(store, host="127.0.0.1", port=8741):
             self.send_header("Content-Type", mime)
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-store")
+            origin = self.headers.get('Origin')
+            paired = store.setting('chrome_collector_pair', {})
+            if (urllib.parse.urlsplit(self.path).path == '/api/collector/capture' and
+                    paired.get('extension_id') and origin == 'chrome-extension://' + paired['extension_id']):
+                self.send_header('Access-Control-Allow-Origin', origin)
+                self.send_header('Vary', 'Origin')
+                self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+                self.send_header('Access-Control-Allow-Headers', 'Content-Type, X-Omega-Collector-Token')
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
             self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
@@ -83,7 +93,9 @@ def make_server(store, host="127.0.0.1", port=8741):
             return self.headers.get("Host") in expected
 
         def do_GET(self):
-            if not self.safe_host() or self.headers.get('Sec-Fetch-Site')=='cross-site':
+            origin = self.headers.get('Origin')
+            local = {f'http://127.0.0.1:{self.server.server_port}', f'http://localhost:{self.server.server_port}'}
+            if not self.safe_host() or self.headers.get('Sec-Fetch-Site')=='cross-site' or (origin and origin not in local):
                 return self.send({"error":"Local access only."},403)
             path = urllib.parse.urlsplit(self.path).path
             try:
@@ -95,6 +107,7 @@ def make_server(store, host="127.0.0.1", port=8741):
                                 odds_last_failure=store.setting('odds_last_failure'),
                                 odds_quota=store.setting("odds_quota",{}),odds_budget=store.setting("odds_budget",{}),jobs=jobs.recent())
                     data['mlb']=mlb.state()
+                    data['chrome_collector']=chrome_collector.state()
                     return self.send(data)
                 if path == '/api/mlb/report':
                     return self.send(mlb.report,filename='OMEGA_V2_MLB_BACKTEST.json')
@@ -163,9 +176,22 @@ def make_server(store, host="127.0.0.1", port=8741):
                 traceback.print_exc()
                 self.send({"error":"Request failed; check the local terminal."},500)
 
+        def do_OPTIONS(self):
+            paired = store.setting('chrome_collector_pair', {})
+            if (self.safe_host() and urllib.parse.urlsplit(self.path).path == '/api/collector/capture' and
+                    paired.get('extension_id') and self.headers.get('Origin') == 'chrome-extension://' + paired['extension_id']):
+                return self.send(b'', 204)
+            return self.send({'error': 'Collector is not paired.'}, 403)
+
         def do_POST(self):
             origin = self.headers.get("Origin")
-            if not self.safe_host() or self.headers.get("X-Omega-Token") != token or (origin and origin not in {f"http://127.0.0.1:{self.server.server_port}",f"http://localhost:{self.server.server_port}"}):
+            path = urllib.parse.urlsplit(self.path).path
+            if path == '/api/collector/capture':
+                valid = chrome_collector.authorized(origin, self.headers.get('X-Omega-Collector-Token'))
+            else:
+                valid = (self.headers.get('X-Omega-Token') == token and
+                         (not origin or origin in {f'http://127.0.0.1:{self.server.server_port}', f'http://localhost:{self.server.server_port}'}))
+            if not self.safe_host() or not valid:
                 return self.send({"error":"Session changed. Refresh OMEGA and try again."},403)
             try:
                 self.connection.settimeout(20)
@@ -180,6 +206,12 @@ def make_server(store, host="127.0.0.1", port=8741):
                 if path == "/api/import":
                     result = store.import_file(b["kind"],b.get("name","import.csv"),b["raw"])
                     store.log("IMPORT","OK",f"{b['kind']}: {result['rows']} rows")
+                elif path == '/api/collector/pair':
+                    result = chrome_collector.pair(b.get('extension_id'))
+                elif path == '/api/collector/disconnect':
+                    result = chrome_collector.disconnect()
+                elif path == '/api/collector/capture':
+                    result = chrome_collector.ingest(b.get('capture'))
                 elif path == "/api/bets":
                     result = store.add_bet(b)
                 elif path == "/api/bets/settle":

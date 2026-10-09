@@ -2,7 +2,11 @@
 
 Local sports research app with an integrated DELTA postseason strikeout model, MLB playoff board, and reproducible historical comparisons. **MLB betting edge is not verified.** Starter K prediction error improved; the moneyline challengers did not improve accuracy. Read MLB_BACKTEST_REPORT.md for the results and limitations.
 
-## Open on your Mac
+## Unified repository workflow
+
+When using this Git repository, launch the root `Start_OMEGA.command`, reload the Chrome extension from `apps/chrome-extension/src`, and use OMEGA’s **Chrome collector** screen to pair and sync. Read [the unified workspace guide](../docs/OMEGA_UNIFIED_WORKSPACE.md). OMEGA is the main application and model authority; the extension is its source collector.
+
+## Open the standalone archive on your Mac
 
 1. Quit any running OMEGA server with Ctrl+C in its terminal.
 2. Unzip OMEGA_DELTA_0.1.3.zip and keep the OMEGA_DELTA_0.1.3 folder together.

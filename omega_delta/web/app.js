@@ -16,6 +16,7 @@ const tag = (s,cls='plain') => `<span class="tag ${cls}">${esc(s)}</span>`;
 const btn = (s,a,cls='',extra='') => `<button class="button ${cls}" data-action="${a}" ${extra}>${s}</button>`;
 const option = (value,label,selected) => `<option value="${esc(value)}" ${String(value)===String(selected)?'selected':''}>${esc(label)}</option>`;
 const titles = {delta:'DELTA model',deltatest:'DELTA validation',mlb:'Playoff board',mlbtest:'Playoff backtest',forecasts:'Forecast board',lab:'Scenario lab',review:'Results & diagnostics',markets:'Market capture',bets:'My bets',poly:'Polymarket',validation:'Model validation',system:'Data & provenance'};
+titles.collector='Chrome collector';
 let deltaKey='',deltaLine=5.5,deltaOdds=-110;
 let S = null;
 let tab = titles[location.hash.slice(1)] ? location.hash.slice(1) : 'mlb';
@@ -209,6 +210,60 @@ function systemPage(){
     `<div class="aside-card"><div class="eyebrow">LOCAL WORKSPACE</div><p class="code">${esc(S.data_path)}</p><p style="margin-top:10px">The server runs on your Mac. Keep it open for collection; sleeping or closing your Mac interrupts monitoring. The existing MODEL worktrees are not needed to launch this app.</p></div>`;
 }
 
+function collectorPage(){
+  const c=S.chrome_collector||{},last=c.last||{},candidate=new URLSearchParams(location.search||'').get('collector');
+  const id=candidate||c.extension_id||'',valid=/^[a-p]{32}$/.test(id);
+  const date=new Date().toLocaleDateString('sv-SE',{timeZone:'America/New_York'});
+  return head('OMEGA · CONNECTED WORKSPACE','One workspace. One model authority.','Chrome collects your PropsMadness sources. OMEGA stores them, runs models, and records comparisons.')+
+    panel('Your Chrome collector',c.connected?'Paired with this OMEGA workspace':'Open this page from the OMEGA Collector extension.',`<div class="panel-body"><p class="small-text">Use Chrome for this connection. Your PropsMadness session stays in Chrome; its login cookies and passwords are not sent to OMEGA.</p><p class="small-text">${c.connected?'Paired '+esc(time(c.paired_at)):'Open the extension and select “Open OMEGA & connect,” then connect below.'}</p><div class="form-row">${btn(c.connected?'Reconnect collector':'Connect collector','collector-pair','primary',`data-extension="${esc(id)}" ${valid?'':'disabled'}`)}${c.connected?btn('Archive previous Chrome records','collector-archive')+btn('Disconnect','collector-disconnect'):''}</div>${c.legacy_archive?`<p class="small-text">${c.legacy_archive.artifact_count} previous Chrome artifacts copied into this journal without activating their forecasts. <a href="/api/snapshot?id=${encodeURIComponent(c.legacy_archive.snapshot_id)}">Archive ↓</a></p>`:''}</div>`)+
+    panel('Collect and run MLB','One action captures sources, runs the frozen MLB/DELTA engines, then captures prices after the forecast.',`<div class="panel-body"><label>Game date <input id="collector-date" class="input" type="date" value="${date}"></label><div class="form-row">${btn('Sync MLB slate','collector-sync','primary',c.connected?'':'disabled')}${btn('Capture NFL T+A','collector-nfl','',c.connected?'':'disabled')}${btn('Retry delivery','collector-flush','',c.connected?'':'disabled')}</div><p class="small-text">MLB forecasts still require confirmed starters, both official lineups, sourced skills, and pregame timestamps. Pending games remain blocked. NFL captures are archived sources; they do not manufacture GSIS identities or new tackle forecasts. Supporting MLB markets are saved but are not automatic workload inputs in this release.</p><p class="small-text">This workflow does not call a paid odds API. Public model inputs are collected by OMEGA.</p></div>`)+
+    panel('Latest source delivery','Saved in the same SQLite database as your forecasts, quotes and results.',`<div class="panel-body"><div class="status-list"><div class="status-row"><span>Source received</span><b>${esc(time(last.received_at))}</b></div><div class="status-row"><span>League</span><b>${esc(last.league?.toUpperCase()||'Not captured')}</b></div><div class="status-row"><span>Research quotes compared</span><b>${last.priced_quotes||0}</b></div><div class="status-row"><span>Quotes awaiting a valid comparison</span><b>${last.held_quote_count||0}</b></div></div>${(last.held_quotes||[]).map(q=>`<p class="small-text">${esc(q.player)}: ${esc(q.reason)}</p>`).join('')}${last.snapshot_id?`<a class="button small" href="/api/snapshot?id=${encodeURIComponent(last.snapshot_id)}">Saved source ↓</a>`:''}<p class="small-text">Quotes remain collected reference prices, not authenticated bet-entry receipts. Original capture times are preserved after outages.</p></div>`);
+}
+
+function extensionMessage(extensionId,message){
+  return new Promise((resolve,reject)=>{
+    const runtime=window.chrome?.runtime;
+    if(!runtime?.sendMessage){reject(new Error('Open OMEGA in Chrome and reload the updated OMEGA Collector extension.'));return;}
+    const timer=setTimeout(()=>reject(new Error('Collector timed out. Inspect the extension and retry pending delivery.')),180000);
+    try{runtime.sendMessage(extensionId,message,result=>{
+      clearTimeout(timer);const error=runtime.lastError;
+      if(error||result?.ok===false)reject(new Error(error?.message||result.error));else if(!result)reject(new Error('Collector returned no response.'));else resolve(result);
+    });}catch(e){clearTimeout(timer);reject(e);}
+  });
+}
+
+async function collectorAction(action,button){
+  button.disabled=true;
+  try{
+    if(action==='collector-pair'){
+      const id=button.dataset.extension;
+      await extensionMessage(id,{type:'OMEGA_COLLECTOR_STATUS'});
+      const pairing=await api('/api/collector/pair',{extension_id:id});
+      await extensionMessage(id,{type:'OMEGA_COLLECTOR_PAIR',token:pairing.token});
+      notify('Collector connected. OMEGA is your model workspace.');
+    }else if(action==='collector-disconnect'){
+      await api('/api/collector/disconnect',{});notify('Collector access revoked. Saved records retained.');
+    }else{
+      const id=S.chrome_collector?.extension_id;
+      if(action==='collector-sync'){
+        const date=$('#collector-date').value;
+        await extensionMessage(id,{type:'OMEGA_COLLECTOR_CAPTURE',league:'mlb'});
+        const forecast=await runJob('mlb_refresh',{date});
+        // Entry comparisons require a quote captured AFTER the saved forecast.
+        const result=await extensionMessage(id,{type:'OMEGA_COLLECTOR_CAPTURE',league:'mlb'});
+        notify(`${forecast.ready} research forecasts · ${result.priced_quotes||0} quotes compared · ${forecast.blocked} games awaiting inputs.`);
+      }else if(action==='collector-nfl'){
+        await extensionMessage(id,{type:'OMEGA_COLLECTOR_CAPTURE',league:'nfl'});notify('NFL source saved in OMEGA.');
+      }else if(action==='collector-flush'){
+        await extensionMessage(id,{type:'OMEGA_COLLECTOR_FLUSH'});notify('Pending captures delivered with original times.');
+      }else if(action==='collector-archive'){
+        await extensionMessage(id,{type:'OMEGA_COLLECTOR_ARCHIVE'});notify('Previous Chrome sources and boards archived in OMEGA.');
+      }
+    }
+    await load();
+  }finally{button.disabled=false;}
+}
+
 function showModal(html){$('#modal-content').innerHTML=html;if(!$('#modal').open)$('#modal').showModal();}
 function importModal(kind='forecasts'){
   showModal(`<div class="modal-head"><h2>Import an OMEGA artifact</h2>${btn('×','close','ghost')}</div><div class="modal-body"><div class="field"><label for="import-kind">File type</label><select id="import-kind">${option('forecasts','Pregame dual-track forecast CSV',kind)}${option('scores','Graded forecast scores CSV',kind)}${option('quotes','Normalized market quote CSV',kind)}${option('availability','Availability observations CSV',kind)}${option('outcomes','Final outcome observations CSV',kind)}</select></div><p class="form-note">Forecast imports select an active snapshot. Scores merge by game, player and track; newer imports revise matching rows. Missing actuals remain ungraded. All original snapshots are retained.</p><div class="banner amber">Availability CSVs need game_id, player_id, status, observed_at and source. Accepted statuses: ACTIVE, INACTIVE, QUESTIONABLE, UNKNOWN. Observations do not retroactively alter saved forecasts.</div><div class="modal-error" id="import-error"></div></div><div class="modal-footer">${btn('Cancel','close')}${btn('Choose CSV file ↥','choose-file','primary')}</div>`);
@@ -291,7 +346,7 @@ function render(){
   document.querySelectorAll('[data-nav]').forEach(n=>n.classList.toggle('active',n.dataset.nav===tab));
   $('#breadcrumb-page').textContent=titles[tab];
   document.title=`${titles[tab]} · OMEGA Next`;
-  $('#screen').innerHTML=({delta:deltaPage,deltatest:deltaBacktest,mlb:mlbPage,mlbtest:mlbBacktest,forecasts,lab:labPage,review:reviewPage,markets:marketsPage,bets:betsPage,poly:polyPage,validation:validationPage,system:systemPage}[tab]||forecasts)();
+  $('#screen').innerHTML=({collector:collectorPage,delta:deltaPage,deltatest:deltaBacktest,mlb:mlbPage,mlbtest:mlbBacktest,forecasts,lab:labPage,review:reviewPage,markets:marketsPage,bets:betsPage,poly:polyPage,validation:validationPage,system:systemPage}[tab]||forecasts)();
   if(S.jobs?.some(j=>j.status==='RUNNING'))$('#screen').insertAdjacentHTML('afterbegin',`<div class="banner"><span class="spinner"></span> Running: ${S.jobs.filter(j=>j.status==='RUNNING').map(j=>esc(j.kind)).join(', ')}. You can navigate while it completes.</div>`);
   if(tab==='markets'&&S.odds_last_failure)$('#screen').insertAdjacentHTML('afterbegin',`<div class="banner rose">Capture failed ${esc(time(S.odds_last_failure.failed_at))}: ${esc(S.odds_last_failure.error)}. Previous successful snapshots keep their original timestamps.</div>`);
   if(tab==='markets'&&S.odds_last?.events)$('#screen').insertAdjacentHTML('afterbegin',captureCoverage());
@@ -305,6 +360,7 @@ document.addEventListener('click',async e=>{
   const el=e.target.closest('[data-action]');if(!el||el.disabled)return;
   const a=el.dataset.action;
   try{
+    if(a.startsWith('collector-')){await collectorAction(a,el);return;}
     if(a==='close')$('#modal').close();
     else if(a==='mlb-import')$('#mlb-file-input').click();
     else if(a==='mlb-backtest')go('mlbtest');

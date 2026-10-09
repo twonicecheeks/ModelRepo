@@ -91,3 +91,5 @@ chrome.runtime.onMessage.addListener((m,_sender,sendResponse)=>{
   if(m?.type==='OMEGA_TA_SET_ENABLED'){storageSet({omega_ta_auto_enabled:!!m.enabled}).then(()=>m.enabled?scheduleNext(1):chrome.alarms.clear(OMEGA_ALARM)).then(()=>sendResponse({ok:true,enabled:!!m.enabled}));return true}
 });
 init();
+
+importScripts('features/data_pipeline/omega_collector_background.js');

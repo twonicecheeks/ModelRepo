@@ -3,14 +3,14 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const path=require('node:path'),os=require('node:os'),cp=require('node:child_process');
 const root=path.resolve(__dirname,'..'),tmp=fs.mkdtempSync(path.join(os.tmpdir(),'omega-ui-'));
 try{
-  cp.execFileSync(process.env.OMEGA_PYTHON||'python3',[path.join(root,'tools/build_preview.py'),
+  if(!process.env.OMEGA_UI_STATE) cp.execFileSync(process.env.OMEGA_PYTHON||'python3',[path.join(root,'tools/build_preview.py'),
     '--output',path.join(tmp,'preview.html'),'--state-output',path.join(tmp,'state.json')]);
-  const data=JSON.parse(fs.readFileSync(path.join(tmp,'state.json'),'utf8'));
+  const data=JSON.parse(fs.readFileSync(process.env.OMEGA_UI_STATE||path.join(tmp,'state.json'),'utf8'));
   const nodes=new Map();
   function node(id){if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',open:false,
     classList:{toggle(){},remove(){}},insertAdjacentHTML(where,html){this.innerHTML=html+this.innerHTML},
     addEventListener(){},showModal(){this.open=true},close(){this.open=false}});return nodes.get(id);}
-  const ctx={console,URL,Date,Intl,Set,Map,Math,Number,String,JSON,Array,Object,Promise,
+  const ctx={console,URL,URLSearchParams,Date,Intl,Set,Map,Math,Number,String,JSON,Array,Object,Promise,
     FormData:function(){},setTimeout(){},clearTimeout(){},setInterval(){},location:{hash:''},
     document:{querySelector:node,querySelectorAll(){return []},addEventListener(){},getElementById:node},
     window:{OMEGA_PREVIEW:data,addEventListener(){},scrollTo(){}}};
@@ -18,7 +18,7 @@ try{
   vm.runInContext(fs.readFileSync(path.join(root,'web/app.js'),'utf8'),ctx);
   // Supply state directly: async load() at script end is harmless for these pure renders.
   ctx.fixtureState=data;vm.runInContext('S=fixtureState',ctx);
-  for(const page of ['delta','deltatest','mlb','mlbtest','forecasts','lab','review','markets','bets','poly','validation','system']){
+  for(const page of ['collector','delta','deltatest','mlb','mlbtest','forecasts','lab','review','markets','bets','poly','validation','system']){
     vm.runInContext(`tab='${page}';render()`,ctx);
     const html=node('#screen').innerHTML;
     assert(html.length>1000,page+' rendered');

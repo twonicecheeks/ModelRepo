@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "MODEL — MLB + NFL Matchup Center",
-  "version": "3.2.1",
-  "version_name": "3.2.1 NFL T+A Auto Capture",
-  "description": "MODEL 3.2.1: non-mutating MLB lineup-transition impact and NFL depth-chart-weighted personnel/unit matchup intelligence, with automated Week 2 T+A reference-market capture.",
+  "name": "OMEGA Collector \u2014 PropsMadness",
+  "version": "3.3.0",
+  "version_name": "3.3.0 Unified OMEGA Collector",
+  "description": "PropsMadness source collector for the local OMEGA Sports Intelligence app. OMEGA owns models, forecasts, prices and the audit journal.",
   "permissions": [
     "activeTab",
     "scripting",
@@ -24,14 +24,15 @@
     "https://www.fangraphs.com/*",
     "https://news.google.com/*",
     "https://www.fanduel.com/*",
-    "https://site.api.espn.com/*"
+    "https://site.api.espn.com/*",
+    "http://127.0.0.1:8741/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "MODEL Matchup Center"
+    "default_title": "OMEGA Collector"
   },
   "content_scripts": [
     {
@@ -46,5 +47,10 @@
       "run_at": "document_start",
       "world": "MAIN"
     }
-  ]
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://127.0.0.1/*"
+    ]
+  }
 }
